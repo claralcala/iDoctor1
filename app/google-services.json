@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "659349117549",
+    "firebase_url": "https://idoctor1-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "idoctor1",
+    "storage_bucket": "idoctor1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659349117549:android:9eb1c30723473ecb563d64",
+        "android_client_info": {
+          "package_name": "es.iescarrillo.idoctor1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3aJhhBTAkwZ_4DTJ4nUiIxMfd0deF-1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
