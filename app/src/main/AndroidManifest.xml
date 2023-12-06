@@ -13,6 +13,15 @@
         android:theme="@style/Theme.IDoctor1"
         tools:targetApi="31">
         <activity
+            android:name=".activities.RegisterPatient"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterProfessional"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.MainActivity"
             android:exported="false">
             <intent-filter>
