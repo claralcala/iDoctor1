@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ProfessionalViewConsultations">
+    tools:context=".activities.ProfessionalViewTimetable">
 
     <LinearLayout
-        android:id="@+id/linearLayout12"
+        android:id="@+id/linearLayout20"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
 
         <ListView
-            android:id="@+id/lvConsultations"
+            android:id="@+id/lvTimetables"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true" />
@@ -23,16 +23,16 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnAddConsultation"
+        android:id="@+id/btnAddTimetable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:backgroundTint="#200FAB"
         android:layout_marginBottom="60dp"
-        android:text="Agregar consulta"
+        android:text="Agregar horario"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/linearLayout12" />
+        app:layout_constraintBottom_toBottomOf="@id/linearLayout20" />
     <Button
         android:id="@+id/btnBack"
         android:layout_width="match_parent"
@@ -42,6 +42,6 @@
         android:backgroundTint="#200FAB"
         android:text="Volver pantalla principal"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/linearLayout12" />
+        app:layout_constraintBottom_toBottomOf="@id/linearLayout20" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,30 @@
         android:theme="@style/Theme.IDoctor1"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ProfessionalViewAppointments"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalEditTimetable"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalAddTimetable"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalTimetableDetails"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalViewTimetable"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalEditConsultation"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalAddConsultation"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalConsultationDetails"
+            android:exported="false" />
+        <activity
             android:name=".activities.ProfessionalViewConsultations"
             android:exported="false" />
         <activity
