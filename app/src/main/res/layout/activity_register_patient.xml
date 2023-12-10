@@ -118,7 +118,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnSaveProf"
+                android:id="@+id/btnSavePatient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
