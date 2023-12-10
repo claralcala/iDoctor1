@@ -1,0 +1,54 @@
+package es.iescarrillo.idoctor1.models;
+
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.io.Serializable;
+import java.time.LocalTime;
+
+@IgnoreExtraProperties
+public class Timetable implements Serializable {
+
+    private String dayOfWeek;
+
+    private LocalTime startTime;
+
+    private LocalTime endTime;
+
+    private String id;
+
+    public Timetable(){
+
+    }
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+}
