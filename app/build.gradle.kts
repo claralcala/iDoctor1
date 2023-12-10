@@ -42,4 +42,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
 
+    // Dependencia BCrypt
+    implementation ("de.svenkubiak:jBCrypt:0.4.3")
+
 }
