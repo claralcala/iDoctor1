@@ -7,4 +7,6 @@ Proyecto iDoctor para PMDM
 
 -Manuel Ángel Rodríguez Portillo
 
+-Damián Lozano Morilla
+
 -Clara Alcalá García (Jefa de proyecto)
