@@ -70,8 +70,6 @@ public class RegisterPatient extends AppCompatActivity {
             pat.setRole("PATIENT");
             String encryptPassword = BCrypt.hashpw(etPassword.getText().toString(), BCrypt.gensalt(5));
             pat.setPassword(encryptPassword);
-
-
             pService.insertPatient(pat);
 
             Intent intent = new Intent (this, MainActivity.class);
