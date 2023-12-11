@@ -9,6 +9,8 @@ public class Person implements Serializable {
 
     private String id;
     private String name;
+
+    private String surname;
     private String photo;
     private String username;
     private String password;
@@ -66,4 +68,14 @@ public class Person implements Serializable {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 }
+
+

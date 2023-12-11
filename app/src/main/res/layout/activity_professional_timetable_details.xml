@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
-
+    tools:context=".activities.ProfessionalTimetableDetails">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -18,76 +17,76 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="97dp"
-            android:gravity="center"
-            android:text="iDoctor"
-            android:textSize="40sp" />
-
-        <EditText
-            android:id="@+id/etUserName"
+            android:id="@+id/tvDetailsTimetable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Nombre de usuario"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword"/>
-
-
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="30dp"
+            android:text="Detalles del horario" />
 
         <TextView
-            android:id="@+id/tvError"
+            android:id="@+id/tvDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:text="Dia semana" />
+
+        <TextView
+            android:id="@+id/tvStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:text="Hora inicio" />
+
+        <TextView
+            android:id="@+id/tvendTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:text="Hora fin" />
+
 
 
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="77dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-
             <Button
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:backgroundTint="#20B798"
-                android:text="Login" />
-
+                android:backgroundTint="#4CAF50"
+                android:text="Editar" />
 
             <Button
-                android:id="@+id/btnRegister"
+                android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:text="Registrarse" />
-
-
+                android:backgroundTint="#F44336"
+                android:text="Borrar" />
         </LinearLayout>
 
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

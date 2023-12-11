@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
-
+    tools:context=".activities.ProfessionalAddTimetable">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -18,75 +17,79 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="97dp"
-            android:gravity="center"
-            android:text="iDoctor"
-            android:textSize="40sp" />
-
-        <EditText
-            android:id="@+id/etUserName"
+            android:id="@+id/tvAddTimetable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:text="Añadir horario" />
+
+
+        <TextView
+            android:id="@+id/tvDayOf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:gravity="left"
+            android:text="Día de la semana:" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="Nombre de usuario"
+            android:hint="Hora inicio"
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/etEndTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword"/>
-
-
-
-        <TextView
-            android:id="@+id/tvError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="" />
-
+            android:hint="Hora fin"
+            android:inputType="text" />
 
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="77dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="140dp"
             android:orientation="horizontal">
 
-
             <Button
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:backgroundTint="#20B798"
-                android:text="Login" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="30dp"
+                android:text="Guardar" />
 
 
             <Button
-                android:id="@+id/btnRegister"
+                android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:text="Registrarse" />
-
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="#F44336"
+                android:text="Cancelar" />
 
         </LinearLayout>
+
 
     </LinearLayout>
 

@@ -13,8 +13,62 @@
         android:theme="@style/Theme.IDoctor1"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ProfessionalAppointmentDetails"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalEditAppointment"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalAddAppointment"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalViewAppointments"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalEditTimetable"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalAddTimetable"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalTimetableDetails"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalViewTimetable"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalEditConsultation"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalAddConsultation"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalConsultationDetails"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalViewConsultations"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalEditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfessionalMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterPatient"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterProfessional"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.MainActivity"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
