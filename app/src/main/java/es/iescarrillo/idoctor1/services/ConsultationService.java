@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Consultation;
 
@@ -37,5 +39,10 @@ public class ConsultationService {
         database.child(consultation.getId()).removeValue();
     }
 
+
+    public void getConsultationsByProfessionalID(String id, ValueEventListener listener){
+        Query query = database.orderByChild("professional_id").equalTo(id);
+        query.addValueEventListener(listener);
+    }
 
 }

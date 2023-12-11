@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.models.Professional;
@@ -40,5 +42,15 @@ public class ProfessionalService {
 
     public void deleteProfessional(Professional prof){
         database.child(prof.getId()).removeValue();
+    }
+
+    public void getProfessionalByUsername(String username, ValueEventListener listener){
+        Query query= database.orderByChild("username").equalTo(username);
+        query.addValueEventListener(listener);
+    }
+
+    public void getProfessionalByID(String id, ValueEventListener listener){
+        Query query = database.orderByChild("id").equalTo(id);
+        query.addValueEventListener(listener);
     }
 }
