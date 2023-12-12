@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,6 +26,13 @@ public class ProfessionalAddEvaluation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professional_add_evaluation);
+
+        //Variables de sesión
+        SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
+        String username= sharedPreferences.getString("user", "");
+        String role = sharedPreferences.getString("role", "");
+        Boolean login = sharedPreferences.getBoolean("login", true);
+        String id = sharedPreferences.getString("id", "");
 
         btnDate = findViewById(R.id.btnDate);
         btnTime = findViewById(R.id.btnTime);

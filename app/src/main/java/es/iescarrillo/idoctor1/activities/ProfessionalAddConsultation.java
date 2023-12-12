@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
+import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.services.ConsultationService;
@@ -61,7 +61,6 @@ public class ProfessionalAddConsultation extends AppCompatActivity {
             cons.setPhone(etPhone.getText().toString());
             cons.setPhoneAux(etPhoneAux.getText().toString());
             cons.setProfessional_id(id);
-
             consService.insertConsultation(cons);
 
             Intent back = new Intent(this, ProfessionalViewConsultations.class);
