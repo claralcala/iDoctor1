@@ -75,11 +75,13 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
 
         btnViewAppointments.setOnClickListener(v -> {
             Intent appointment = new Intent (this, ProfessionalViewAppointments.class);
+            appointment.putExtra("consultation", cons);
             startActivity(appointment);
         });
 
         btnViewTimetable.setOnClickListener(v -> {
             Intent timetable = new Intent(this, ProfessionalViewTimetable.class);
+            timetable.putExtra("consultation", cons);
             startActivity(timetable);
         });
 

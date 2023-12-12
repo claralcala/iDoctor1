@@ -54,7 +54,7 @@ public class ProfessionalViewConsultations extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
-        DatabaseReference dbSuperheros = FirebaseDatabase.getInstance().getReference().child("consultation");
+        DatabaseReference dbDoctor = FirebaseDatabase.getInstance().getReference().child("consultation");
 
 
         consService= new ConsultationService(getApplicationContext());

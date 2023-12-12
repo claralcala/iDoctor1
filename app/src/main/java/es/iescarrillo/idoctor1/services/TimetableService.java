@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Timetable;
 
@@ -36,6 +38,11 @@ public class TimetableService {
         public void deleteTimetable (Timetable timetable){
             database.child(timetable.getId()).removeValue();
         }
+
+        public void getTimetablesByConsultationID(String id, ValueEventListener listener){
+        Query query = database.orderByChild("consultation_id").equalTo(id);
+        query.addValueEventListener(listener);
+    }
 
 
     }

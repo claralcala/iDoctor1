@@ -129,6 +129,7 @@ public class RegisterProfessional extends AppCompatActivity {
         patService.getPatientByUsername(username, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot patSnapshot) {
+
                 if (patSnapshot.exists()) {
                     // El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registres al profesional
                     Toast.makeText(RegisterProfessional.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();

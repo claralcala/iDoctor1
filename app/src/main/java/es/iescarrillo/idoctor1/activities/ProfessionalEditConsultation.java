@@ -81,8 +81,7 @@ public class ProfessionalEditConsultation extends AppCompatActivity {
 
 
         btnCancel.setOnClickListener(v -> {
-            Intent back = new Intent(this, ProfessionalConsultationDetails.class);
-            startActivity(back);
+            onBackPressed();
         });
 
 
