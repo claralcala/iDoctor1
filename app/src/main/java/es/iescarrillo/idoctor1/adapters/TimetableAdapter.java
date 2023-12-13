@@ -30,7 +30,7 @@ public class TimetableAdapter extends ArrayAdapter<Timetable> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_timetable, parent, false);
         }
 
-        TextView tvDay=convertView.findViewById(R.id.tvDay);
+        TextView tvDay=convertView.findViewById(R.id.tvDayOfWeek);
 
 
         tvDay.setText(timetable.getDayOfWeek());

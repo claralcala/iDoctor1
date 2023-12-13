@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Timetable;
+import es.iescarrillo.idoctor1.models.TimetableString;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
 public class ProfessionalAddTimetable extends AppCompatActivity {
@@ -85,14 +86,17 @@ public class ProfessionalAddTimetable extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
         btnSave.setOnClickListener(v -> {
+
             timetable = new Timetable();
             timetable.setConsultation_id(consultationID);
             timetable.setDayOfWeek(day);
             timetable.setStartTime(LocalTime.parse(etStartHour.getText().toString(), formatter));
             timetable.setEndTime(LocalTime.parse(etEndHour.getText().toString(), formatter));
 
+            TimetableString timetableString = timetable.convertToTimetableString();
+            timetableService.insertTimetableString(timetableString);
 
-            timetableService.insertTimetable(timetable);
+            onBackPressed();
         });
 
         btnCancel.setOnClickListener(v -> {

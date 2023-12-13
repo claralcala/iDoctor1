@@ -69,8 +69,7 @@ public class ProfessionalTimetableDetails extends AppCompatActivity {
         btnDelete.setOnClickListener(v -> {
 
             timetableService.deleteTimetable(timetable.getId());
-            Intent back = new Intent(this, ProfessionalMainActivity.class);
-            startActivity(back);
+            onBackPressed();
         });
 
 

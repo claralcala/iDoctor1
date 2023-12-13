@@ -23,6 +23,7 @@ import es.iescarrillo.idoctor1.adapters.ConsultationAdapter;
 import es.iescarrillo.idoctor1.adapters.TimetableAdapter;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Timetable;
+import es.iescarrillo.idoctor1.models.TimetableString;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
 public class ProfessionalViewTimetable extends AppCompatActivity {
@@ -40,6 +41,8 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
     ArrayList<Timetable> timetables;
 
     String consultationID;
+
+    TimetableString timetableString;
 
    Consultation consul;
     @Override
@@ -84,8 +87,9 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
                 timetables.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Convierte cada nodo de la base de datos a un objeto Superhero
-                    timetable= snapshot.getValue(Timetable.class);
+                    // Convierte cada nodo de la base de datos a un objeto
+                    timetableString= snapshot.getValue(TimetableString.class);
+                    timetable=timetableString.convertToTimetable();
                     timetables.add(timetable);
                 }
 

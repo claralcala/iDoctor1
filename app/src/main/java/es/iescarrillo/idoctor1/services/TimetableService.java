@@ -8,6 +8,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Timetable;
+import es.iescarrillo.idoctor1.models.TimetableString;
 
 public class TimetableService {
 
@@ -27,13 +28,30 @@ public class TimetableService {
             newReference.setValue(timetable);
         }
 
+        public void insertTimetableString (TimetableString timetableString){
+
+            //Utiliza push () para obtener una clave única y agregar el mensaje
+            DatabaseReference newReference = database.push();
+            timetableString.setId(newReference.getKey()); // Asigna el ID generado automáticamente
+
+            // Ahora, utiliza setValue() en la nueva referencia para agregar el nuevo mensaje
+            newReference.setValue(timetableString);
+
+        }
+
         public void updateTimetable (Timetable timetable){
             database.child(timetable.getId()).setValue(timetable);
         }
 
+
+    public void updateTimetableString (TimetableString timetable){
+        database.child(timetable.getId()).setValue(timetable);
+    }
         public void deleteTimetable ( String id){
             database.child(id).removeValue();
         }
+
+
 
         public void deleteTimetable (Timetable timetable){
             database.child(timetable.getId()).removeValue();

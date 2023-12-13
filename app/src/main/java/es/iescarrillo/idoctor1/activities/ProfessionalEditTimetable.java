@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Timetable;
+import es.iescarrillo.idoctor1.models.TimetableString;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
 public class ProfessionalEditTimetable extends AppCompatActivity {
@@ -31,6 +32,8 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
     TimetableService timetableService;
 
     Timetable timetable;
+
+    TimetableString timetableString;
 
     String day;
 
@@ -90,6 +93,8 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
             }
         });
 
+        etStart.setText(timetable.getStartTime().toString());
+        etEnd.setText(timetable.getEndTime().toString());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -101,7 +106,8 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
             timetable.setEndTime(LocalTime.parse(etEnd.getText().toString(), formatter));
 
 
-            timetableService.updateTimetable(timetable);
+            timetableString=timetable.convertToTimetableString();
+            timetableService.updateTimetableString(timetableString);
 
             Intent back = new Intent (this, ProfessionalMainActivity.class);
             startActivity(back);

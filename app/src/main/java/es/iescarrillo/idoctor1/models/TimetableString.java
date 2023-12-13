@@ -1,28 +1,33 @@
 package es.iescarrillo.idoctor1.models;
 
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+
+
 import java.time.format.DateTimeFormatter;
 
-@IgnoreExtraProperties
-public class Timetable implements Serializable {
 
+@IgnoreExtraProperties
+public class TimetableString implements Serializable {
 
     private String dayOfWeek;
 
-    private LocalTime startTime;
+    private String startTime;
 
-    private LocalTime endTime;
+    private String endTime;
 
     private String id;
 
     private String consultation_id;
 
-    public Timetable(){
+
+    public TimetableString(){
 
     }
+
 
     public String getDayOfWeek() {
         return dayOfWeek;
@@ -32,19 +37,19 @@ public class Timetable implements Serializable {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -64,18 +69,21 @@ public class Timetable implements Serializable {
         this.consultation_id = consultation_id;
     }
 
-    public TimetableString convertToTimetableString() {
+
+    //Método para convertir TimetableString a Timetable
+    public Timetable convertToTimetable() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        TimetableString timetableString = new TimetableString();
-        timetableString.setDayOfWeek(this.dayOfWeek);
-        timetableString.setId(this.id);
-        timetableString.setConsultation_id(this.consultation_id);
+        Timetable timetable = new Timetable();
+        timetable.setDayOfWeek(this.dayOfWeek);
+        timetable.setId(this.id);
+        timetable.setConsultation_id(this.consultation_id);
 
-        //Convertimos LocalTime a String
-        timetableString.setStartTime(this.startTime.format(formatter));
-        timetableString.setEndTime(this.endTime.format(formatter));
+        //Convertimos String a LocalTime
+        timetable.setStartTime(LocalTime.parse(this.startTime, formatter));
+        timetable.setEndTime(LocalTime.parse(this.endTime, formatter));
 
-        return timetableString;
+        return timetable;
     }
 }
+
