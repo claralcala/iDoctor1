@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Patient;
 
@@ -40,5 +42,15 @@ public class PatientService {
     public void deletePatient(Patient patient){
         database.child(patient.getId()).removeValue();
     }
-    
+
+
+    public void getPatientByUsername(String username, ValueEventListener listener){
+        Query query= database.orderByChild("username").equalTo(username);
+        query.addListenerForSingleValueEvent(listener);
+    }
+
+    public void getPatientByID(String id, ValueEventListener listener){
+        Query query = database.orderByChild("id").equalTo(id);
+        query.addListenerForSingleValueEvent(listener);
+    }
 }

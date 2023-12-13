@@ -19,6 +19,8 @@ public class Appointment implements Serializable {
 
     private String patient_id;
 
+    private String consultation_id;
+
 
     public Appointment(){
 
@@ -62,5 +64,13 @@ public class Appointment implements Serializable {
 
     public void setPatient_id(String patient_id) {
         this.patient_id = patient_id;
+    }
+
+    public String getConsultation_id() {
+        return consultation_id;
+    }
+
+    public void setConsultation_id(String consultation_id) {
+        this.consultation_id = consultation_id;
     }
 }

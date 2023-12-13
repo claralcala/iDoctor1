@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Appointment;
 
@@ -33,6 +35,12 @@ public class AppointmentService {
 
     public void deleteAppointment (Appointment appointment){
         database.child(appointment.getId()).removeValue();
+    }
+
+
+    public void getAppointmentsByConsultation(String id, ValueEventListener listener){
+        Query query = database.orderByChild("consultation_id").equalTo(id);
+        query.addValueEventListener(listener);
     }
 
 

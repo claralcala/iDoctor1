@@ -103,7 +103,7 @@
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="contraseña"
-            android:inputType="text" />
+            android:inputType="textPassword" />
 
 
         <CheckBox
@@ -111,6 +111,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="¿Tiene seguro médico?" />
+
+
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
 
         <LinearLayout
             android:layout_width="match_parent"

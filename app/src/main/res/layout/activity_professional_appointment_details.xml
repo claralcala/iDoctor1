@@ -28,7 +28,7 @@
             android:textSize="30dp"
             android:textStyle="bold"
             android:layout_marginBottom="30dp"
-            android:text="Detalles de la citra" />
+            android:text="Detalles de la cita" />
 
         <TextView
             android:id="@+id/tvDate"
@@ -38,6 +38,7 @@
             android:textAlignment="center"
             android:text="Fecha" />
 
+
         <TextView
             android:id="@+id/tvHour"
             android:layout_width="match_parent"
@@ -45,6 +46,16 @@
             android:text="Hora"
             android:textAlignment="center"
             android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvPatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:text="Paciente" />
+
+
 
         <CheckBox
             android:id="@+id/checkBoxActive"
