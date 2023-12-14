@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -20,6 +21,7 @@ import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.adapters.AppointmentAdapter;
 import es.iescarrillo.idoctor1.adapters.TimetableAdapter;
 import es.iescarrillo.idoctor1.models.Appointment;
+import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Timetable;
 import es.iescarrillo.idoctor1.services.AppointmentService;
@@ -43,6 +45,9 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
 
     String consultationID;
 
+    AppointmentString appString;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,16 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
 
         lvAppointments=findViewById(R.id.lvAppointments);
         btnBack=findViewById(R.id.btnBack);
@@ -73,6 +88,7 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
 
        consultationID=consul.getId();
 
+        Log.d("ProfessionalViewAppointments", "Consultation id " + consultationID);
         app = new Appointment();
 
 
@@ -84,9 +100,12 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Convierte cada nodo de la base de datos a un objeto Superhero
-                    app= snapshot.getValue(Appointment.class);
+                    appString= snapshot.getValue(AppointmentString.class);
+                    app=appString.convertToAppointment();
                     appointments.add(app);
                 }
+
+                Log.d("ProfessionalViewAppointments", "Appointments size: " + appointments.size());
 
                 // Una vez los datos añadidos a nuestra lista, se la pasamos al adaptador
                 adapter = new AppointmentAdapter(getApplicationContext(), appointments);

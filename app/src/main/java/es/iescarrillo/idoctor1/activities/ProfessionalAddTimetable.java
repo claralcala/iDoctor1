@@ -2,7 +2,9 @@ package es.iescarrillo.idoctor1.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,6 +53,21 @@ public class ProfessionalAddTimetable extends AppCompatActivity {
         btnSave=findViewById(R.id.btnSave);
         btnCancel=findViewById(R.id.btnCancel);
 
+        //Variables de sesión
+        SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
+        String username= sharedPreferences.getString("user", "");
+        String role = sharedPreferences.getString("role", "");
+        Boolean login = sharedPreferences.getBoolean("login", true);
+        String id_ = sharedPreferences.getString("id", "");
+
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
 
         Intent intent = getIntent();
         consultationID=intent.getStringExtra("consultation_id");

@@ -35,6 +35,15 @@ public class ProfessionalTimetableDetails extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
+
         tvDay=findViewById(R.id.tvDay);
         tvStart=findViewById(R.id.tvStartTime);
         tvEnd=findViewById(R.id.tvendTime);

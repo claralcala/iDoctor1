@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -20,11 +21,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Appointment;
+import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.PatientService;
@@ -65,6 +70,16 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
+
+
         etDate=findViewById(R.id.etDate);
         etHour=findViewById(R.id.etTime);
         cbActive=findViewById(R.id.checkBoxActive);
@@ -74,6 +89,9 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
         btnBack=findViewById(R.id.btnCancel);
 
         appService = new AppointmentService(getApplicationContext());
+
+        Intent intent = getIntent();
+        consultationID=intent.getStringExtra("consultation_id");
 
         patients = new ArrayList<>();
 
@@ -87,12 +105,12 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
 
                 patients.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Convierte cada nodo de la base de datos a un objeto Superhero
+                    // Convierte cada nodo de la base de datos a un objeto
                     Patient p = snapshot.getValue(Patient.class);
                     patients.add(p);
                 }
 
-                //Creamos otro arraylist para meter los nombres de usuario de los profesores
+                //Creamos otro arraylist para meter los nombres de usuario
                 ArrayList<String>patientUsername= new ArrayList<String>();
                 for (Patient pa : patients){
                     String tName=pa.getUsername();
@@ -127,19 +145,29 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
 
 
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH:mm");
 
         btnAdd.setOnClickListener(v -> {
             app = new Appointment();
 
             app.setConsultation_id(consultationID);
             app.setPatient_id(patientId);
+            app.setAppointmentDate(LocalDate.parse(etDate.getText().toString(), formatter));
+            app.setAppointmentTime(LocalTime.parse(etHour.getText().toString(), formatterHour));
             if (cbActive.isChecked()){
                 app.setActive(true);
             }else {
                 app.setActive(false);
             }
 
-            appService.insertAppointment(app);
+            AppointmentString appString = new AppointmentString();
+            appString=app.convertToAppointmentString();
+
+            appService.insertAppointmentString(appString);
+            Intent back = new Intent(this, ProfessionalMainActivity.class);
+            startActivity(back);
+
         });
 
 

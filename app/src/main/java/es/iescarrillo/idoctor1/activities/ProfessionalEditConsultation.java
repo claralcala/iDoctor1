@@ -40,6 +40,16 @@ public class ProfessionalEditConsultation extends AppCompatActivity {
         String id = sharedPreferences.getString("id", "");
 
 
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
+
+
         etAddress=findViewById(R.id.etConsAddress);
         etCity=findViewById(R.id.etConsCity);
         etMail=findViewById(R.id.etConsMail);

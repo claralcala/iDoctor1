@@ -39,6 +39,16 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         String id = sharedPreferences.getString("id", "");
 
 
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
+
+
         tvAddress=findViewById(R.id.tvAddress);
         tvCity=findViewById(R.id.tvCity);
         tvEmail=findViewById(R.id.tvEmail);

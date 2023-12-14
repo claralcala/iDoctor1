@@ -1,14 +1,17 @@
 package es.iescarrillo.idoctor1.models;
 
-
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+
 @IgnoreExtraProperties
-public class Assessment implements Serializable {
+public class AssessmentString implements Serializable {
+
 
     private String id;
     private String username;
@@ -19,13 +22,13 @@ public class Assessment implements Serializable {
 
     private Double stars;
 
-    private LocalDateTime assessmentDateTime;
+    private String assessmentDateTime;
 
 
     private String professional_id;
 
 
-    public Assessment(){
+    public AssessmentString(){
 
 
     }
@@ -62,11 +65,11 @@ public class Assessment implements Serializable {
         this.stars = stars;
     }
 
-    public LocalDateTime getAssessmentDateTime() {
+    public String getAssessmentDateTime() {
         return assessmentDateTime;
     }
 
-    public void setAssessmentDateTime(LocalDateTime assessmentDateTime) {
+    public void setAssessmentDateTime(String assessmentDateTime) {
         this.assessmentDateTime = assessmentDateTime;
     }
 
@@ -86,18 +89,22 @@ public class Assessment implements Serializable {
         this.id = id;
     }
 
-    public AssessmentString convertToAssessmentString() {
+
+    public Assessment convertToAssessment() {
+
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-        AssessmentString assessmentString = new AssessmentString();
-        assessmentString.setId(this.id);
-        assessmentString.setUsername(this.username);
-        assessmentString.setTitle(this.title);
-        assessmentString.setDescription(this.description);
-        assessmentString.setStars(this.stars);
-        assessmentString.setAssessmentDateTime(this.assessmentDateTime.format(formatter));
-        assessmentString.setProfessional_id(this.professional_id);
+        Assessment assessment = new Assessment();
+        assessment.setId(this.getId());
+        assessment.setUsername(this.getUsername());
+        assessment.setTitle(this.getTitle());
+        assessment.setDescription(this.getDescription());
+        assessment.setStars(this.getStars());
+        assessment.setAssessmentDateTime(LocalDateTime.parse(this.getAssessmentDateTime(), formatter));
+        assessment.setProfessional_id(this.getProfessional_id());
 
-        return assessmentString;
+        return assessment;
     }
 }
+

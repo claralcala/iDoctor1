@@ -58,6 +58,15 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
+
 
         profService=new ProfessionalService(getApplicationContext());
 

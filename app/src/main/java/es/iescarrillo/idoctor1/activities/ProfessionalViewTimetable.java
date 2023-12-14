@@ -58,6 +58,16 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
         String id_ = sharedPreferences.getString("id", "");
 
 
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
+
+
         lvTimetable=findViewById(R.id.lvTimetables);
 
         btnBack=findViewById(R.id.btnBack);

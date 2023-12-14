@@ -54,6 +54,15 @@ public class ProfessionalViewConsultations extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
+
         DatabaseReference dbDoctor = FirebaseDatabase.getInstance().getReference().child("consultation");
 
 
