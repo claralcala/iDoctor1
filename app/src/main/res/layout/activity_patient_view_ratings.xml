@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout12"
+        android:id="@+id/linearLayout120"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -28,6 +28,6 @@
         android:backgroundTint="#200FAB"
         android:text="Volver pantalla principal"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/linearLayout12" />
+        app:layout_constraintBottom_toBottomOf="@id/linearLayout120" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
