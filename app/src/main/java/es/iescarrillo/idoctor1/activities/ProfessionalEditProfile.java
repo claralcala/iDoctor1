@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -114,11 +116,17 @@ public class ProfessionalEditProfile extends AppCompatActivity {
             prof.setSpeciality(profSpeciality);
             prof.setUsername(etUsername.getText().toString());
             prof.setDescription(etDescription.getText().toString());
+            if (!TextUtils.isEmpty(etPassword.getText().toString())) {
+                String encryptPassword = BCrypt.hashpw(etPassword.getText().toString(), BCrypt.gensalt(5));
+                prof.setPassword(encryptPassword);
+            } else {
+                Toast.makeText(this, "La contraseña no puede estar vacia", Toast.LENGTH_SHORT).show();
+                return; // Detener la ejecución del método si el campo de fecha de nacimiento está vacío
+            }
 
-            String encryptPassword = BCrypt.hashpw(etPassword.getText().toString(), BCrypt.gensalt(5));
-            prof.setPassword(encryptPassword);
+                profService.updateProfessional(prof);
 
-            profService.updateProfessional(prof);
+
 
             Intent back = new Intent (this, ProfessionalProfileActivity.class);
             startActivity(back);
