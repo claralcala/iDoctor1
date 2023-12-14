@@ -10,7 +10,8 @@ public class PatientViewEvaluation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_view_ratings);
+        setContentView(R.layout.activity_patient_view_evaluation);
+
 
 
     }
