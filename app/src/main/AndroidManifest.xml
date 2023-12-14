@@ -15,6 +15,9 @@
         <activity android:name=".activities.PatientAddRating"
             android:exported="false"/>
         <activity
+            android:name=".activities.PatientMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ProfessionalAppointmentDetails"
             android:exported="false" />
         <activity

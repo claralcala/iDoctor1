@@ -8,11 +8,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @IgnoreExtraProperties
-public class Appointment implements Serializable {
+public class AppointmentString implements Serializable {
 
-    private LocalDate appointmentDate;
+    private String appointmentDate;
 
-    private LocalTime appointmentTime;
+    private String appointmentTime;
 
     private boolean active;
 
@@ -23,23 +23,23 @@ public class Appointment implements Serializable {
     private String consultation_id;
 
 
-    public Appointment(){
+    public AppointmentString(){
 
     }
 
-    public LocalDate getAppointmentDate() {
+    public String getAppointmentDate() {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(LocalDate appointmentDate) {
+    public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 
-    public LocalTime getAppointmentTime() {
+    public String getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(LocalTime appointmentTime) {
+    public void setAppointmentTime(String appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 
@@ -75,18 +75,18 @@ public class Appointment implements Serializable {
         this.consultation_id = consultation_id;
     }
 
-    public AppointmentString convertToAppointmentString() {
+    public Appointment convertToAppointment() {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        AppointmentString appointmentString = new AppointmentString();
-        appointmentString.setAppointmentDate(this.appointmentDate.format(dateFormatter));
-        appointmentString.setAppointmentTime(this.appointmentTime.format(timeFormatter));
-        appointmentString.setActive(this.active);
-        appointmentString.setId(this.id);
-        appointmentString.setPatient_id(this.patient_id);
-        appointmentString.setConsultation_id(this.consultation_id);
+        Appointment appointment = new Appointment();
+        appointment.setAppointmentDate(LocalDate.parse(this.appointmentDate, dateFormatter));
+        appointment.setAppointmentTime(LocalTime.parse(this.appointmentTime, timeFormatter));
+        appointment.setActive(this.active);
+        appointment.setId(this.id);
+        appointment.setPatient_id(this.patient_id);
+        appointment.setConsultation_id(this.consultation_id);
 
-        return appointmentString;
+        return appointment;
     }
 }

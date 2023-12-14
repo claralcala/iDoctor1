@@ -39,7 +39,7 @@
             android:text="Direccion" />
 
         <TextView
-            android:id="@+id/tvcity"
+            android:id="@+id/tvCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
@@ -63,7 +63,7 @@
             android:text="Teléfono" />
 
         <TextView
-            android:id="@+id/tvTelAux"
+            android:id="@+id/tvPhoneAux"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"

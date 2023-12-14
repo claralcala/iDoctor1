@@ -1,5 +1,6 @@
 package es.iescarrillo.idoctor1.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -17,6 +23,7 @@ import java.util.ArrayList;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Professional;
+import es.iescarrillo.idoctor1.services.PatientService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
 public class RegisterProfessional extends AppCompatActivity {
@@ -31,6 +38,9 @@ public class RegisterProfessional extends AppCompatActivity {
     Professional prof;
 
     String profSpeciality;
+
+    PatientService patService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,8 @@ public class RegisterProfessional extends AppCompatActivity {
         specialities.add("fisioterapia");
         specialities.add("odontologia");
 
+        patService= new PatientService(getApplicationContext());
+
         ArrayAdapter sAdapter= new ArrayAdapter(RegisterProfessional.this, android.R.layout.simple_spinner_dropdown_item, specialities);
         spSpeciality.setAdapter(sAdapter);
 
@@ -73,22 +85,32 @@ public class RegisterProfessional extends AppCompatActivity {
         profService = new ProfessionalService(getApplicationContext());
         prof = new Professional();
 
+
         btnSave.setOnClickListener(v -> {
 
-            prof.setName(etName.getText().toString());
-            prof.setSurname(etSurname.getText().toString());
-            prof.setCollegiateNumber((etCollegiate.getText().toString()));
-            prof.setDescription(etDescription.getText().toString());
-            prof.setSpeciality(profSpeciality);
-            prof.setUsername(etUsername.getText().toString());
-            prof.setRole("PROFESSIONAL");
-            String encryptPassword = BCrypt.hashpw(etPassword.getText().toString(), BCrypt.gensalt(5));
-            prof.setPassword(encryptPassword);
+            String username=etUsername.getText().toString();
 
-            profService.insertProfessional(prof);
+            profService.getProfessionalByUsername(username, new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            Intent intent = new Intent (this, MainActivity.class);
-            startActivity(intent);
+                    if (snapshot.exists()) {
+                        // El nombre de usuario ya está en uso por un profesional, muestra un Toast y no registres al profesional
+                        Toast.makeText(RegisterProfessional.this, "El nombre de usuario ya existe", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // El nombre de usuario no existe en profesionales, verifica en pacientes
+                        checkPatientUsername(username);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
         });
 
 
@@ -100,5 +122,46 @@ public class RegisterProfessional extends AppCompatActivity {
         });
 
 
+    }
+
+    private void checkPatientUsername(String username) {
+        // Verificar si el nombre de usuario ya existe en pacientes
+        patService.getPatientByUsername(username, new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot patSnapshot) {
+
+                if (patSnapshot.exists()) {
+                    // El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registres al profesional
+                    Toast.makeText(RegisterProfessional.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
+                } else {
+                    registerProfessional();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Manejo de cancelación si es necesario
+            }
+        });
+    }
+
+
+    private void registerProfessional() {
+        // El nombre de usuario no existe en pacientes ni en profesionales, permite el registro del profesional
+        prof.setName(etName.getText().toString());
+        prof.setSurname(etSurname.getText().toString());
+        prof.setCollegiateNumber((etCollegiate.getText().toString()));
+        prof.setDescription(etDescription.getText().toString());
+        prof.setSpeciality(profSpeciality);
+        prof.setUsername(etUsername.getText().toString());
+        prof.setRole("PROFESSIONAL");
+        String encryptPassword = BCrypt.hashpw(etPassword.getText().toString(), BCrypt.gensalt(5));
+        prof.setPassword(encryptPassword);
+
+        profService.insertProfessional(prof);
+
+        Toast.makeText(RegisterProfessional.this, "Registro correcto", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent (RegisterProfessional.this, MainActivity.class);
+        startActivity(intent);
     }
 }
