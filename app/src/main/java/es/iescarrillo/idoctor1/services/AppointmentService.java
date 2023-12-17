@@ -57,5 +57,9 @@ public class AppointmentService {
         query.addValueEventListener(listener);
     }
 
+    public void getAppointmentsByPatientID(String id, ValueEventListener listener){
+        Query query = database.orderByChild("patient_id").equalTo(id);
+        query.addValueEventListener(listener);
+    }
 
 }
