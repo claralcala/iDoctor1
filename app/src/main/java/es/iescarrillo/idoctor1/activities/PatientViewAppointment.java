@@ -46,11 +46,11 @@ public class PatientViewAppointment extends AppCompatActivity {
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
-//        if(!role.equals("PATIENT")){
-//            sharedPreferences.edit().clear().apply();
-//            Intent backMain = new Intent(this, PatientMainActivity.class);
-//            startActivity(backMain);
-//        }
+        if(!role.equals("PATIENT")){
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+        }
         DatabaseReference dbAppointmentPatient= FirebaseDatabase.getInstance().getReference().child("appointment");
         apService.getAppointmentsByPatientID(id_, new ValueEventListener() {
             @Override
