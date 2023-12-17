@@ -60,10 +60,9 @@ public class PatientAppointmentDetails extends AppCompatActivity {
                 for (DataSnapshot data:snapshot.getChildren()){
                     consultation = data.getValue(Consultation.class);
                     consultationAddress = consultation.getAddress();
-                    tvConsultationPatient.setText("Direccion" + consultationAddress);
                     break;
                 }
-                //tvConsultationPatient.setText("Direccion" + consultationAddress);
+                tvConsultationPatient.setText("Direccion" + consultationAddress);
             }
 
             @Override
