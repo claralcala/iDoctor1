@@ -60,9 +60,9 @@ public class PatientAppointmentDetails extends AppCompatActivity {
                 for (DataSnapshot data:snapshot.getChildren()){
                     consultation = data.getValue(Consultation.class);
                     consultationAddress = consultation.getAddress();
-                    break;
+                    tvConsultationPatient.setText("Direccion " + consultationAddress);
+
                 }
-                tvConsultationPatient.setText("Direccion" + consultationAddress);
             }
 
             @Override
@@ -70,8 +70,8 @@ public class PatientAppointmentDetails extends AppCompatActivity {
 
             }
         });
-        tvAppointmentDatePatient.setText("Fecha " +appointment.getAppointmentDate().toString());
-        tvAppointmentTimePatient.setText("Hora" + appointment.getAppointmentTime().toString());
+        tvAppointmentDatePatient.setText("Fecha  " +appointment.getAppointmentDate().toString());
+        tvAppointmentTimePatient.setText("Hora " + appointment.getAppointmentTime().toString());
 
     }
 }
