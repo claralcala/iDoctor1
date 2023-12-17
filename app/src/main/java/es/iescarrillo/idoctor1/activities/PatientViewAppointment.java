@@ -39,6 +39,7 @@ public class PatientViewAppointment extends AppCompatActivity {
         ArrayList <Appointment> appointmentsList=new ArrayList<Appointment>();
         apService = new AppointmentService(getApplicationContext());
         lvAppointment=findViewById(R.id.lvPatientAppointment);
+        btnBackPatientMain=findViewById(R.id.btnBackPatientMain);
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferenceDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
@@ -47,14 +48,14 @@ public class PatientViewAppointment extends AppCompatActivity {
         String id_ = sharedPreferences.getString("id", "");
 //        if(!role.equals("PATIENT")){
 //            sharedPreferences.edit().clear().apply();
-//            Intent backMain = new Intent(this, MainActivity.class);
+//            Intent backMain = new Intent(this, PatientMainActivity.class);
 //            startActivity(backMain);
 //        }
         DatabaseReference dbAppointmentPatient= FirebaseDatabase.getInstance().getReference().child("appointment");
         apService.getAppointmentsByPatientID(id_, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                //appointmentsList.clear();
+                appointmentsList.clear();
                 for (DataSnapshot data:datasnapshot.getChildren()){
                     appointment=data.getValue(Appointment.class);
                     appointmentsList.add(appointment);
@@ -79,7 +80,6 @@ public class PatientViewAppointment extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnBackPatientMain=findViewById(R.id.btnBackPatientMain);
         btnBackPatientMain.setOnClickListener(v -> {
             Intent intent=new Intent(this, PatientMainActivity.class);
             startActivity(intent);

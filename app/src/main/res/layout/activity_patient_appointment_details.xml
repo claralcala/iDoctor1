@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PatientAppointmentDetails">
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvTitleDetailAppointment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detalles cita paciente" />
+
+        <TextView
+            android:id="@+id/tvAppointmentDatePatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="fecha" />
+
+        <TextView
+            android:id="@+id/tvAppointmentTimePatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hora" />
+
+        <TextView
+            android:id="@+id/tvProfessionalPatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="profesional" />
+
+        <Button
+            android:id="@+id/btnCancelAppointmentPatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar cita" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
