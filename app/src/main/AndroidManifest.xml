@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IDoctor1"
         tools:targetApi="31">
-
+        <activity
+            android:name=".activities.PatientViewAppointment"
+            android:exported="false" />
         <activity
             android:name=".activities.PatientMainActivity"
             android:exported="false" />
@@ -67,7 +69,6 @@
         <activity
             android:name=".activities.RegisterProfessional"
             android:exported="false" />
-
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false" />
