@@ -26,9 +26,8 @@ public class PatientMainActivity extends AppCompatActivity {
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
-//
-//
-//        }
+
+        }
             Button btnPatientAppointment = findViewById(R.id.btnPatientAppointment);
             btnPatientAppointment.setOnClickListener(v -> {
                 Intent intent = new Intent(this, PatientViewAppointment.class);
@@ -38,4 +37,3 @@ public class PatientMainActivity extends AppCompatActivity {
 
         }
     }
-}

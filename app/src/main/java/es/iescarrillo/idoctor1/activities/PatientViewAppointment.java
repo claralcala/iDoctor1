@@ -24,12 +24,14 @@ import java.util.ArrayList;
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.adapters.AppointmentAdapter;
 import es.iescarrillo.idoctor1.models.Appointment;
+import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 
 public class PatientViewAppointment extends AppCompatActivity {
     ListView lvAppointment;
     Button btnBackPatientMain;
     Appointment appointment;
+    AppointmentString appointmentString;
     AppointmentAdapter apAdapter;
     AppointmentService apService;
     @Override
@@ -41,7 +43,7 @@ public class PatientViewAppointment extends AppCompatActivity {
         lvAppointment=findViewById(R.id.lvPatientAppointment);
         btnBackPatientMain=findViewById(R.id.btnBackPatientMain);
         //Variables de sesión
-        SharedPreferences sharedPreferences= getSharedPreferences("PreferenceDoctor", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
@@ -57,10 +59,10 @@ public class PatientViewAppointment extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 appointmentsList.clear();
                 for (DataSnapshot data:datasnapshot.getChildren()){
-                    appointment=data.getValue(Appointment.class);
+                    appointmentString=data.getValue(AppointmentString.class);
+                    appointment=appointmentString.convertToAppointment();
                     appointmentsList.add(appointment);
                 }
-                Log.d("PatientViewAppointment", "Appointments count: " + appointmentsList.size());
 
                 apAdapter=new AppointmentAdapter(getApplicationContext(),appointmentsList);
                 lvAppointment.setAdapter(apAdapter);
@@ -68,13 +70,11 @@ public class PatientViewAppointment extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("PatientViewAppointment", "Error getting appointments: " + error.getMessage());
 
             }
         });
         lvAppointment.setOnItemClickListener((parent, view, position, id) -> {
             appointment=(Appointment) parent.getItemAtPosition(position);
-            Log.d("PatientViewAppointment", "Selected appointment: " + appointment.getId());
             Intent intent=new Intent(this, PatientAppointmentDetails.class);
             intent.putExtra("appointment",appointment);
             startActivity(intent);
