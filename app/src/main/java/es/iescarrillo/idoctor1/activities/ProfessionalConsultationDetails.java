@@ -18,7 +18,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
 
     TextView tvAddress, tvCity, tvEmail, tvPhone, tvPhoneAux;
 
-    Button btnEdit, btnDelete, btnViewTimetable, btnViewAppointments, btnBack;
+    Button btnEdit, btnDelete, btnViewTimetable, btnViewAppointments, btnBack, btnGenerateAppointments;
 
 
     Consultation cons;
@@ -59,6 +59,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         btnDelete=findViewById(R.id.btnDelete);
         btnViewAppointments=findViewById(R.id.btnViewAppointments);
         btnViewTimetable=findViewById(R.id.btnViewTimetable);
+        btnGenerateAppointments=findViewById(R.id.btnGenerateAppointments);
 
         btnEdit=findViewById(R.id.btnEdit);
 
@@ -81,6 +82,12 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent(this, ProfessionalViewConsultations.class);
             startActivity(back);
+        });
+
+
+        btnGenerateAppointments.setOnClickListener(v -> {
+            //Añadir el intent de la pantalla de generar appointments
+            //Recordar llevarse la consulta en el intent
         });
 
         btnViewAppointments.setOnClickListener(v -> {
