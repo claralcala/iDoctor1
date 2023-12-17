@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -36,6 +37,8 @@ public class PatientViewAppointment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_view_appointment);
         ArrayList <Appointment> appointmentsList=new ArrayList<Appointment>();
+        apService = new AppointmentService(getApplicationContext());
+        lvAppointment=findViewById(R.id.lvPatientAppointment);
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferenceDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
@@ -51,29 +54,33 @@ public class PatientViewAppointment extends AppCompatActivity {
         apService.getAppointmentsByPatientID(id_, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                appointmentsList.clear();
+                //appointmentsList.clear();
                 for (DataSnapshot data:datasnapshot.getChildren()){
                     appointment=data.getValue(Appointment.class);
                     appointmentsList.add(appointment);
                 }
+                Log.d("PatientViewAppointment", "Appointments count: " + appointmentsList.size());
+
                 apAdapter=new AppointmentAdapter(getApplicationContext(),appointmentsList);
                 lvAppointment.setAdapter(apAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("PatientViewAppointment", "Error getting appointments: " + error.getMessage());
 
             }
         });
         lvAppointment.setOnItemClickListener((parent, view, position, id) -> {
             appointment=(Appointment) parent.getItemAtPosition(position);
+            Log.d("PatientViewAppointment", "Selected appointment: " + appointment.getId());
             Intent intent=new Intent(this, PatientAppointmentDetails.class);
             intent.putExtra("appointment",appointment);
             startActivity(intent);
         });
 
-        Button btnBackPatient=findViewById(R.id.btnBackPatientMain);
-        btnBackPatient.setOnClickListener(v -> {
+        btnBackPatientMain=findViewById(R.id.btnBackPatientMain);
+        btnBackPatientMain.setOnClickListener(v -> {
             Intent intent=new Intent(this, PatientMainActivity.class);
             startActivity(intent);
         });
