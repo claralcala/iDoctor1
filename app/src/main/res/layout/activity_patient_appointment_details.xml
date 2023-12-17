@@ -39,10 +39,10 @@
             android:text="hora" />
 
         <TextView
-            android:id="@+id/tvProfessionalPatient"
+            android:id="@+id/tvConsultationPatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="profesional" />
+            android:text="Consulta" />
 
         <Button
             android:id="@+id/btnCancelAppointmentPatient"
