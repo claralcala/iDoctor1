@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Patient_Main_Activity">
+    tools:context=".activities.Patient_View_Profile">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout4"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -21,42 +21,56 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvPatient"
+            android:id="@+id/tvProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Perfil"
+            android:textAlignment="center"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/tvDni"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="100dp"
-            android:text="Bienvenido paciente" />
+            android:textSize="20dp"
+            android:text="dni" />
 
-        <Button
-            android:id="@+id/btnViewProfile"
+        <TextView
+            android:id="@+id/tvEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="Ver perfil" />
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:text="email" />
 
-        <Button
-            android:id="@+id/btnViewProfesionals"
+        <TextView
+            android:id="@+id/tvPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Ver profesionales" />
-
-        <Button
-            android:id="@+id/btnViewCites"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:text="Numero" />
+        <CheckBox
+            android:id="@+id/cbHealthInsurance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Ver citas" />
+            android:enabled="false"
+            android:text="Activa" />
 
         <Button
-            android:id="@+id/btnLogout"
+            android:id="@+id/btnEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
-            android:text="Cerrar sesión" />
+            android:text="Editar" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver" />
+
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
