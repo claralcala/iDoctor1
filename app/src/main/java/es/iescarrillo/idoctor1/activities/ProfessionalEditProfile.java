@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +33,7 @@ import com.google.firebase.storage.UploadTask;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,7 +47,9 @@ public class ProfessionalEditProfile extends AppCompatActivity {
     ImageView ivPhoto;
 
 
-    Button btnSave, btnCancel, btnPhoto, btnDeletePhoto;
+
+
+    Button btnSave, btnCancel;
 
     StorageReference storageReference;
 
@@ -51,6 +59,9 @@ public class ProfessionalEditProfile extends AppCompatActivity {
 
     private Uri image_url;
     String photo ="photo";
+
+
+    private String url;
 
     String idd;
 
@@ -74,12 +85,12 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         etDescription=findViewById(R.id.etProfDescription);
         etPassword=findViewById(R.id.etProfPassword);
 
+        ivPhoto=findViewById(R.id.prof_photo);
         spSpeciality=findViewById(R.id.spnSpeciality);
 
-        storageReference= FirebaseStorage.getInstance().getReference();
+        storageReference= FirebaseStorage.getInstance().getReference().child("photo/");
 
-        btnPhoto=findViewById(R.id.btn_photo);
-        btnDeletePhoto=findViewById(R.id.btn_remove_photo);
+
 
 
 
@@ -138,9 +149,15 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         etCollegiate.setText(prof.getCollegiateNumber());
         etDescription.setText(prof.getDescription());
 
+        if (prof.getPhoto() != null && !prof.getPhoto().isEmpty()) {
+            Picasso.get().load(prof.getPhoto()).into(ivPhoto);
+        } else {
+            Picasso.get().load("https://img.freepik.com/vector-gratis/fondo-personaje-doctor_1270-84.jpg?w=740&t=st=1702906621~exp=1702907221~hmac=ab4e750f9abbc3639d96cc11482c3e2d4e2884af78c387638bd8b2c6c2ade362").into(ivPhoto);
+        }
 
 
-        btnPhoto.setOnClickListener(new View.OnClickListener() {
+
+        ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadPhoto();
@@ -164,6 +181,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
             }
 
                 profService.updateProfessional(prof);
+                uploadImage(prof.getId());
 
 
 
@@ -193,36 +211,50 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         if (resultCode == RESULT_OK){
             if(requestCode==COD_SEL_IMAGE){
                 image_url=data.getData();
+                ivPhoto.setImageURI(image_url);
+
             }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void upPhoto(Uri image_url){
-        String rute_storage_photo = storage_path + "" + photo+ "" + prof.getId() + ""+ idd;
-        StorageReference reference = storageReference.child(rute_storage_photo);
-        reference.putFile(image_url).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+
+    // Método para obtener la URI de la imagen de un ImageView
+    private Uri getImageUri(Context context, ImageView imageView, String name) {
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, name, null);
+        return Uri.parse(path);
+    }
+
+    private void uploadImage(String idProf){
+        Uri file = getImageUri(this, ivPhoto, idProf);
+        StorageReference storageRefProfessional = storageReference.child(idProf);
+        storageRefProfessional.putFile(file).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isSuccessful());
-                if (uriTask.isSuccessful()){
+                while (!uriTask.isSuccessful()) ;
+                if (uriTask.isSuccessful()) {
                     uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            String download_uri = uri.toString();
-                            HashMap<String, Object> map = new HashMap<>();
-                            map.put("photo", download_uri);
+                            url= uri.toString();
 
+                           prof.setPhoto(url);
+                           profService.updateProfessional(prof);
                         }
                     });
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ProfessionalEditProfile.this, "Error al cargar foto", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Guardando profesional", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -46,33 +46,11 @@
                     android:id="@+id/prof_photo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:clickable="true"
                     app:srcCompat="@android:drawable/sym_def_app_icon" />
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Foto" />
-
-                <Space
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/btn_remove_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#F82828"
-                    android:text="Borrar" />
-
-            </LinearLayout>
         </LinearLayout>
 
         <EditText
