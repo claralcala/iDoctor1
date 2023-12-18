@@ -47,11 +47,11 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
 
     CheckBox cbActive;
 
-    Spinner spPatient;
+
 
     Button btnAdd, btnBack;
 
-    List<Patient> patients;
+
 
     String patientId;
 
@@ -83,7 +83,7 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
         etDate=findViewById(R.id.etDate);
         etHour=findViewById(R.id.etTime);
         cbActive=findViewById(R.id.checkBoxActive);
-        spPatient=findViewById(R.id.spPatient);
+
 
         btnAdd=findViewById(R.id.btnSaveAppo);
         btnBack=findViewById(R.id.btnCancel);
@@ -93,55 +93,6 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
         Intent intent = getIntent();
         consultationID=intent.getStringExtra("consultation_id");
 
-        patients = new ArrayList<>();
-
-
-        DatabaseReference dbPatients = FirebaseDatabase.getInstance().getReference().child("patient");
-
-
-        dbPatients.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                patients.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Convierte cada nodo de la base de datos a un objeto
-                    Patient p = snapshot.getValue(Patient.class);
-                    patients.add(p);
-                }
-
-                //Creamos otro arraylist para meter los nombres de usuario
-                ArrayList<String>patientUsername= new ArrayList<String>();
-                for (Patient pa : patients){
-                    String tName=pa.getUsername();
-                    patientUsername.add(tName);
-                }
-
-                //Adaptador para el spinner
-                ArrayAdapter tAdapter = new ArrayAdapter(ProfessionalAddAppointment.this, android.R.layout.simple_spinner_dropdown_item, patientUsername);
-                spPatient.setAdapter(tAdapter);
-
-                //Cuando seleccionamos un item
-                spPatient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        //Metemos el id del profesor en la variable que hemos creado
-                        patientId= patients.get(position).getId();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
@@ -152,7 +103,7 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
             app = new Appointment();
 
             app.setConsultation_id(consultationID);
-            app.setPatient_id(patientId);
+
             app.setAppointmentDate(LocalDate.parse(etDate.getText().toString(), formatter));
             app.setAppointmentTime(LocalTime.parse(etHour.getText().toString(), formatterHour));
             if (cbActive.isChecked()){

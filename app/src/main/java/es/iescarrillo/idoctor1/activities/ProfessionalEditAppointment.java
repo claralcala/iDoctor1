@@ -52,11 +52,11 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
 
     CheckBox cbActive;
 
-    Spinner spPatient;
+
 
     Button btnSave, btnBack;
 
-    List<Patient> patients;
+
 
     String patientId;
 
@@ -95,7 +95,7 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
         etDate=findViewById(R.id.etDate);
         etHour=findViewById(R.id.etTime);
         cbActive=findViewById(R.id.checkBoxActive);
-        spPatient=findViewById(R.id.spPatient);
+
 
         btnSave=findViewById(R.id.btnSaveAppo);
         btnBack=findViewById(R.id.btnCancel);
@@ -103,55 +103,7 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
         appService = new AppointmentService(getApplicationContext());
 
 
-        patients = new ArrayList<>();
 
-
-        DatabaseReference dbPatients = FirebaseDatabase.getInstance().getReference().child("patient");
-
-
-        dbPatients.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                patients.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Convierte cada nodo de la base de datos a un objeto
-                    Patient p = snapshot.getValue(Patient.class);
-                    patients.add(p);
-                }
-
-                //Creamos otro arraylist para meter los nombres de usuario
-                ArrayList<String>patientUsername= new ArrayList<String>();
-                for (Patient pa : patients){
-                    String tName=pa.getUsername();
-                    patientUsername.add(tName);
-                }
-
-                //Adaptador para el spinner
-                ArrayAdapter tAdapter = new ArrayAdapter(ProfessionalEditAppointment.this, android.R.layout.simple_spinner_dropdown_item, patientUsername);
-                spPatient.setAdapter(tAdapter);
-
-                //Cuando seleccionamos un item
-                spPatient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        //Metemos el id del profesor en la variable que hemos creado
-                        patientId= patients.get(position).getId();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         etDate.setText(app.getAppointmentDate().toString());
         etHour.setText(app.getAppointmentTime().toString());
@@ -161,7 +113,7 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
             cbActive.setChecked(false);
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH:mm");
 
         btnSave.setOnClickListener(v -> {

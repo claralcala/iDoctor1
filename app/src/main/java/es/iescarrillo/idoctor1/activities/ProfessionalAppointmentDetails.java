@@ -94,7 +94,12 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
 
                 }
 
-                tvPatient.setText("Paciente: " +patientUsername);
+                if (patientUsername==null){
+                    tvPatient.setText("Paciente: No asignado");
+                }else {
+                    tvPatient.setText("Paciente: " +patientUsername);
+                }
+
                 Log.d("ProfessionalViewAppointments", "Patient username: " + patientUsername);
 
 
