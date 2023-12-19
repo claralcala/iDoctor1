@@ -19,7 +19,7 @@
             android:name=".activities.PatientViewAppointment"
             android:exported="false" />
         <activity
-            android:name=".activities.PatientMainActivity"
+            android:name=".activities.Patient_Main_Activity"
             android:exported="false" />
         <activity
             android:name=".activities.ProfessionalAppointmentDetails"

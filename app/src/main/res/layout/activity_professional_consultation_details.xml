@@ -96,15 +96,17 @@
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="50dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnViewTimetable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF5722"
                 android:layout_weight="1"
                 android:text="Ver horario" />
 
@@ -112,14 +114,24 @@
                 android:id="@+id/btnViewAppointments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#364FF4"
                 android:layout_weight="1"
                 android:text="Ver citas" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnGenerateAppointments"
+            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Generar citas automáticamente" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#090808"
             android:text="Volver" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,6 +29,8 @@
             android:gravity="center"
             android:text="Registro de paciente" />
 
+
+
         <EditText
             android:id="@+id/etPatientName"
             android:layout_width="match_parent"
@@ -47,14 +49,7 @@
             android:hint="Apellidos"
             android:inputType="text" />
 
-        <EditText
-            android:id="@+id/etPatientPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:hint="Photo"
-            android:inputType="text" />
+
 
 
         <EditText
@@ -109,20 +104,16 @@
         <CheckBox
             android:id="@+id/checkBoxInsurance"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="¿Tiene seguro médico?" />
 
 
-        <TextView
-            android:id="@+id/tvError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="" />
+
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
             <Button
@@ -131,7 +122,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="80dp"
-                android:layout_marginTop="30dp"
                 android:text="Guardar" />
 
 
@@ -141,7 +131,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="30dp"
                 android:backgroundTint="#F44336"
                 android:text="Cancelar" />
 

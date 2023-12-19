@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         if ("PROFESSIONAL".equals(role)) {
             intent = new Intent(MainActivity.this, ProfessionalMainActivity.class);
         } else {
-            intent = new Intent(MainActivity.this, PatientMainActivity.class);
+            intent = new Intent(MainActivity.this, Patient_Main_Activity.class);
         }
         startActivity(intent);
     }

@@ -30,6 +30,9 @@
             android:gravity="center"
             android:text="Registro de profesional" />
 
+
+
+
         <EditText
             android:id="@+id/etProfName"
             android:layout_width="match_parent"
@@ -48,14 +51,6 @@
             android:hint="Apellidos"
             android:inputType="text" />
 
-        <EditText
-            android:id="@+id/etProfPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:hint="Photo"
-            android:inputType="text" />
 
 
         <EditText
@@ -108,17 +103,13 @@
         <Spinner
             android:id="@+id/spnSpeciality"
             android:layout_width="match_parent"
-            android:layout_height="72dp" />
+            android:layout_height="30dp" />
 
 
-        <TextView
-            android:id="@+id/tvError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
             <Button
