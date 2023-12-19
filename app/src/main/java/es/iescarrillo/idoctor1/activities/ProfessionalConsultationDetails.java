@@ -112,7 +112,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         });
 
         btnGenerateAppointments.setOnClickListener(v -> {
-            //Meter el intent hacia la pantalla de generar citas 
+            //Meter el intent hacia la pantalla de generar citas
         });
 
     }
