@@ -3,6 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_fondos">#fffbfe</color>
-    <color name="verde">#14D671</color>
-    <color name="rojo">#D52517</color>
+    <color name="verde">#029749</color>
+    <color name="rojo">#A61B10</color>
+    <color name="azul">#064DB8</color>
+    <color name="gris">#787872</color>
+
+
 </resources>

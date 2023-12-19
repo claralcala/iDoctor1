@@ -8,6 +8,7 @@ import java.time.LocalTime;
 @IgnoreExtraProperties
 public class Timetable implements Serializable {
 
+
     private String dayOfWeek;
 
     private LocalTime startTime;
@@ -15,6 +16,8 @@ public class Timetable implements Serializable {
     private LocalTime endTime;
 
     private String id;
+
+    private String consultation_id;
 
     public Timetable(){
 
@@ -50,5 +53,13 @@ public class Timetable implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getConsultation_id() {
+        return consultation_id;
+    }
+
+    public void setConsultation_id(String consultation_id) {
+        this.consultation_id = consultation_id;
     }
 }

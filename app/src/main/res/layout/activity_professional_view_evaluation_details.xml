@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ProfessionalAddEvaluation">
+    tools:context=".activities.ProfessionalViewEvaluationDetails">
 
     <LinearLayout
         android:layout_width="409dp"
@@ -12,24 +12,23 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        >
+        tools:layout_editor_absoluteY="1dp">
 
         <TextView
-            android:id="@+id/tvEvaluation"
+            android:id="@+id/tvEvaluationDetails"
             android:layout_width="match_parent"
             android:layout_height="94dp"
             android:layout_marginBottom="30dp"
             android:background="@color/azul"
             android:gravity="center"
-            android:text="Evaluation"
+            android:text="Evaluation Details"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="35dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/etDescription"
+        <TextView
+            android:id="@+id/tvDescriptionDetails"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="50dp"
@@ -42,8 +41,8 @@
 
             />
 
-        <EditText
-            android:id="@+id/etExploration"
+        <TextView
+            android:id="@+id/tvExplorationDetails"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="50dp"
@@ -58,8 +57,8 @@
 
             />
 
-        <EditText
-            android:id="@+id/etTreatment"
+        <TextView
+            android:id="@+id/tvTreatmentDetails"
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:layout_marginLeft="50dp"
@@ -74,61 +73,52 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:orientation="horizontal"
             android:layout_marginBottom="10dp"
-            >
+            android:orientation="horizontal">
 
 
             <Button
-                android:id="@+id/btnDate"
+                android:id="@+id/btnDateDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Fecha"
                 android:layout_marginLeft="10dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/azul"
-                />
+                android:text="Fecha" />
 
             <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tvDateDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="text"
-
-
-                />
+                android:inputType="text"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:orientation="horizontal"
             android:layout_marginBottom="40dp"
-            >
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnTime"
+                android:id="@+id/btnTimeDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Hora"
                 android:layout_marginLeft="10dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/azul"
-                />
+                android:text="Hora" />
 
             <TextView
-                android:id="@+id/tvTime"
+                android:id="@+id/tvTimeDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="text"
-                android:text=""
+                android:inputType="text"/>
 
-                />
         </LinearLayout>
 
         <LinearLayout
@@ -137,30 +127,40 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnCancel"
+                android:id="@+id/btnCancelDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cancelar"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/rojo"
+                android:text="Cancelar"
 
 
                 />
 
             <Button
-                android:id="@+id/btnSave"
+                android:id="@+id/btnSaveDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/verde"
+                android:text="Añadir" />
+
+            <Button
+                android:id="@+id/btnViewInform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Guardar"
+                android:text="Ver informes"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="@color/verde"
+                android:backgroundTint="@color/gris"
                 />
         </LinearLayout>
 
-
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
