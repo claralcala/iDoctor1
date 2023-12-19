@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.adapters.EvaluationAdapter;
+import es.iescarrillo.idoctor1.models.Appointment;
+import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Evaluation;
 import es.iescarrillo.idoctor1.services.EvaluationService;
 
@@ -36,6 +38,10 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
     Evaluation evaluation;
 
     EvaluationAdapter adapter;
+
+    Appointment appointment;
+
+    String appId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +67,17 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
 
         }
 
+        Intent  intent1 = getIntent();
+        appointment = new Appointment();
+        if (intent1 != null) {
+            appointment = (Appointment) intent1.getSerializableExtra("appointment");
+        }
+         appId = appointment.getId();
         evaluationService  = new EvaluationService(getApplicationContext());
 
         evaluationArrayList = new ArrayList<>();
 
-        evaluationService.getListEvaluation(id_, new ValueEventListener() {
+        evaluationService.getListEvaluation(appId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 evaluationArrayList.clear();

@@ -22,25 +22,25 @@ import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.services.PatientService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
-public class RegisterPatient extends AppCompatActivity {
+public class RegisterPatient extends AppCompatActivity{
 
-    Button btnSave, btnBack;
+        Button btnSave,btnBack;
 
-    EditText etName, etSurname, etUsername, etPassword, etDNI, etEmail, etPhone;
+        EditText etName,etSurname,etUsername,etPassword,etDNI,etEmail,etPhone;
 
-    CheckBox cbHealthInsurance;
+        CheckBox cbHealthInsurance;
 
-    PatientService pService;
+        PatientService pService;
 
-    ProfessionalService profService;
+        ProfessionalService profService;
 
-    Patient pat;
+        Patient pat;
 
-    TextView tvError;
+        TextView tvError;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+@Override
+protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_patient);
 
@@ -59,72 +59,72 @@ public class RegisterPatient extends AppCompatActivity {
 
         cbHealthInsurance=findViewById(R.id.checkBoxInsurance);
 
-        btnBack.setOnClickListener(v -> {
-            Intent back = new Intent(this, RegisterActivity.class);
-            startActivity(back);
+        btnBack.setOnClickListener(v->{
+        Intent back=new Intent(this,RegisterActivity.class);
+        startActivity(back);
         });
 
-        pService= new PatientService(getApplicationContext());
-        profService= new ProfessionalService(getApplicationContext());
+        pService=new PatientService(getApplicationContext());
+        profService=new ProfessionalService(getApplicationContext());
 
-        pat = new Patient();
+        pat=new Patient();
 
-        btnSave.setOnClickListener(v -> {
+        btnSave.setOnClickListener(v->{
 
-            String username = etUsername.getText().toString();
+        String username=etUsername.getText().toString();
 
-            pService.getPatientByUsername(username, new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        // El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registres al paciente
+        pService.getPatientByUsername(username,new ValueEventListener(){
+@Override
+public void onDataChange(@NonNull DataSnapshot snapshot){
+        if(snapshot.exists()){
+        // El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registres al paciente
 
-                        Toast.makeText(RegisterPatient.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
+        Toast.makeText(RegisterPatient.this,"El nombre de usuario ya está en uso",Toast.LENGTH_SHORT).show();
 
 
-                    } else {
-                        // El nombre de usuario no existe en pacientes, verifica en profesionales
-                        checkProfessionalUsername(username);
-                    }
-                }
+        }else{
+        // El nombre de usuario no existe en pacientes, verifica en profesionales
+        checkProfessionalUsername(username);
+        }
+        }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+@Override
+public void onCancelled(@NonNull DatabaseError error){
 
-                }
-            });
+        }
+        });
 
         });
 
-    }
+        }
 
-    private void checkProfessionalUsername(String username) {
+private void checkProfessionalUsername(String username){
         // Verificar si el nombre de usuario ya existe en profesionales
-        profService.getProfessionalByUsername(username, new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot profSnapshot) {
-                if (profSnapshot.exists()) {
+        profService.getProfessionalByUsername(username,new ValueEventListener(){
+@Override
+public void onDataChange(@NonNull DataSnapshot profSnapshot){
+        if(profSnapshot.exists()){
 
 
-                    // El nombre de usuario ya está en uso por un profesional, muestra un Toast y no registres al paciente
+        // El nombre de usuario ya está en uso por un profesional, muestra un Toast y no registres al paciente
 
-                    Toast.makeText(RegisterPatient.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
+        Toast.makeText(RegisterPatient.this,"El nombre de usuario ya está en uso",Toast.LENGTH_SHORT).show();
 
 
-                } else {
-                    // El nombre de usuario no existe en profesionales ni en pacientes, permite el registro del paciente
-                    registerPatient();
-                }
-            }
+        }else{
+        // El nombre de usuario no existe en profesionales ni en pacientes, permite el registro del paciente
+        registerPatient();
+        }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Manejo de cancelación si es necesario
-            }
+@Override
+public void onCancelled(@NonNull DatabaseError error){
+        // Manejo de cancelación si es necesario
+        }
         });
-    }
+        }
 
-    private void registerPatient() {
+private void registerPatient(){
         pat.setName(etName.getText().toString());
         pat.setSurname(etSurname.getText().toString());
         pat.setDni(etDNI.getText().toString());
@@ -132,25 +132,25 @@ public class RegisterPatient extends AppCompatActivity {
         pat.setPhone(etPhone.getText().toString());
 
         if(cbHealthInsurance.isChecked()){
-            pat.setHealthInsurance(true);
+        pat.setHealthInsurance(true);
         }else{
-            pat.setHealthInsurance(false);
+        pat.setHealthInsurance(false);
         }
         pat.setUsername(etUsername.getText().toString());
         pat.setRole("PATIENT");
-        String encryptPassword = BCrypt.hashpw(etPassword.getText().toString(), BCrypt.gensalt(5));
+        String encryptPassword=BCrypt.hashpw(etPassword.getText().toString(),BCrypt.gensalt(5));
         pat.setPassword(encryptPassword);
 
 
         pService.insertPatient(pat);
 
 
+        Toast.makeText(RegisterPatient.this,"Registro correcto",Toast.LENGTH_SHORT).show();
 
-       Toast.makeText(RegisterPatient.this, "Registro correcto", Toast.LENGTH_SHORT).show();
 
-
-        Intent intent = new Intent (this, MainActivity.class);
+        Intent intent=new Intent(this,MainActivity.class);
         startActivity(intent);
 
-    }
-}
+        }
+
+        }

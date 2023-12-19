@@ -86,4 +86,3 @@ public class TimetableString implements Serializable {
         return timetable;
     }
 }
-

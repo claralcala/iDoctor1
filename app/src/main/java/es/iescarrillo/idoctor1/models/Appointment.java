@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @IgnoreExtraProperties
 public class Appointment implements Serializable {
@@ -72,5 +73,20 @@ public class Appointment implements Serializable {
 
     public void setConsultation_id(String consultation_id) {
         this.consultation_id = consultation_id;
+    }
+
+    public AppointmentString convertToAppointmentString() {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        AppointmentString appointmentString = new AppointmentString();
+        appointmentString.setAppointmentDate(this.appointmentDate.format(dateFormatter));
+        appointmentString.setAppointmentTime(this.appointmentTime.format(timeFormatter));
+        appointmentString.setActive(this.active);
+        appointmentString.setId(this.id);
+        appointmentString.setPatient_id(this.patient_id);
+        appointmentString.setConsultation_id(this.consultation_id);
+
+        return appointmentString;
     }
 }

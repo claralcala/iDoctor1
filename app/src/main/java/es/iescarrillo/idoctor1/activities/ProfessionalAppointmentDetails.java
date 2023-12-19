@@ -3,6 +3,7 @@ package es.iescarrillo.idoctor1.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,6 +40,7 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
 
     String patientId;
     Patient p;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +130,12 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
         });
 
         btnEval.setOnClickListener(v -> {
-            //Poner intent y llevarse el objeto appointment tambien
+
+            Intent intent1 = new Intent(this, ProfessionalViewEvaluation.class);
+
+            intent1.putExtra("appointment", app);
+
+            startActivity(intent1);
         });
 
         btnBack.setOnClickListener(v -> {

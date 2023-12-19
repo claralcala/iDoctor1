@@ -44,8 +44,8 @@ public class EvaluationService {
         database.child(evaluation.getId()).removeValue();
     }
 
-    public void getListEvaluation(String evaluationValue, ValueEventListener listener) {
-        Query query = database.child("evaluations").orderByChild("evaluation").equalTo(evaluationValue);
+    public void getListEvaluation(String Id , ValueEventListener listener) {
+        Query query = database.orderByChild("appoitment_id").equalTo(Id);
         query.addValueEventListener(listener);
     }
 

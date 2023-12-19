@@ -2,6 +2,7 @@ package es.iescarrillo.idoctor1.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -36,6 +37,7 @@ public class ProfessionalAddEvaluation extends AppCompatActivity {
 
     Evaluation evaluation;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

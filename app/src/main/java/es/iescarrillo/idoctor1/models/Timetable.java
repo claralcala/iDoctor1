@@ -4,6 +4,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @IgnoreExtraProperties
 public class Timetable implements Serializable {
@@ -61,5 +62,20 @@ public class Timetable implements Serializable {
 
     public void setConsultation_id(String consultation_id) {
         this.consultation_id = consultation_id;
+    }
+
+    public TimetableString convertToTimetableString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        TimetableString timetableString = new TimetableString();
+        timetableString.setDayOfWeek(this.dayOfWeek);
+        timetableString.setId(this.id);
+        timetableString.setConsultation_id(this.consultation_id);
+
+        //Convertimos LocalTime a String
+        timetableString.setStartTime(this.startTime.format(formatter));
+        timetableString.setEndTime(this.endTime.format(formatter));
+
+        return timetableString;
     }
 }
