@@ -46,6 +46,11 @@ public class PatientService {
 
     public void getPatientByUsername(String username, ValueEventListener listener){
         Query query= database.orderByChild("username").equalTo(username);
-        query.addValueEventListener(listener);
+        query.addListenerForSingleValueEvent(listener);
+    }
+
+    public void getPatientByID(String id, ValueEventListener listener){
+        Query query = database.orderByChild("id").equalTo(id);
+        query.addListenerForSingleValueEvent(listener);
     }
 }

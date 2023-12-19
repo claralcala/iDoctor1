@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +36,8 @@ public class RegisterPatient extends AppCompatActivity {
 
     Patient pat;
 
+    TextView tvError;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class RegisterPatient extends AppCompatActivity {
         etDNI=findViewById(R.id.etDNI);
         etEmail=findViewById(R.id.etPatientMail);
         etPhone=findViewById(R.id.etTelephone);
+
+        tvError=findViewById(R.id.tvError);
 
         cbHealthInsurance=findViewById(R.id.checkBoxInsurance);
 
@@ -73,7 +78,10 @@ public class RegisterPatient extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         // El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registres al paciente
+
                         Toast.makeText(RegisterPatient.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
+
+
                     } else {
                         // El nombre de usuario no existe en pacientes, verifica en profesionales
                         checkProfessionalUsername(username);
@@ -96,8 +104,13 @@ public class RegisterPatient extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot profSnapshot) {
                 if (profSnapshot.exists()) {
+
+
                     // El nombre de usuario ya está en uso por un profesional, muestra un Toast y no registres al paciente
+
                     Toast.makeText(RegisterPatient.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
+
+
                 } else {
                     // El nombre de usuario no existe en profesionales ni en pacientes, permite el registro del paciente
                     registerPatient();
@@ -131,9 +144,13 @@ public class RegisterPatient extends AppCompatActivity {
 
         pService.insertPatient(pat);
 
+
+
        Toast.makeText(RegisterPatient.this, "Registro correcto", Toast.LENGTH_SHORT).show();
+
 
         Intent intent = new Intent (this, MainActivity.class);
         startActivity(intent);
+
     }
 }

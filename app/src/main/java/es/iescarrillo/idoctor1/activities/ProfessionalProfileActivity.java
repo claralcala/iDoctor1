@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Patient;
@@ -28,6 +30,8 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
     Professional prof;
 
     String name, surname;
+
+    ImageView ivPhoto;
     TextView tvName, tvSurname, tvUsername, tvCollegiate, tvSpeciality, tvDescription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
         tvCollegiate=findViewById(R.id.tvprofCollegiate);
         tvSpeciality=findViewById(R.id.tvProfSpeciality);
         tvDescription=findViewById(R.id.tvProfDescription);
+        ivPhoto=findViewById(R.id.prof_photo);
 
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
@@ -47,6 +52,15 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
+
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
 
         btnEdit=findViewById(R.id.btnEdit);
         btnBack=findViewById(R.id.btnBack);
@@ -67,6 +81,12 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
                     tvDescription.setText("Descripción: " +prof.getDescription());
                     tvSpeciality.setText("Especialidad: " +prof.getSpeciality());
                     tvUsername.setText("Nom. usuario: " +prof.getUsername());
+
+                    if (prof.getPhoto() != null && !prof.getPhoto().isEmpty()) {
+                        Picasso.get().load(prof.getPhoto()).into(ivPhoto);
+                    } else {
+                        Picasso.get().load("https://img.freepik.com/vector-gratis/fondo-personaje-doctor_1270-84.jpg?w=740&t=st=1702906621~exp=1702907221~hmac=ab4e750f9abbc3639d96cc11482c3e2d4e2884af78c387638bd8b2c6c2ade362").into(ivPhoto);
+                    }
 
                 }
             }

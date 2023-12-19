@@ -1,21 +1,41 @@
 package es.iescarrillo.idoctor1.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Professional;
@@ -24,9 +44,28 @@ import es.iescarrillo.idoctor1.services.ProfessionalService;
 public class ProfessionalEditProfile extends AppCompatActivity {
 
 
+    ImageView ivPhoto;
+
+
+
+
     Button btnSave, btnCancel;
 
-    EditText etName, etSurname, etCollegiate, etDescription, etUsername, etPassword;
+    StorageReference storageReference;
+
+    String storage_path="photo/*";
+
+    private static final int COD_SEL_IMAGE =300;
+
+    private Uri image_url;
+    String photo ="photo";
+
+
+    private String url;
+
+    String idd;
+
+    EditText etName, etSurname, etCollegiate, etDescription, etPassword;
     Spinner spSpeciality;
     ProfessionalService profService;
     Professional prof;
@@ -44,10 +83,16 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         etSurname=findViewById(R.id.etProfSurname);
         etCollegiate=findViewById(R.id.etCollegiate);
         etDescription=findViewById(R.id.etProfDescription);
-        etUsername=findViewById(R.id.etProfUserName);
         etPassword=findViewById(R.id.etProfPassword);
 
+        ivPhoto=findViewById(R.id.prof_photo);
         spSpeciality=findViewById(R.id.spnSpeciality);
+
+        storageReference= FirebaseStorage.getInstance().getReference().child("photo/");
+
+
+
+
 
         Intent intent = getIntent();
 
@@ -57,6 +102,15 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
+
+        if(!role.equals("PROFESSIONAL")){
+
+
+            sharedPreferences.edit().clear().apply();
+            Intent backMain = new Intent(this, MainActivity.class);
+            startActivity(backMain);
+
+        }
 
 
         profService=new ProfessionalService(getApplicationContext());
@@ -94,22 +148,42 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         etSurname.setText(prof.getSurname());
         etCollegiate.setText(prof.getCollegiateNumber());
         etDescription.setText(prof.getDescription());
-        etUsername.setText(prof.getUsername());
+
+        if (prof.getPhoto() != null && !prof.getPhoto().isEmpty()) {
+            Picasso.get().load(prof.getPhoto()).into(ivPhoto);
+        } else {
+            Picasso.get().load("https://img.freepik.com/vector-gratis/fondo-personaje-doctor_1270-84.jpg?w=740&t=st=1702906621~exp=1702907221~hmac=ab4e750f9abbc3639d96cc11482c3e2d4e2884af78c387638bd8b2c6c2ade362").into(ivPhoto);
+        }
 
 
+
+        ivPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadPhoto();
+
+            }
+        });
 
         btnSave.setOnClickListener(v -> {
             prof.setName(etName.getText().toString());
             prof.setSurname(etSurname.getText().toString());
             prof.setCollegiateNumber(etCollegiate.getText().toString());
             prof.setSpeciality(profSpeciality);
-            prof.setUsername(etUsername.getText().toString());
+
             prof.setDescription(etDescription.getText().toString());
+            if (!TextUtils.isEmpty(etPassword.getText().toString())) {
+                String encryptPassword = BCrypt.hashpw(etPassword.getText().toString(), BCrypt.gensalt(5));
+                prof.setPassword(encryptPassword);
+            } else {
+                Toast.makeText(this, "La contraseña no puede estar vacia", Toast.LENGTH_SHORT).show();
+                return; // Detener la ejecución del método si el campo de fecha de nacimiento está vacío
+            }
 
-            String encryptPassword = BCrypt.hashpw(etPassword.getText().toString(), BCrypt.gensalt(5));
-            prof.setPassword(encryptPassword);
+                profService.updateProfessional(prof);
+                uploadImage(prof.getId());
 
-            profService.updateProfessional(prof);
+
 
             Intent back = new Intent (this, ProfessionalProfileActivity.class);
             startActivity(back);
@@ -123,5 +197,65 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         });
 
 
+    }
+
+    private void uploadPhoto(){
+        Intent i = new Intent(Intent.ACTION_PICK);
+        i.setType("image/*");
+        startActivityForResult(i, COD_SEL_IMAGE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK){
+            if(requestCode==COD_SEL_IMAGE){
+                image_url=data.getData();
+                ivPhoto.setImageURI(image_url);
+
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+
+    // Método para obtener la URI de la imagen de un ImageView
+    private Uri getImageUri(Context context, ImageView imageView, String name) {
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, name, null);
+        return Uri.parse(path);
+    }
+
+    private void uploadImage(String idProf){
+        Uri file = getImageUri(this, ivPhoto, idProf);
+        StorageReference storageRefProfessional = storageReference.child(idProf);
+        storageRefProfessional.putFile(file).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                while (!uriTask.isSuccessful()) ;
+                if (uriTask.isSuccessful()) {
+                    uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            url= uri.toString();
+
+                           prof.setPhoto(url);
+                           profService.updateProfessional(prof);
+                        }
+                    });
+                }
+                Toast.makeText(getApplicationContext(), "Guardando profesional", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

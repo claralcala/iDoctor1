@@ -51,6 +51,6 @@ public class ProfessionalService {
 
     public void getProfessionalByID(String id, ValueEventListener listener){
         Query query = database.orderByChild("id").equalTo(id);
-        query.addValueEventListener(listener);
+        query.addListenerForSingleValueEvent(listener);
     }
 }

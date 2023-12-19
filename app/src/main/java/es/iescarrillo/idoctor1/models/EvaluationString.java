@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @IgnoreExtraProperties
-public class Evaluation implements Serializable {
-
+public class EvaluationString implements Serializable {
 
     private String id;
 
@@ -17,11 +16,11 @@ public class Evaluation implements Serializable {
 
     private String treatment;
 
-    private LocalDateTime evaluationDateTime;
+    private String evaluationDateTime;
 
     private String appointment_id;
 
-    public Evaluation(){
+    public EvaluationString(){
 
     }
 
@@ -49,11 +48,11 @@ public class Evaluation implements Serializable {
         this.treatment = treatment;
     }
 
-    public LocalDateTime getEvaluationDateTime() {
+    public String getEvaluationDateTime() {
         return evaluationDateTime;
     }
 
-    public void setEvaluationDateTime(LocalDateTime evaluationDateTime) {
+    public void setEvaluationDateTime(String evaluationDateTime) {
         this.evaluationDateTime = evaluationDateTime;
     }
 
@@ -73,18 +72,19 @@ public class Evaluation implements Serializable {
         this.id = id;
     }
 
+    public Evaluation convertToEvaluation() {
 
-    public EvaluationString convertToEvaluationString() {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        EvaluationString evaluationString = new EvaluationString();
-        evaluationString.setId(this.id);
-        evaluationString.setDescription(this.description);
-        evaluationString.setExploration(this.exploration);
-        evaluationString.setTreatment(this.treatment);
-        evaluationString.setEvaluationDateTime(this.evaluationDateTime.format(formatter));
-        evaluationString.setAppointment_id(this.appointment_id);
 
-        return evaluationString;
+        Evaluation evaluation = new Evaluation();
+        evaluation.setId(this.id);
+        evaluation.setDescription(this.description);
+        evaluation.setExploration(this.exploration);
+        evaluation.setTreatment(this.treatment);
+        evaluation.setEvaluationDateTime(LocalDateTime.parse(this.evaluationDateTime, formatter));
+        evaluation.setAppointment_id(this.appointment_id);
+
+        return evaluation;
     }
 }
