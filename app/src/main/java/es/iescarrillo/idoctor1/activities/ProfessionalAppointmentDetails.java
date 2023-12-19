@@ -96,11 +96,6 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
 
                 }
 
-                if (patientUsername==null){
-                    tvPatient.setText("Paciente: No asignado");
-                }else {
-                    tvPatient.setText("Paciente: " +patientUsername);
-                }
 
                 Log.d("ProfessionalViewAppointments", "Patient username: " + patientUsername);
 
@@ -112,6 +107,12 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
 
             }
         });
+
+        if (patientUsername==null){
+            tvPatient.setText("Paciente: No asignado");
+        }else {
+            tvPatient.setText("Paciente: " +patientUsername);
+        }
 
         tvDate.setText("Fecha: "+app.getAppointmentDate().toString());
         tvHour.setText("Hora: " +app.getAppointmentTime().toString());

@@ -57,8 +57,7 @@ public class ProfessionalMainActivity extends AppCompatActivity {
         });
 
         btnViewVal.setOnClickListener(v -> {
-            Intent evaluation = new Intent (this, ProfessionalViewEvaluation.class);
-            startActivity(evaluation);
+
         });
 
 

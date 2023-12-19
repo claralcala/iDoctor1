@@ -23,6 +23,7 @@ import es.iescarrillo.idoctor1.adapters.EvaluationAdapter;
 import es.iescarrillo.idoctor1.models.Appointment;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Evaluation;
+import es.iescarrillo.idoctor1.models.EvaluationString;
 import es.iescarrillo.idoctor1.services.EvaluationService;
 
 public class ProfessionalViewEvaluation extends AppCompatActivity {
@@ -40,6 +41,8 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
     EvaluationAdapter adapter;
 
     Appointment appointment;
+
+    EvaluationString evString;
 
     String appId;
 
@@ -82,8 +85,9 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 evaluationArrayList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    evaluation = snapshot.getValue(Evaluation.class);
+                    evString = snapshot.getValue(EvaluationString.class);
 
+                   evaluation = evString.convertToEvaluation();
                     evaluationArrayList.add(evaluation);
                 }
 
