@@ -7,17 +7,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import es.iescarrillo.idoctor1.R;
 
-public class Patient_Main_Activity extends AppCompatActivity {
+public class Patient_Edit_Profile extends AppCompatActivity {
 
-    Button btnViewProfile, btnViewProfesionals, btnViewCites, btnLogout;
+    EditText etDNI, etEmail, etNumber;
+    CheckBox cbHealthInsurance;
+    Button btnAccept, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_main);
+        setContentView(R.layout.activity_patient_edit_profile);
 
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
@@ -36,32 +40,6 @@ public class Patient_Main_Activity extends AppCompatActivity {
 
         }
 
-        btnViewProfile = findViewById(R.id.btnViewProfile);
-        btnViewProfesionals = findViewById(R.id.btnViewProfesionals);
-        btnViewCites = findViewById(R.id.btnViewCites);
-        btnLogout = findViewById(R.id.btnLogout);
-
-        btnLogout.setOnClickListener(v -> {
-            sharedPreferences.edit().clear().apply();
-            Intent backMain = new Intent(this, MainActivity.class);
-            startActivity(backMain);
-
-
-        });
-
-        btnViewProfile.setOnClickListener(v -> {
-            Intent profile = new Intent(this, Patient_View_Profile.class);
-            profile.putExtra("id", id);
-            startActivity(profile);
-        });
-
-        btnViewProfesionals.setOnClickListener(v -> {
-
-        });
-
-        btnViewCites.setOnClickListener(v -> {
-
-        });
-
+        
     }
 }
