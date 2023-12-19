@@ -15,8 +15,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Appointment;
+import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
@@ -29,6 +33,7 @@ public class PatientAppointmentDetails extends AppCompatActivity {
     Consultation consultation;
     String consultation_id;
     String consultationAddress;
+    AppointmentString appointmentString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +76,12 @@ public class PatientAppointmentDetails extends AppCompatActivity {
         });
         tvAppointmentDatePatient.setText("Fecha:  " +appointment.getAppointmentDate().toString());
         tvAppointmentTimePatient.setText("Hora: " + appointment.getAppointmentTime().toString());
-
+        btnCancelAppointmentPatient=findViewById(R.id.btnCancelAppointmentPatient);
+        LocalDate currentDate=LocalDate.now();
+        LocalDate DateAppointment= LocalDate.parse(appointmentString.getAppointmentDate());
+        if (DateAppointment.isAfter(currentDate)){
+            appointment=appointmentString.convertToAppointment();
+            btnCancelAppointmentPatient.setEnabled(false);
+        }
     }
 }
