@@ -9,14 +9,22 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import es.iescarrillo.idoctor1.R;
+import es.iescarrillo.idoctor1.models.Patient;
+import es.iescarrillo.idoctor1.services.PatientService;
 
 public class Patient_Edit_Profile extends AppCompatActivity {
 
-    EditText etDNI, etEmail, etNumber;
+    EditText etName, etSurname, etPassword, etDNI, etEmail, etNumber;
     CheckBox cbHealthInsurance;
     Button btnAccept, btnBack;
+
+    ImageView ivPhoto;
+
+    PatientService patientService;
+    Patient patient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,29 @@ public class Patient_Edit_Profile extends AppCompatActivity {
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
 
+        }
+
+        etName = findViewById(R.id.etName);
+        etSurname = findViewById(R.id.etSurname);
+        etPassword = findViewById(R.id.etPassword);
+        etDNI = findViewById(R.id.etDNI);
+        etEmail = findViewById(R.id.etEmail);
+        etNumber = findViewById(R.id.etNumber);
+
+        cbHealthInsurance = findViewById(R.id.cbHealthInsurance);
+
+        btnAccept = findViewById(R.id.btnAccept);
+        btnBack = findViewById(R.id.btnBack);
+
+        ivPhoto = findViewById(R.id.ivPhoto);
+
+        patientService = new PatientService(getApplicationContext());
+
+        Intent intent = getIntent();
+
+        patient = new Patient();
+        if(intent != null){
+            patient = (Patient) intent.getSerializableExtra("patient");
         }
 
         
