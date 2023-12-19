@@ -32,6 +32,8 @@ public class PatientAppointmentDetails extends AppCompatActivity {
     TextView tvConsultationPatient;
     Button btnCancelAppointmentPatient;
     Button btnBackToAppointment;
+    Button btnViewEvaluation;
+
     Appointment appointment;
     Consultation consultation;
     String consultation_id;
@@ -95,6 +97,14 @@ public class PatientAppointmentDetails extends AppCompatActivity {
             });
 
         }
+        btnViewEvaluation=findViewById(R.id.btnViewEvaluation);
+        btnViewEvaluation.setOnClickListener(v -> {
+            Intent goToEvaluation=new Intent(this,PatientViewEvaluation.class);
+            appointment=(Appointment)intent.getSerializableExtra("appointment");
+            goToEvaluation.putExtra("appointment",appointment);
+            startActivity(goToEvaluation);
+        });
+        btnBackToAppointment=findViewById(R.id.btnBackToAppointment);
         btnBackToAppointment.setOnClickListener(v -> {
             Intent backToAppointment=new Intent(this,PatientViewAppointment.class);
             startActivity(backToAppointment);

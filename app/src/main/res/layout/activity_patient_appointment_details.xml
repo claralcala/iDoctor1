@@ -42,13 +42,19 @@
             android:id="@+id/tvConsultationPatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Consulta" />
+            android:text="Direccion" />
 
         <Button
             android:id="@+id/btnCancelAppointmentPatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cancelar cita" />
+
+        <Button
+            android:id="@+id/btnViewEvaluation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver evaluacion" />
 
         <Button
             android:id="@+id/btnBackToAppointment"
