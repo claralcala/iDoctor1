@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Appointment;
 import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.models.Consultation;
+import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
 public class PatientAppointmentDetails extends AppCompatActivity {
@@ -29,11 +31,13 @@ public class PatientAppointmentDetails extends AppCompatActivity {
     TextView tvAppointmentTimePatient;
     TextView tvConsultationPatient;
     Button btnCancelAppointmentPatient;
+    Button btnBackToAppointment;
     Appointment appointment;
     Consultation consultation;
     String consultation_id;
     String consultationAddress;
     AppointmentString appointmentString;
+    AppointmentService appointmentService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +56,7 @@ public class PatientAppointmentDetails extends AppCompatActivity {
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
-
+        appointmentService=new AppointmentService(getApplicationContext());
         Intent intent=getIntent();
         if (intent!=null){
             appointment=(Appointment)intent.getSerializableExtra("appointment");
@@ -78,10 +82,23 @@ public class PatientAppointmentDetails extends AppCompatActivity {
         tvAppointmentTimePatient.setText("Hora: " + appointment.getAppointmentTime().toString());
         btnCancelAppointmentPatient=findViewById(R.id.btnCancelAppointmentPatient);
         LocalDate currentDate=LocalDate.now();
-        LocalDate DateAppointment= LocalDate.parse(appointmentString.getAppointmentDate());
-        if (DateAppointment.isAfter(currentDate)){
-            appointment=appointmentString.convertToAppointment();
+        LocalDate DateAppointment=appointment.getAppointmentDate();
+        if (currentDate.isAfter(DateAppointment)){
             btnCancelAppointmentPatient.setEnabled(false);
+        }else{
+            btnCancelAppointmentPatient.setOnClickListener(v -> {
+                appointment.setPatient_id("");
+                appointmentString=appointment.convertToAppointmentString();
+                appointmentService.updateAppointmentString(appointmentString);
+                Intent back=new Intent(this,PatientMainActivity.class);
+                startActivity(back);
+            });
+
         }
+        btnBackToAppointment.setOnClickListener(v -> {
+            Intent backToAppointment=new Intent(this,PatientViewAppointment.class);
+            startActivity(backToAppointment);
+        });
+
     }
 }
