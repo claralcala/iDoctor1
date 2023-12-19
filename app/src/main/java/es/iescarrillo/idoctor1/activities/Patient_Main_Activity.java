@@ -40,19 +40,19 @@ public class Patient_Main_Activity extends AppCompatActivity {
         btnViewProfesionals = findViewById(R.id.btnViewProfesionals);
         btnViewCites = findViewById(R.id.btnViewCites);
         btnLogout = findViewById(R.id.btnLogout);
-
         btnLogout.setOnClickListener(v -> {
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
-
-
         });
 
         btnViewProfile.setOnClickListener(v -> {
             Intent profile = new Intent(this, Patient_View_Profile.class);
             startActivity(profile);
         });
-
+        btnViewCites.setOnClickListener(v->{
+            Intent viewAppointment=new Intent(this,PatientViewAppointment.class);
+            startActivity(viewAppointment);
+        });
     }
 }

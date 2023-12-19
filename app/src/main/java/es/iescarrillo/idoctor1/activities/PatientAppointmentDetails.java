@@ -56,12 +56,11 @@ public class PatientAppointmentDetails extends AppCompatActivity {
         ConsultationService consultationService=new ConsultationService(getApplicationContext());
         consultationService.getConsultationByID(consultation_id, new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data:snapshot.getChildren()){
-                    consultation = data.getValue(Consultation.class);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    consultation = snapshot.getValue(Consultation.class);
                     consultationAddress = consultation.getAddress();
-                    tvConsultationPatient.setText("Direccion " + consultationAddress);
-
+                    tvConsultationPatient.setText("Direccion" + consultationAddress);
                 }
             }
 
@@ -70,8 +69,8 @@ public class PatientAppointmentDetails extends AppCompatActivity {
 
             }
         });
-        tvAppointmentDatePatient.setText("Fecha  " +appointment.getAppointmentDate().toString());
-        tvAppointmentTimePatient.setText("Hora " + appointment.getAppointmentTime().toString());
+        tvAppointmentDatePatient.setText("Fecha:  " +appointment.getAppointmentDate().toString());
+        tvAppointmentTimePatient.setText("Hora: " + appointment.getAppointmentTime().toString());
 
     }
 }
