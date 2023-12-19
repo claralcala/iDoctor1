@@ -49,5 +49,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cancelar cita" />
+
+        <Button
+            android:id="@+id/btnBackToAppointment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
