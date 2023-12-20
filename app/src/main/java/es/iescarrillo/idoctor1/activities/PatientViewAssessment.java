@@ -15,7 +15,8 @@ import com.google.firebase.database.ValueEventListener;
 import es.iescarrillo.idoctor1.R;
 
 public class PatientViewAssessment extends AppCompatActivity {
-    ListView
+    ListView lvAssessment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
