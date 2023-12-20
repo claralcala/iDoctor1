@@ -98,7 +98,6 @@ public class Patient_Edit_Profile extends AppCompatActivity {
 
         etName.setText(patient.getName());
         etSurname.setText(patient.getSurname());
-        etPassword.setText(patient.getPassword());
         etDNI.setText(patient.getDni());
         etEmail.setText(patient.getEmail());
         etNumber.setText(patient.getPhone());

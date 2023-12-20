@@ -56,7 +56,8 @@ public class Patient_Main_Activity extends AppCompatActivity {
         });
 
         btnViewProfesionals.setOnClickListener(v -> {
-
+            Intent prof = new Intent(this, Patient_View_Professional.class);
+            startActivity(prof);
         });
 
         btnViewCites.setOnClickListener(v -> {
