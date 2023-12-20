@@ -30,7 +30,7 @@
             android:id="@+id/tvUserAssessment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="" />
 
         <EditText
             android:id="@+id/etTitleAssessment"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Introduce fecha y hora"
+            android:hint="Introduce fecha y hora (d/MM/YY HH:mm)"
             android:inputType="textMultiLine"
             android:minHeight="48dp" />
 

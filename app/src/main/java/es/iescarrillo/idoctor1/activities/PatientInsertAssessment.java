@@ -61,14 +61,6 @@ public class PatientInsertAssessment extends AppCompatActivity {
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
-        Intent intent=getIntent();
-        assessmentService=new AssessmentService(getApplicationContext());
-
-        if (intent!=null){
-            professional=(Professional) intent.getSerializableExtra("professional");
-        }
-
-        professionalId=professional.getId();
         tvUserAssessment=findViewById(R.id.tvUserAssessment);
         etTitleAssessment=findViewById(R.id.etTitleAssessment);
         etAssessmentDescription=findViewById(R.id.etAssessmentDescription);
@@ -80,6 +72,19 @@ public class PatientInsertAssessment extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapterSpinnerRating= ArrayAdapter.createFromResource(this,R.array.starsValues, android.R.layout.simple_spinner_item);
         adapterSpinnerRating.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spStars.setAdapter(adapterSpinnerRating);
+        Intent intent=getIntent();
+        assessmentService=new AssessmentService(getApplicationContext());
+        patientService=new PatientService(getApplicationContext());
+        if (intent!=null){
+            professional=(Professional) intent.getSerializableExtra("professional");
+        }
+
+        professionalId=professional.getId();
+        Log.d("ProfessionalViewAppointments", "Consultation id " + professionalId);
+
+
+
+
         patientService.getPatientByID(id_, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -88,6 +93,7 @@ public class PatientInsertAssessment extends AppCompatActivity {
                     // Convierte cada nodo de la base de datos a un objeto
                     p = snapshot.getValue(Patient.class);
                     patientUsername=p.getUsername();
+                    tvUserAssessment.setText("Usuario:" + patientUsername);
 
                 }
             }
@@ -103,7 +109,7 @@ public class PatientInsertAssessment extends AppCompatActivity {
             Double stars= Double.valueOf(spStars.getSelectedItem().toString());
             String date=etDateTimeAssessment.getText().toString();
             // Convertir las cadenas a LocalDateTime (asumiendo un formato específico)
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/YY HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yy HH:mm");
             // Establecer el LocalDateTime en tu entidad Evaluation
             assessment=new Assessment();
             assessment.setDescription(assessmentDescription);
@@ -115,7 +121,7 @@ public class PatientInsertAssessment extends AppCompatActivity {
             assessmentString=new AssessmentString();
             assessmentString=assessment.convertToAssessmentString();
             assessmentService.insertAssessmentString(assessmentString);
-            Intent back = new Intent(this, PatientMainActivity.class);
+            Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);
         });
 

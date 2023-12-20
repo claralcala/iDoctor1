@@ -60,9 +60,8 @@ public class Patient_Main_Activity extends AppCompatActivity {
             startActivity(prof);
         });
 
-        btnViewCites.setOnClickListener(v -> {
 
-        });
+
 
         btnViewCites.setOnClickListener(v->{
             Intent viewAppointment=new Intent(this,PatientViewAppointment.class);

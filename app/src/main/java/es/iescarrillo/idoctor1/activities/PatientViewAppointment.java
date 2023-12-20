@@ -81,7 +81,7 @@ public class PatientViewAppointment extends AppCompatActivity {
         });
 
         btnBackPatientMain.setOnClickListener(v -> {
-            Intent intent=new Intent(this, PatientMainActivity.class);
+            Intent intent=new Intent(this, Patient_Main_Activity.class);
             startActivity(intent);
         });
     }

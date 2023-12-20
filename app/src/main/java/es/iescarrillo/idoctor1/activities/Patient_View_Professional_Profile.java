@@ -89,7 +89,9 @@ public class Patient_View_Professional_Profile extends AppCompatActivity {
         });
 
         btnValoration.setOnClickListener(v -> {
-            
+            Intent insertAppointment=new Intent(this,PatientInsertAssessment.class);
+            insertAppointment.putExtra("professional", prof);
+            startActivity(insertAppointment);
         });
 
     }
