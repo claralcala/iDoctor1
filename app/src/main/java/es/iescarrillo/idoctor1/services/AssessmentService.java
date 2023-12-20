@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Assessment;
 import es.iescarrillo.idoctor1.models.Patient;
@@ -41,4 +43,9 @@ public class AssessmentService {
     public void deleteAssessment(Assessment assessment){
         database.child(assessment.getId()).removeValue();
     }
+    public void getAssessmentsByProfessionalID(String id, ValueEventListener listener){
+        Query query = database.orderByChild("professional_id").equalTo(id);
+        query.addValueEventListener(listener);
+    }
+
 }

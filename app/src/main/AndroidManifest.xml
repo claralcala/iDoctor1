@@ -13,6 +13,12 @@
         android:theme="@style/Theme.IDoctor1"
         tools:targetApi="31">
         <activity
+            android:name=".activities.PatientInsertAssessment"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PatientInsertAssesment"
+            android:exported="false" />
+        <activity
             android:name=".activities.PatientViewEvaluation"
             android:exported="false" />
         <activity
