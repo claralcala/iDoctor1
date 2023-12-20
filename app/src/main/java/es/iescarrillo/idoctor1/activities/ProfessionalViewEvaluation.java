@@ -75,15 +75,25 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
         if (intent1 != null) {
             appointment = (Appointment) intent1.getSerializableExtra("appointment");
         }
-         appId = appointment.getId();
+
+        lvEvaluation=findViewById(R.id.lvEvaluation);
+
+        appId = appointment.getId();
         evaluationService  = new EvaluationService(getApplicationContext());
 
+
         evaluationArrayList = new ArrayList<>();
+        adapter = new EvaluationAdapter(getApplicationContext(),evaluationArrayList);
+
+
+
+
 
         evaluationService.getListEvaluation(appId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 evaluationArrayList.clear();
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     evString = snapshot.getValue(EvaluationString.class);
 
@@ -91,8 +101,8 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
                     evaluationArrayList.add(evaluation);
                 }
 
-                adapter  =new EvaluationAdapter(getApplicationContext(), evaluationArrayList);
                 lvEvaluation.setAdapter(adapter);
+
             }
 
             @Override
@@ -104,9 +114,17 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
         btnAddEvaluation = findViewById(R.id.btnAddEvaluation);
 
         btnAddEvaluation.setOnClickListener( v -> {
-            Intent intent = new Intent(this, ProfessionalAddEvaluation.class);
+            Intent add = new Intent(this, ProfessionalAddEvaluation.class);
+            add.putExtra("appointment", appointment);
+            startActivity(add);
+        });
 
-            startActivity(intent);
+        lvEvaluation.setOnItemClickListener((parent, view, position, id) -> {
+        evaluation = (Evaluation)  parent.getItemAtPosition(position);
+
+        Intent IntentEvaluationDetails = new Intent(this, ProfessionalViewEvaluationDetails.class);
+            IntentEvaluationDetails.putExtra("evaluation",evaluation);
+        startActivity(IntentEvaluationDetails);
         });
 
     }

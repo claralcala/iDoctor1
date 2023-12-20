@@ -2,16 +2,21 @@ package es.iescarrillo.idoctor1.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+
 import es.iescarrillo.idoctor1.R;
+import es.iescarrillo.idoctor1.adapters.AppointmentAdapter;
+
 import es.iescarrillo.idoctor1.models.Consultation;
-import es.iescarrillo.idoctor1.models.Professional;
+
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
 public class ProfessionalConsultationDetails extends AppCompatActivity {
@@ -25,6 +30,11 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
 
     ConsultationService consService;
 
+    ListView lvAppointment;
+
+    AppointmentAdapter adapter;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +42,14 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
 
 
         //Variables de sesión
-        SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
-        String username= sharedPreferences.getString("user", "");
+        SharedPreferences sharedPreferences = getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
 
-        if(!role.equals("PROFESSIONAL")){
+        if (!role.equals("PROFESSIONAL")) {
 
 
             sharedPreferences.edit().clear().apply();
@@ -49,23 +59,25 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         }
 
 
-        tvAddress=findViewById(R.id.tvAddress);
-        tvCity=findViewById(R.id.tvCity);
-        tvEmail=findViewById(R.id.tvEmail);
-        tvPhone=findViewById(R.id.tvPhone);
-        tvPhoneAux=findViewById(R.id.tvPhoneAux);
+        tvAddress = findViewById(R.id.tvAddress);
+        tvCity = findViewById(R.id.tvCity);
+        tvEmail = findViewById(R.id.tvEmail);
+        tvPhone = findViewById(R.id.tvPhone);
+        tvPhoneAux = findViewById(R.id.tvPhoneAux);
 
-        btnBack=findViewById(R.id.btnCancel);
-        btnDelete=findViewById(R.id.btnDelete);
-        btnViewAppointments=findViewById(R.id.btnViewAppointments);
-        btnViewTimetable=findViewById(R.id.btnViewTimetable);
-        btnGenerateAppointments=findViewById(R.id.btnGenerateAppointments);
+        btnBack = findViewById(R.id.btnCancel);
+        btnDelete = findViewById(R.id.btnDelete);
+        btnViewAppointments = findViewById(R.id.btnViewAppointments);
+        btnViewTimetable = findViewById(R.id.btnViewTimetable);
+        btnGenerateAppointments = findViewById(R.id.btnGenerateAppointments);
 
-        btnEdit=findViewById(R.id.btnEdit);
+        btnEdit = findViewById(R.id.btnEdit);
+
+        lvAppointment = findViewById(R.id.lvAppointments);
 
         Intent intent = getIntent();
 
-        consService= new ConsultationService(getApplicationContext());
+        consService = new ConsultationService(getApplicationContext());
 
 
         cons = new Consultation();
@@ -73,11 +85,11 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
             cons = (Consultation) intent.getSerializableExtra("consultation");
         }
 
-        tvAddress.setText("Direccion: " +cons.getAddress());
-        tvCity.setText("Ciudad: " +cons.getCity());
-        tvEmail.setText("Email: " +cons.getEmail());
-        tvPhone.setText("Telefono: " +cons.getPhone());
-        tvPhoneAux.setText("Telf. Auxiliar: " +cons.getPhoneAux());
+        tvAddress.setText("Direccion: " + cons.getAddress());
+        tvCity.setText("Ciudad: " + cons.getCity());
+        tvEmail.setText("Email: " + cons.getEmail());
+        tvPhone.setText("Telefono: " + cons.getPhone());
+        tvPhoneAux.setText("Telf. Auxiliar: " + cons.getPhoneAux());
 
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent(this, ProfessionalViewConsultations.class);
@@ -85,7 +97,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         });
 
         btnViewAppointments.setOnClickListener(v -> {
-            Intent appointment = new Intent (this, ProfessionalViewAppointments.class);
+            Intent appointment = new Intent(this, ProfessionalViewAppointments.class);
             appointment.putExtra("consultation", cons);
             startActivity(appointment);
         });
@@ -112,8 +124,8 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         });
 
         btnGenerateAppointments.setOnClickListener(v -> {
-            //Meter el intent hacia la pantalla de generar citas
-        });
 
+        });
     }
+
 }

@@ -8,6 +8,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Evaluation;
+import es.iescarrillo.idoctor1.models.EvaluationString;
 import es.iescarrillo.idoctor1.models.Patient;
 
 public class EvaluationService {
@@ -32,6 +33,16 @@ public class EvaluationService {
         newReference.setValue(evaluation);
     }
 
+
+    public void insertEvaluationString(EvaluationString evaluation) {
+        // Utiliza push() para obtener una clave única y agregar el mensaje
+        DatabaseReference newReference = database.push();
+        evaluation.setId(newReference.getKey()); // Asigna el ID generado automáticamente
+
+        // Ahora, utiliza setValue() en la nueva referencia para agregar el nuevo mensaje
+        newReference.setValue(evaluation);
+    }
+
     public void updateEvaluation(Evaluation evaluation) {
         database.child(evaluation.getId()).setValue(evaluation);
     }
@@ -45,8 +56,11 @@ public class EvaluationService {
     }
 
     public void getListEvaluation(String Id , ValueEventListener listener) {
-        Query query = database.orderByChild("appoitment_id").equalTo(Id);
+        Query query = database.orderByChild("appointment_id").equalTo(Id);
         query.addValueEventListener(listener);
     }
+
+
+
 
 }

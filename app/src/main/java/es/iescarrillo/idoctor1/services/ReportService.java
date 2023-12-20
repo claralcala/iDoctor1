@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.models.Report;
@@ -41,4 +43,10 @@ public class ReportService {
     public void deleteReport(Report report){
         database.child(report.getId()).removeValue();
     }
+
+    public void getReportByEvaluationID(String Id, ValueEventListener listener) {
+        Query query = database.orderByChild("evaluation_id").equalTo(Id);
+        query.addListenerForSingleValueEvent(listener);
+    }
+
 }

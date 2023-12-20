@@ -17,28 +17,27 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvDetailsAppointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="Detalles de la cita"
             android:textAlignment="center"
             android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginBottom="30dp"
+            android:text="Detalles de la cita" />
 
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha"
+            android:textSize="20dp"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:text="Fecha" />
+
 
         <TextView
             android:id="@+id/tvHour"
@@ -47,6 +46,16 @@
             android:text="Hora"
             android:textAlignment="center"
             android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvPatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:text="Paciente" />
+
+
 
         <CheckBox
             android:id="@+id/checkBoxActive"
@@ -87,7 +96,7 @@
 
             <Button
                 android:id="@+id/btnViewEval"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Ver evaluación" />

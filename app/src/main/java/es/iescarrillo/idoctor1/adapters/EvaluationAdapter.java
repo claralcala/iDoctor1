@@ -28,15 +28,15 @@ public class EvaluationAdapter extends ArrayAdapter<Evaluation>{
         // Reutiliza una vista existente o crea una nueva si es necesario
         if (convertView == null) {
             // Indicamos la vista plantilla
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_consultation, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_evaluation, parent, false);
         }
 
-        TextView tvDesciption = convertView.findViewById(R.id.tvDescriptionDetails);
-        TextView tvExploration = convertView.findViewById(R.id.tvExplorationDetails);
+        TextView tvDescription = convertView.findViewById(R.id.tvDescription);
+        TextView tvExploration = convertView.findViewById(R.id.tvExploration);
 
 
-        tvDesciption.setText(evaluation.getDescription());
-        tvExploration.setText(evaluation.getExploration());
+        tvDescription.setText("Descripcion: " + evaluation.getDescription());
+        tvExploration.setText("Exploracion: " + evaluation.getExploration());
 
 
 
