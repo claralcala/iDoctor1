@@ -8,6 +8,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import es.iescarrillo.idoctor1.models.Assessment;
+import es.iescarrillo.idoctor1.models.AssessmentString;
 import es.iescarrillo.idoctor1.models.Patient;
 
 public class AssessmentService {
@@ -47,5 +48,12 @@ public class AssessmentService {
         Query query = database.orderByChild("professional_id").equalTo(id);
         query.addValueEventListener(listener);
     }
+    public void insertAssessmentString(AssessmentString assessment) {
+        // Utiliza push() para obtener una clave única y agregar el mensaje
+        DatabaseReference newReference = database.push();
+        assessment.setId(newReference.getKey()); // Asigna el ID generado automáticamente
 
+        // Ahora, utiliza setValue() en la nueva referencia para agregar el nuevo mensaje
+        newReference.setValue(assessment);
+    }
 }

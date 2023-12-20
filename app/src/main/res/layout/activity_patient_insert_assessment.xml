@@ -26,15 +26,11 @@
             android:layout_height="wrap_content"
             android:text="Valoraciones" />
 
-        <EditText
-            android:id="@+id/etUserAssessment"
+        <TextView
+            android:id="@+id/tvUserAssessment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="Nombre profesional"
-            android:inputType="textMultiLine"
-            android:minHeight="48dp" />
+            android:text="TextView" />
 
         <EditText
             android:id="@+id/etTitleAssessment"
@@ -60,6 +56,16 @@
             android:id="@+id/spStars"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/etDateTimeAssessment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Introduce fecha y hora"
+            android:inputType="textMultiLine"
             android:minHeight="48dp" />
 
         <LinearLayout
