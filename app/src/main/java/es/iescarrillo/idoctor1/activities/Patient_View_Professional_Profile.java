@@ -81,6 +81,7 @@ public class Patient_View_Professional_Profile extends AppCompatActivity {
 
         btnAddAppointment.setOnClickListener(v -> {
             Intent consultation = new Intent(this, Patient_View_Consultation.class);
+            consultation.putExtra("professional", prof);
             startActivity(consultation);
         });
 
