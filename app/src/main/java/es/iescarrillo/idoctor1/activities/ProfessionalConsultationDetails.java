@@ -34,6 +34,8 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
 
     AppointmentAdapter adapter;
 
+    Consultation consultation;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,9 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         });
 
         btnGenerateAppointments.setOnClickListener(v -> {
-
+            Intent generate = new Intent(this, ProfessionalGenerateAppointments.class);
+            generate.putExtra("consultation",consultation);
+            startActivity(generate);
         });
     }
 

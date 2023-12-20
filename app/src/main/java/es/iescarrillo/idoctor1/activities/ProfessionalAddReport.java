@@ -7,11 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import es.iescarrillo.idoctor1.R;
+import es.iescarrillo.idoctor1.models.Evaluation;
 import es.iescarrillo.idoctor1.models.Report;
 import es.iescarrillo.idoctor1.services.ReportService;
 
@@ -20,12 +22,11 @@ public class ProfessionalAddReport extends AppCompatActivity {
     Report report;
 
     ReportService reportService;
-    String evaluationID;
-
-
     EditText etAddTitle, etAddLink;
 
     Button btnCancelAddReport, btnAddReport;
+    Evaluation evaluation;
+    String evaluationId;
 
 
     @SuppressLint("MissingInflatedId")
@@ -59,7 +60,12 @@ public class ProfessionalAddReport extends AppCompatActivity {
         reportService  =new ReportService(getApplicationContext());
 
         Intent intent = getIntent();
-        evaluationID = intent.getStringExtra("evaluation_id");
+        if (intent != null) {
+            evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
+        }
+
+        evaluationId = evaluation.getId();
+        Log.d("ProfessionalViewReport", "Evaluation ID" + evaluationId);
 
         btnAddReport.setOnClickListener(v -> {
 
@@ -67,10 +73,10 @@ public class ProfessionalAddReport extends AppCompatActivity {
             String title = etAddTitle.getText().toString();
             String link = etAddLink.getText().toString();
 
-            if (!title.isEmpty() && !link.isEmpty()) {
 
-                Report report = new Report();
-                report.setEvaluation_id(evaluationID);
+
+
+                report.setEvaluation_id(evaluationId);
                 report.setTitle(title);
                 report.setLink(link);
 
@@ -78,9 +84,7 @@ public class ProfessionalAddReport extends AppCompatActivity {
                 reportService.insertReport(report);
 
                 Toast.makeText(ProfessionalAddReport.this, "Informe insertado correctamente.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(ProfessionalAddReport.this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show();
-            }
+
 
             Intent inserInfor = new Intent(this,ProfessionalMainActivity.class);
             startActivity(inserInfor);

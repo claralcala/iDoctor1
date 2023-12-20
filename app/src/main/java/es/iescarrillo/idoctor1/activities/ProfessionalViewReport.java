@@ -36,7 +36,7 @@ public class ProfessionalViewReport extends AppCompatActivity {
     Evaluation evaluation;
     String evaluationId;
 
-    ArrayList<Report> arrayListReport;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,6 @@ public class ProfessionalViewReport extends AppCompatActivity {
 
         btnAdd = findViewById(R.id.btnAdd);
         btnCancel = findViewById(R.id.btnCancel);
-
         tvTitle = findViewById(R.id.tvTitle);
         tvLink = findViewById(R.id.tvLink);
 
@@ -76,27 +75,19 @@ public class ProfessionalViewReport extends AppCompatActivity {
 
         evaluationId = evaluation.getId();
 
-        arrayListReport = new ArrayList<>();
+
 
         // Obtener el informe por la ID de evaluación
         reportService.getReportByEvaluationID(evaluationId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                arrayListReport.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     report = snapshot.getValue(Report.class);
-                    arrayListReport.add(report);
+                    tvTitle.setText(report.getTitle().toString());
+                    tvLink.setText(report.getLink().toString());
+                    btnAdd.setEnabled(false);
                 }
-
-                // Muestra los informes de alguna manera (por ejemplo, solo el primero)
-                if (!arrayListReport.isEmpty()) {
-                    Report firstReport = arrayListReport.get(0);
-                    tvTitle.setText(firstReport.getTitle());
-                    tvLink.setText(firstReport.getLink());
-                }
-
-                btnAdd.setEnabled(false);
             }
 
             @Override
@@ -104,10 +95,17 @@ public class ProfessionalViewReport extends AppCompatActivity {
                 // Manejar errores de la base de datos
             }
         });
-
         btnAdd.setOnClickListener(v -> {
             Intent intent2 = new Intent(this, ProfessionalAddReport.class);
+            intent2.putExtra("evaluation",evaluation);
             startActivity(intent2);
         });
+
+        btnCancel.setOnClickListener(v -> {
+            Intent back = new Intent(this, ProfessionalMainActivity.class);
+            startActivity(back);
+
+        });
     }
+
 }

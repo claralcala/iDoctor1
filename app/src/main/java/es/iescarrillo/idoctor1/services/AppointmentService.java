@@ -13,7 +13,14 @@ import es.iescarrillo.idoctor1.models.AppointmentString;
 public class AppointmentService {
     private DatabaseReference database;
 
+    private Context context;
+
+    private DatabaseReference appointmentsRef;
+
+
+
     public AppointmentService(Context context){
+        this.context = context;
         database = FirebaseDatabase.getInstance().getReference().child("appointment");
     }
 
@@ -56,6 +63,7 @@ public class AppointmentService {
         Query query = database.orderByChild("consultation_id").equalTo(id);
         query.addValueEventListener(listener);
     }
+
 
 
 }

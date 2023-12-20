@@ -46,7 +46,7 @@ public class ReportService {
 
     public void getReportByEvaluationID(String Id, ValueEventListener listener) {
         Query query = database.orderByChild("evaluation_id").equalTo(Id);
-        query.addListenerForSingleValueEvent(listener);
+        query.addValueEventListener(listener);
     }
 
 }

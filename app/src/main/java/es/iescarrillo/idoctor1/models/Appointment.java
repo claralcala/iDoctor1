@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @IgnoreExtraProperties
 public class Appointment implements Serializable {
@@ -89,4 +90,5 @@ public class Appointment implements Serializable {
 
         return appointmentString;
     }
+
 }
