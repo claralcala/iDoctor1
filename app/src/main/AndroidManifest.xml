@@ -28,7 +28,22 @@
             android:name=".activities.PatientViewAppointment"
             android:exported="false" />
         <activity
+            android:name=".activities.Patient_View_Consultation"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Patient_View_Professional_Profile"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Patient_View_Professional"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Patient_Edit_Profile"
+            android:exported="false" />
+        <activity
             android:name=".activities.Patient_Main_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Patient_View_Profile"
             android:exported="false" />
         <activity
             android:name=".activities.ProfessionalAppointmentDetails"
@@ -81,6 +96,7 @@
         <activity
             android:name=".activities.RegisterProfessional"
             android:exported="false" />
+
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false" />
