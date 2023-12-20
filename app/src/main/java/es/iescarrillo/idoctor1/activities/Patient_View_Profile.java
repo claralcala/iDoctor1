@@ -102,7 +102,8 @@ public class Patient_View_Profile extends AppCompatActivity {
         });
 
         btnBack.setOnClickListener(v -> {
-            onBackPressed();
+            Intent intent = new Intent(this, Patient_Main_Activity.class);
+            startActivity(intent);
         });
 
         btnEdit.setOnClickListener(v -> {
