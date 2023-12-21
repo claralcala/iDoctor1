@@ -23,11 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.adapters.ProfessionalAdapter;
 import es.iescarrillo.idoctor1.models.Appointment;
+import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Professional;
+import es.iescarrillo.idoctor1.services.ConsultationService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
 public class Patient_View_Professional extends AppCompatActivity {
@@ -38,9 +41,14 @@ public class Patient_View_Professional extends AppCompatActivity {
     Button btnFilter, btnBack;
     ArrayList<Professional> professionals;
     ArrayList<String> options;
+    ArrayList<String> profesionalID;
+    ArrayList<Consultation> consultations;
     String option;
     ProfessionalAdapter adapter;
+    ProfessionalService professionalService;
     Professional professional;
+    ConsultationService consultationService;
+    Consultation consultation;
 
 
     @Override
@@ -70,7 +78,15 @@ public class Patient_View_Professional extends AppCompatActivity {
         etFilter = findViewById(R.id.etFilter);
         btnFilter = findViewById(R.id.btnFilter);
         btnBack = findViewById(R.id.btnBack);
+
+        professionalService = new ProfessionalService(getApplicationContext());
+        consultationService = new ConsultationService(getApplicationContext());
+
         professionals = new ArrayList<>();
+        consultations = new ArrayList<>();
+        profesionalID = new ArrayList<>();
+
+        consultation = new Consultation();
         // Obtenemos la referencial al nodo "superheros"
         DatabaseReference dbDoctor = FirebaseDatabase.getInstance().getReference().child("professional");
 
@@ -128,6 +144,97 @@ public class Patient_View_Professional extends AppCompatActivity {
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);
+        });
+
+        btnFilter.setOnClickListener(v -> {
+
+            if(option.equalsIgnoreCase("nombre")){
+                professionalService.getProfesionalByName(etFilter.getText().toString(), new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        professionals.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            // Convierte cada nodo de la base de datos a un objeto Superhero
+                            professional = snapshot.getValue(Professional.class);
+                            professionals.add(professional);
+                        }
+
+                        // Una vez los datos añadidos a nuestra lista, se la pasamos al adaptador
+                        adapter = new ProfessionalAdapter(getApplicationContext(), professionals);
+                        lvProfessional.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            } else if (option.equalsIgnoreCase("Especialidad")) {
+                professionalService.getProfesionalBySpeciality(etFilter.getText().toString(), new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        professionals.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            // Convierte cada nodo de la base de datos a un objeto Superhero
+                            professional = snapshot.getValue(Professional.class);
+                            professionals.add(professional);
+                        }
+
+                        // Una vez los datos añadidos a nuestra lista, se la pasamos al adaptador
+                        adapter = new ProfessionalAdapter(getApplicationContext(), professionals);
+                        lvProfessional.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            } else if (option.equalsIgnoreCase("Ciudad")) {
+                consultationService.getConsultationByCity(etFilter.getText().toString(), new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        consultations.clear();
+                        professionals.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            // Convierte cada nodo de la base de datos a un objeto Superhero
+                            consultation = snapshot.getValue(Consultation.class);
+                            consultations.add(consultation);
+                        }
+
+                        for(Consultation cons: consultations){
+                            professionalService.getProfessionalByID(cons.getProfessional_id(), new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+
+                                    for (DataSnapshot snapshot : dataSnapshot1.getChildren()) {
+                                        // Convierte cada nodo de la base de datos a un objeto Superhero
+                                        professional = snapshot.getValue(Professional.class);
+                                        professionals.add(professional);
+                                    }
+
+                                    // Una vez los datos añadidos a nuestra lista, se la pasamos al adaptador
+                                    adapter = new ProfessionalAdapter(getApplicationContext(), professionals);
+                                    lvProfessional.setAdapter(adapter);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
         });
 
     }

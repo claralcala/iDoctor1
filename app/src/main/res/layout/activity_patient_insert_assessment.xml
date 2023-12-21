@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Introduce fecha y hora (d/MM/yy HH:mm)"
+            android:hint="Introduce fecha y hora (dd/MM/YYYY HH:mm)"
             android:inputType="textMultiLine"
             android:minHeight="48dp" />
 
