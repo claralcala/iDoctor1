@@ -44,9 +44,7 @@ public class PatientAppointmentDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_appointment_details);
-        tvAppointmentDatePatient=findViewById(R.id.tvAppointmentDatePatient);
-        tvAppointmentTimePatient=findViewById(R.id.tvAppointmentTimePatient);
-        tvConsultationPatient=findViewById(R.id.tvConsultationPatient);
+
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
@@ -58,6 +56,9 @@ public class PatientAppointmentDetails extends AppCompatActivity {
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
+        tvAppointmentDatePatient=findViewById(R.id.tvAppointmentDatePatient);
+        tvAppointmentTimePatient=findViewById(R.id.tvAppointmentTimePatient);
+        tvConsultationPatient=findViewById(R.id.tvConsultationPatient);
         appointmentService=new AppointmentService(getApplicationContext());
         Intent intent=getIntent();
         if (intent!=null){
