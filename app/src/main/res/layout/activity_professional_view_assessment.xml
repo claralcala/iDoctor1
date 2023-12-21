@@ -6,4 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".activities.ProfessionalViewAssessment">
 
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <TextView
+            android:id="@+id/tvAssessmentList"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            android:background="@color/azul"
+            android:gravity="center"
+            android:text="Assessment List"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="35dp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
+        <ListView
+            android:id="@+id/lvAssessment"
+            android:layout_width="match_parent"
+            android:layout_height="629dp">
+
+        </ListView>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

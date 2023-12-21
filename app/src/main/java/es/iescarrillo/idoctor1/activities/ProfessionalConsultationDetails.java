@@ -127,7 +127,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
 
         btnGenerateAppointments.setOnClickListener(v -> {
             Intent generate = new Intent(this, ProfessionalGenerateAppointments.class);
-            generate.putExtra("consultation",consultation);
+            generate.putExtra("consultation",cons);
             startActivity(generate);
         });
     }

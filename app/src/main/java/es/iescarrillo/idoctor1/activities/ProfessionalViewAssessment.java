@@ -13,5 +13,10 @@ public class ProfessionalViewAssessment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professional_view_assessment);
 
+
+
+
+
+
     }
 }
