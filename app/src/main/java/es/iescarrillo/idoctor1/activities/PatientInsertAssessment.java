@@ -109,7 +109,7 @@ public class PatientInsertAssessment extends AppCompatActivity {
             Double stars= Double.valueOf(spStars.getSelectedItem().toString());
             String date=etDateTimeAssessment.getText().toString();
             // Convertir las cadenas a LocalDateTime (asumiendo un formato específico)
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yy HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             // Establecer el LocalDateTime en tu entidad Evaluation
             assessment=new Assessment();
             assessment.setDescription(assessmentDescription);
@@ -123,6 +123,9 @@ public class PatientInsertAssessment extends AppCompatActivity {
             assessmentService.insertAssessmentString(assessmentString);
             Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);
+        });
+        btnBackToDetails.setOnClickListener(v -> {
+            onBackPressed();
         });
 
     }

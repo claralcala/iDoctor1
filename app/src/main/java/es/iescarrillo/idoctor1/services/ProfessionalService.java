@@ -53,4 +53,18 @@ public class ProfessionalService {
         Query query = database.orderByChild("id").equalTo(id);
         query.addListenerForSingleValueEvent(listener);
     }
+    public void getProfesionalByName(String name, ValueEventListener listener){
+        Query query = database.orderByChild("name").equalTo(name);
+        query.addValueEventListener(listener);
+    }
+    public void getProfesionalBySpeciality(String speciality, ValueEventListener listener){
+        Query query = database.orderByChild("speciality").equalTo(speciality);
+        query.addValueEventListener(listener);
+    }
+    public void getProfessionalByArray(String id, ValueEventListener listener){
+        Query query = database.orderByChild("id").equalTo(id);
+        query.addListenerForSingleValueEvent(listener);
+    }
+
+
 }
