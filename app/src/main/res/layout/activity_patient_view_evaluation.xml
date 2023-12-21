@@ -34,5 +34,5 @@
         android:backgroundTint="#200FAB"
         android:text="Volver pantalla principal"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/linearLayout6" />
+        app:layout_constraintBottom_toBottomOf="@id/linearLayout6"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

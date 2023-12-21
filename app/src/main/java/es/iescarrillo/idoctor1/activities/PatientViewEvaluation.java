@@ -1,5 +1,7 @@
 package es.iescarrillo.idoctor1.activities;
 
+
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,29 +18,39 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.adapters.EvaluationAdapter;
 import es.iescarrillo.idoctor1.models.Appointment;
+import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Evaluation;
+import es.iescarrillo.idoctor1.models.EvaluationString;
+import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.EvaluationService;
-
 public class PatientViewEvaluation extends AppCompatActivity {
-    EvaluationService evaluationService;
-    Appointment appointment;
-    Evaluation evaluation;
-    String appointment_id;
-    ArrayList<Evaluation> evaluations;
-    EvaluationAdapter evaluationAdapter;
+    Button btnBackMainPatient;
     ListView lvPatientEvaluation;
+
+    ArrayList<Evaluation> evaluationArrayList;
+
+    AppointmentService appointmentService;
+
+    Evaluation evaluation;
+
+    EvaluationAdapter adapter;
+
+    Appointment appointment;
+
+    EvaluationString evString;
+
+    String appId;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_view_evaluation);
-        evaluations=new ArrayList<Evaluation>();
+        //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
@@ -49,19 +61,30 @@ public class PatientViewEvaluation extends AppCompatActivity {
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
-        Intent intent=getIntent();
-        if (intent!=null){
-            appointment=(Appointment)intent.getSerializableExtra("appointment");
+        Intent  intent1 = getIntent();
+        appointment = new Appointment();
+        if (intent1 != null) {
+            appointment = (Appointment) intent1.getSerializableExtra("appointment");
         }
 
-        DatabaseReference dbAppointmentPatient= FirebaseDatabase.getInstance().getReference().child("evaluation");
-        appointment_id=evaluation.getAppointment_id();
-        evaluationService=new EvaluationService(getApplicationContext());
+        lvPatientEvaluation=findViewById(R.id.lvPatientEvaluation);
 
-        evaluationService.getEvaluationByAppointmentID(appointment_id, new ValueEventListener() {
-
+        appId = appointment.getId();
+        appointmentService  = new AppointmentService(getApplicationContext());
+        evaluationArrayList = new ArrayList<>();
+        adapter = new EvaluationAdapter(getApplicationContext(),evaluationArrayList);
+        appointmentService.getListEvaluation(appId, new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                evaluationArrayList.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    evString = snapshot.getValue(EvaluationString.class);
+
+                    evaluation = evString.convertToEvaluation();
+                    evaluationArrayList.add(evaluation);
+                }
+                lvPatientEvaluation.setAdapter(adapter);
 
             }
 
@@ -70,6 +93,17 @@ public class PatientViewEvaluation extends AppCompatActivity {
 
             }
         });
+        lvPatientEvaluation.setOnItemClickListener((parent, view, position, id) -> {
+            evaluation = (Evaluation)  parent.getItemAtPosition(position);
 
+            Intent IntentEvaluationDetails = new Intent(this, PatientViewEvaluationDetails.class);
+            IntentEvaluationDetails.putExtra("evaluation",evaluation);
+            startActivity(IntentEvaluationDetails);
+        });
+        btnBackMainPatient.findViewById(R.id.btnBackPatientMain);
+        btnBackMainPatient.setOnClickListener(v -> {
+            Intent BackToPatientActivity=new Intent(this, Patient_Main_Activity.class);
+            startActivity(BackToPatientActivity);
+        });
     }
 }

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PatientViewEvaluationDetails">
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+    <TextView
+        android:id="@+id/tvEvaluationDetails"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="Evaluation Details"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvDescriptionDetailsEvaluation"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Description"
+        android:paddingLeft="15dp"
+        android:paddingTop="35dp" />
+
+    <TextView
+        android:id="@+id/tvExplorationDetailsEvaluation"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Exploration"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:paddingTop="35dp"
+
+
+        />
+
+    <TextView
+        android:id="@+id/tvTreatmentDetailsEvaluation"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Tratamiento"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:paddingTop="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvDateDetailsEvaluation"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="30dp"
+            android:ems="10"
+            android:hint="Fecha y hora (21/12/2000 08:00)"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:paddingTop="20dp"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancelDetailsEvaluation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/rojo"
+            android:text="Cancelar"
+            />
+
+        <Button
+            android:id="@+id/btnViewInformPatient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ver informes"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
