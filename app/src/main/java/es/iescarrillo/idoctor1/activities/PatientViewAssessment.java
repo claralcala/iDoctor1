@@ -100,7 +100,7 @@ public class PatientViewAssessment extends AppCompatActivity {
         });
         btnBackToPatientProfile=findViewById(R.id.btnBackToPatientProfile);
         btnBackToPatientProfile.setOnClickListener(v -> {
-            Intent backToPatientProfile=new Intent(this, Patient_View_Professional_Profile.class);
+            Intent backToPatientProfile=new Intent(this, Patient_Main_Activity.class);
             backToPatientProfile.putExtra("professional",professional);
             startActivity(backToPatientProfile);
         });

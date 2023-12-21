@@ -32,10 +32,10 @@ public class PatientAssessmentDetails extends AppCompatActivity {
     TextView tvAssessmentDateTimeDetails;
     Button btnBackToViewAssessment;
     AssessmentService assessmentService;
-    Professional professional;
+//    Professional professional;
     Patient patient;
     Assessment assessment;
-    String professionalId;
+    String assessmentId;
     String UsernameDetails;
 
 
@@ -62,33 +62,22 @@ public class PatientAssessmentDetails extends AppCompatActivity {
         btnBackToViewAssessment=findViewById(R.id.btnBackToViewAssessment);
         assessmentService=new AssessmentService(getApplicationContext());
         Intent intent=getIntent();
-        professional = new Professional();
+        assessment = new Assessment();
 
         if (intent != null) {
-            professional = (Professional) intent.getSerializableExtra("professional");
+            assessment= (Assessment) intent.getSerializableExtra("assessment");
         }
-        professionalId=professional.getId();
+
+        assessmentId=assessment.getUsername();
         assessmentService=new AssessmentService(getApplicationContext());
-        assessmentService.getAssessmentsByProfessionalID(professionalId, new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                assessment= snapshot.getValue(Assessment.class);
-                UsernameDetails = patient.getUsername();
-                tvUsernameAssessmentDetails.setText("Usuario" + UsernameDetails);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        tvUsernameAssessmentDetails.setText("Usuario" + assessment.getUsername().toString());
         tvTitleAssessmentDetails.setText("Titulo:  " +assessment.getTitle().toString());
         tvDescriptionAssessmentDetails.setText("Descripcion: " + assessment.getDescription().toString());
         tvAssessmentRatingDetails.setText("Estrellas: " + assessment.getStars().toString());
         tvAssessmentDateTimeDetails.setText("Fecha y hora: " + assessment.getAssessmentDateTime().toString());
         btnBackToViewAssessment.setOnClickListener(v -> {
-            Intent BackToViewAssessment=new Intent(this, PatientViewAssessment.class);
-            BackToViewAssessment.putExtra("professional",professional);
+            Intent BackToViewAssessment=new Intent(this, Patient_Main_Activity.class);
+            BackToViewAssessment.putExtra("patient",patient);
             startActivity(BackToViewAssessment);
         });
     }
