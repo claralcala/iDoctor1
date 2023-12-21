@@ -27,7 +27,7 @@ import es.iescarrillo.idoctor1.services.AppointmentService;
 public class Patient_View_Appointment extends AppCompatActivity {
 
     ListView lvAppointments;
-    Button btnBack, btnAdd;
+    Button btnBack;
     ArrayList<Appointment> appointments;
     AppointmentService appService;
     Consultation consul;
@@ -60,7 +60,7 @@ public class Patient_View_Appointment extends AppCompatActivity {
 
         lvAppointments=findViewById(R.id.lvAppointments);
         btnBack=findViewById(R.id.btnBack);
-        btnAdd=findViewById(R.id.btnAddAppointment);
+
 
         appService = new AppointmentService(getApplicationContext());
 
@@ -108,16 +108,9 @@ public class Patient_View_Appointment extends AppCompatActivity {
 
         lvAppointments.setOnItemClickListener((parent, view, position, id) -> {
             app = (Appointment) parent.getItemAtPosition(position);
-            Intent details = new Intent(this, ProfessionalAppointmentDetails.class);
+            Intent details = new Intent(this, Patient_Get_Appointment.class);
             details.putExtra("appointment", app);
             startActivity(details);
-        });
-
-
-        btnAdd.setOnClickListener(v -> {
-            Intent add = new Intent(this, ProfessionalAddAppointment.class);
-            add.putExtra("consultation_id", consultationID);
-            startActivity(add);
         });
 
         btnBack.setOnClickListener(v -> {

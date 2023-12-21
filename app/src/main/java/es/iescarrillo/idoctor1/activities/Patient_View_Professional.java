@@ -125,7 +125,10 @@ public class Patient_View_Professional extends AppCompatActivity {
             startActivity(intent);
         });
 
-
+        btnBack.setOnClickListener(v -> {
+            Intent back = new Intent(this, Patient_Main_Activity.class);
+            startActivity(back);
+        });
 
     }
 }

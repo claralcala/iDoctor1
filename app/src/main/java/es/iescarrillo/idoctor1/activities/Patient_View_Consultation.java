@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,11 +27,13 @@ import es.iescarrillo.idoctor1.services.ProfessionalService;
 public class Patient_View_Consultation extends AppCompatActivity {
 
     ListView lvConsultation;
+    Button btnBack;
     Professional prof;
     ArrayList<Consultation>consultations;
     ConsultationService consultationService;
     ConsultationAdapter adapter;
     Consultation consultation;
+
 
 
 
@@ -57,6 +60,7 @@ public class Patient_View_Consultation extends AppCompatActivity {
         }
 
         lvConsultation = findViewById(R.id.lvConsultations);
+        btnBack = findViewById(R.id.btnBack);
 
         Intent intent=getIntent();
 
@@ -99,6 +103,11 @@ public class Patient_View_Consultation extends AppCompatActivity {
             Intent appointment = new Intent(this, Patient_View_Appointment.class);
             appointment.putExtra("consultation", consultation);
             startActivity(appointment);
+        });
+
+        btnBack.setOnClickListener(v -> {
+            Intent back = new Intent(this, Patient_Main_Activity.class);
+            startActivity(back);
         });
 
     }
