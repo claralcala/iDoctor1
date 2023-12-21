@@ -61,7 +61,8 @@ public class PatientViewAppointment extends AppCompatActivity {
                 for (DataSnapshot data:datasnapshot.getChildren()){
                     appointmentString=data.getValue(AppointmentString.class);
                     appointment=appointmentString.convertToAppointment();
-                    appointmentsList.add(appointment);
+                    //appointmentsList.add(appointment);
+
                 }
 
                 apAdapter=new AppointmentAdapter(getApplicationContext(),appointmentsList);

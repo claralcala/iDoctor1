@@ -7,8 +7,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout10"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -23,7 +23,7 @@
             android:id="@+id/tvUsernameAssessment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Usuario:" />
+            android:text="Usuario:"/>
 
         <TextView
             android:id="@+id/tvTitleAssessmentPatient"
