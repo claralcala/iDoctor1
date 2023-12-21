@@ -72,7 +72,7 @@ public class PatientAppointmentDetails extends AppCompatActivity {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                     consultation = snapshot.getValue(Consultation.class);
                     consultationAddress = consultation.getAddress();
-                    tvConsultationPatient.setText("Direccion" + consultationAddress);
+                    tvConsultationPatient.setText("Direccion: " + consultationAddress);
                 }
             }
 
@@ -81,7 +81,7 @@ public class PatientAppointmentDetails extends AppCompatActivity {
 
             }
         });
-        tvAppointmentDatePatient.setText("Fecha:  " +appointment.getAppointmentDate().toString());
+        tvAppointmentDatePatient.setText("Fecha: " +appointment.getAppointmentDate().toString());
         tvAppointmentTimePatient.setText("Hora: " + appointment.getAppointmentTime().toString());
         btnCancelAppointmentPatient=findViewById(R.id.btnCancelAppointmentPatient);
         LocalDate currentDate=LocalDate.now();
@@ -93,7 +93,7 @@ public class PatientAppointmentDetails extends AppCompatActivity {
                 appointment.setPatient_id("");
                 appointmentString=appointment.convertToAppointmentString();
                 appointmentService.updateAppointmentString(appointmentString);
-                Intent back=new Intent(this,PatientMainActivity.class);
+                Intent back=new Intent(this,Patient_Main_Activity.class);
                 startActivity(back);
             });
 
@@ -101,13 +101,12 @@ public class PatientAppointmentDetails extends AppCompatActivity {
         btnViewEvaluation=findViewById(R.id.btnViewEvaluation);
         btnViewEvaluation.setOnClickListener(v -> {
             Intent goToEvaluation=new Intent(this,PatientViewEvaluation.class);
-            appointment=(Appointment)intent.getSerializableExtra("appointment");
             goToEvaluation.putExtra("appointment",appointment);
             startActivity(goToEvaluation);
         });
         btnBackToAppointment=findViewById(R.id.btnBackToAppointment);
         btnBackToAppointment.setOnClickListener(v -> {
-            Intent backToAppointment=new Intent(this,PatientViewAppointment.class);
+            Intent backToAppointment=new Intent(this,PatientAppointments.class);
             startActivity(backToAppointment);
         });
 

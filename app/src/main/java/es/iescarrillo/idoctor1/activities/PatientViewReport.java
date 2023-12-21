@@ -36,7 +36,6 @@ public class PatientViewReport extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_view_report);
-        evaluationId = evaluation.getId();
         btnCancelReport = findViewById(R.id.btnCancelReport);
         tvTitleReport = findViewById(R.id.tvTitleReport);
         tvLinkReport = findViewById(R.id.tvLinkReport);
@@ -68,9 +67,10 @@ public class PatientViewReport extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     report = snapshot.getValue(Report.class);
-                    tvTitleReport.setText(report.getTitle().toString());
-                    tvLinkReport.setText(report.getLink().toString());
                 }
+                tvTitleReport.setText(report.getTitle());
+                tvLinkReport.setText(report.getLink());
+
             }
 
             @Override
@@ -78,6 +78,7 @@ public class PatientViewReport extends AppCompatActivity {
                 // Manejar errores de la base de datos
             }
         });
+
         btnCancelReport.setOnClickListener(v -> {
             Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);

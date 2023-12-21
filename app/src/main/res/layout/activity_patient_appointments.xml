@@ -4,21 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.PatientViewEvaluation">
-
+    tools:context=".activities.PatientAppointments">
     <LinearLayout
-        android:id="@+id/linearLayout6"
+        android:id="@+id/linearLayout499"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <ListView
-            android:id="@+id/lvPatientEvaluation"
+            android:id="@+id/lvPatientAppointment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clickable="true" />
+
+
     </LinearLayout>
+
     <Button
-        android:id="@+id/btnBackMain"
+        android:id="@+id/btnBackPatientMainEvaluation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
@@ -26,5 +30,5 @@
         android:backgroundTint="#200FAB"
         android:text="Volver pantalla principal"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/linearLayout6"/>
+        app:layout_constraintBottom_toBottomOf="@id/linearLayout499" />
 </androidx.constraintlayout.widget.ConstraintLayout>

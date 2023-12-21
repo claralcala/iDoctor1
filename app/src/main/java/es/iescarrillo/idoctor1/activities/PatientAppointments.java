@@ -27,7 +27,7 @@ import es.iescarrillo.idoctor1.models.Appointment;
 import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 
-public class PatientViewAppointment extends AppCompatActivity {
+public class PatientAppointments extends AppCompatActivity {
     ListView lvAppointment;
     Button btnBackPatientMain;
     Appointment appointment;
@@ -37,11 +37,11 @@ public class PatientViewAppointment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_view_appointment);
+        setContentView(R.layout.activity_patient_appointments);
         ArrayList <Appointment> appointmentsList=new ArrayList<Appointment>();
         apService = new AppointmentService(getApplicationContext());
         lvAppointment=findViewById(R.id.lvPatientAppointment);
-        btnBackPatientMain=findViewById(R.id.btnBackPatientMain);
+        btnBackPatientMain=findViewById(R.id.btnBackPatientMainEvaluation);
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
@@ -61,7 +61,7 @@ public class PatientViewAppointment extends AppCompatActivity {
                 for (DataSnapshot data:datasnapshot.getChildren()){
                     appointmentString=data.getValue(AppointmentString.class);
                     appointment=appointmentString.convertToAppointment();
-                    //appointmentsList.add(appointment);
+                    appointmentsList.add(appointment);
 
                 }
 

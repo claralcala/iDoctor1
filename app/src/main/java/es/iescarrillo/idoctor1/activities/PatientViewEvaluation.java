@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.adapters.EvaluationAdapter;
 import es.iescarrillo.idoctor1.models.Appointment;
+import es.iescarrillo.idoctor1.models.Assessment;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Evaluation;
 import es.iescarrillo.idoctor1.models.EvaluationString;
@@ -34,7 +36,7 @@ public class PatientViewEvaluation extends AppCompatActivity {
 
     ArrayList<Evaluation> evaluationArrayList;
 
-    AppointmentService appointmentService;
+    EvaluationService evaluationService;
 
     Evaluation evaluation;
 
@@ -68,12 +70,12 @@ public class PatientViewEvaluation extends AppCompatActivity {
         }
 
         lvPatientEvaluation=findViewById(R.id.lvPatientEvaluation);
-
+        btnBackMainPatient=findViewById(R.id.btnBackMain);
         appId = appointment.getId();
-        appointmentService  = new AppointmentService(getApplicationContext());
+        evaluationService  = new EvaluationService(getApplicationContext());
         evaluationArrayList = new ArrayList<>();
         adapter = new EvaluationAdapter(getApplicationContext(),evaluationArrayList);
-        appointmentService.getListEvaluation(appId, new ValueEventListener() {
+        evaluationService.getListEvaluation(appId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 evaluationArrayList.clear();
@@ -83,6 +85,9 @@ public class PatientViewEvaluation extends AppCompatActivity {
 
                     evaluation = evString.convertToEvaluation();
                     evaluationArrayList.add(evaluation);
+                }
+                for (Evaluation evaluation1 : evaluationArrayList) {
+                    Log.d("AssessmentData", "Username: " + evaluation1.getDescription() + ", Title: " + evaluation1.getExploration());
                 }
                 lvPatientEvaluation.setAdapter(adapter);
 
@@ -100,10 +105,10 @@ public class PatientViewEvaluation extends AppCompatActivity {
             IntentEvaluationDetails.putExtra("evaluation",evaluation);
             startActivity(IntentEvaluationDetails);
         });
-        btnBackMainPatient.findViewById(R.id.btnBackPatientMain);
         btnBackMainPatient.setOnClickListener(v -> {
-            Intent BackToPatientActivity=new Intent(this, Patient_Main_Activity.class);
-            startActivity(BackToPatientActivity);
+            //Intent BackToPatientActivity=new Intent(this, Patient_Main_Activity.class);
+            //startActivity(BackToPatientActivity);
+            onBackPressed();
         });
     }
 }

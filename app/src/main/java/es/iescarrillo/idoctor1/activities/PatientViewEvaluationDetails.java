@@ -73,9 +73,9 @@ public class PatientViewEvaluationDetails extends AppCompatActivity {
         evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
 
 
-        tvDescriptionDetailsEvaluation.setText(evaluation.getDescription());
-        tvExplorationDetailsEvaluation.setText(evaluation.getExploration());
-        tvTreatmentDetailsEvaluation.setText(evaluation.getTreatment());
+        tvDescriptionDetailsEvaluation.setText("Descripcion: " + evaluation.getDescription());
+        tvExplorationDetailsEvaluation.setText("Exploracion: " + evaluation.getExploration());
+        tvTreatmentDetailsEvaluation.setText("Detalle Tratamiento: " + evaluation.getTreatment());
 
         if (evaluation.getEvaluationDateTime() != null) {
             LocalDateTime dateTime = evaluation.getEvaluationDateTime();
@@ -84,7 +84,7 @@ public class PatientViewEvaluationDetails extends AppCompatActivity {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             String formattedDateTime = dateTime.format(formatter);
 
-            tvDateDetailsEvaluation.setText(formattedDateTime);
+            tvDateDetailsEvaluation.setText("Fecha y hora " + formattedDateTime);
         }
         btnCancelDetailsEvaluation.setOnClickListener(v -> {
             Intent back = new Intent(this, Patient_Main_Activity.class);

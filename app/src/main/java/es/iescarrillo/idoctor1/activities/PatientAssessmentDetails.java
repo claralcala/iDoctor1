@@ -70,7 +70,7 @@ public class PatientAssessmentDetails extends AppCompatActivity {
 
         assessmentId=assessment.getUsername();
         assessmentService=new AssessmentService(getApplicationContext());
-        tvUsernameAssessmentDetails.setText("Usuario" + assessment.getUsername().toString());
+        tvUsernameAssessmentDetails.setText("Usuario: " + assessment.getUsername().toString());
         tvTitleAssessmentDetails.setText("Titulo:  " +assessment.getTitle().toString());
         tvDescriptionAssessmentDetails.setText("Descripcion: " + assessment.getDescription().toString());
         tvAssessmentRatingDetails.setText("Estrellas: " + assessment.getStars().toString());
