@@ -1,6 +1,5 @@
 package es.iescarrillo.idoctor1.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -15,125 +14,116 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Appointment;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Timetable;
-import es.iescarrillo.idoctor1.models.TimetableString;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
 public class ProfessionalGenerateAppointments extends AppCompatActivity {
-
     private ConsultationService consultationService;
     private String consultationId;
     private Consultation selectedConsultation;
-
     private AppointmentService appointmentService;
-
-    EditText edDay, edInter;
-
+    EditText edDuration;
     Button btnGenerate;
-    private int intervaloConsulta;
-    private int duracionConsulta;
 
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professional_generate_appointments);
 
-
-        edDay = findViewById(R.id.etDay);
-        edInter = findViewById(R.id.etInter);
+        edDuration = findViewById(R.id.etInter);
         btnGenerate = findViewById(R.id.btnGenerate);
 
         consultationService = new ConsultationService(this);
 
+        // Obtener la consulta seleccionada
         Intent intent = getIntent();
-
         selectedConsultation = (Consultation) intent.getSerializableExtra("consultation");
 
+        if (selectedConsultation != null) {
+            consultationId = selectedConsultation.getId();
+        } else {
+            Toast.makeText(this, "Consulta no encontrada", Toast.LENGTH_SHORT).show();
+            finish(); // Finalizar la actividad si no hay consulta seleccionada
+        }
 
         btnGenerate.setOnClickListener(v -> {
-            String dayText = edDay.getText().toString();
-            String interText = edInter.getText().toString();
-
-            if (selectedConsultation != null) {
-                intervaloConsulta = Integer.parseInt(dayText);
-                duracionConsulta = Integer.parseInt(interText);
-                generateAppointments(LocalDate.now(), LocalDate.now().plusMonths(1), duracionConsulta);
-            } else {
-                Toast.makeText(this, "Consulta no encontrada o campos vacíos", Toast.LENGTH_SHORT).show();
-            }
+            String durationText = edDuration.getText().toString();
+            int duration = Integer.parseInt(durationText);
+            generateAppointments(selectedConsultation, duration);
         });
     }
 
-
-    private void generateAppointments(LocalDate startDate, LocalDate endDate, int duration) {
-        TimetableService timetableService = new TimetableService(getApplicationContext());
-        timetableService.getTimetablesByConsultationID(consultationId, new ValueEventListener() {
+    private void generateAppointments(Consultation consultation, int duration) {
+        TimetableService timetableService = new TimetableService(this);
+        timetableService.getTimetablesByConsultationID(consultation.getId(), new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Timetable> timetableList = new ArrayList<>();
-
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Timetable> timetables = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    TimetableString timetableString = snapshot.getValue(TimetableString.class);
-                    timetableList.add(timetableString.convertToTimetable());
+                    Timetable timetable = snapshot.getValue(Timetable.class);
+                    timetables.add(timetable);
                 }
 
-                List<LocalDateTime> generatedAppointments = new ArrayList<>();
+                List<LocalDateTime> appointmentDates = new ArrayList<>();
+                LocalDate startDate = LocalDate.now();
+                LocalDate endDate = startDate.plusMonths(1);
 
-                for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-                    for (Timetable timetable : timetableList) {
-                        LocalTime startTime = timetable.getStartTime();
-                        LocalTime endTime = timetable.getEndTime();
-
-                        startTime = startTime.plusMinutes((duration - (startTime.getMinute() % duration)) % duration);
-
-                        if (timetable.getDayOfWeek().equalsIgnoreCase(date.getDayOfWeek().toString())) {
-                            while (startTime.plusMinutes(duration).isBefore(endTime) || (startTime.plusMinutes(duration).equals(endTime))) {
-                                LocalDateTime appointmentDateTime = LocalDateTime.of(date, startTime);
-                                generatedAppointments.add(appointmentDateTime);
-                                startTime = startTime.plusMinutes(duration);
+                for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                    DayOfWeek dayOfWeek = date.getDayOfWeek();
+                    for (Timetable timetable : timetables) {
+                        if (timetable.getDayOfWeek().equalsIgnoreCase(dayOfWeek.toString())) {
+                            LocalTime startTime = timetable.getStartTime();
+                            LocalTime endTime = timetable.getEndTime();
+                            LocalDateTime appointmentDateTime = LocalDateTime.of(date, startTime);
+                            while (appointmentDateTime.plusMinutes(duration).isBefore(LocalDateTime.of(date, endTime))) {
+                                appointmentDates.add(appointmentDateTime);
+                                appointmentDateTime = appointmentDateTime.plusMinutes(duration);
                             }
                         }
                     }
                 }
 
-                insertAppointments(consultationId, generatedAppointments);
+                insertAppointments(appointmentDates);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("Firebase", "Error reading the database", error.toException());
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "Error al leer la base de datos", databaseError.toException());
             }
         });
     }
 
-    private void insertAppointments(String consultationId, List<LocalDateTime> appointmentDates) {
-        AppointmentService appointmentService = new AppointmentService(this);
+    private void insertAppointments(List<LocalDateTime> appointmentDates) {
+        appointmentService = new AppointmentService(this);
 
         for (LocalDateTime appointmentDateTime : appointmentDates) {
-            // Crea una nueva cita y establece los campos necesarios
-            Appointment appointment = new Appointment();
-            appointment.setActive(true);
-            appointment.setAppointmentDate(LocalDate.from(appointmentDateTime.atZone(ZoneId.systemDefault()).toInstant()));
-            appointment.setConsultation_id(consultationId);
+            try {
+                Appointment appointment = new Appointment();
+                appointment.setActive(false);
+                appointment.setAppointmentDate(appointmentDateTime.toLocalDate());
+                appointment.setAppointmentTime(LocalTime.parse(appointmentDateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
+                appointment.setConsultation_id(consultationId);
 
-            // Puedes establecer otros campos según sea necesario
-
-            // Inserta la cita en la base de datos
-            appointmentService.insertAppointment(appointment);
+                appointmentService.insertAppointment(appointment);
+            } catch (Exception e) {
+                Log.e("MyApp", "Error al insertar la cita", e);
+            }
         }
+
+        Toast.makeText(this, "Citas generadas correctamente", Toast.LENGTH_SHORT).show();
     }
 }

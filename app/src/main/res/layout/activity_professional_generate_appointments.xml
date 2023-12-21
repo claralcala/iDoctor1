@@ -11,34 +11,69 @@
         android:layout_height="729dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        tools:layout_editor_absoluteY="1dp"
+        tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/tvGenerateAppointments"
+            android:id="@+id/tvGenerateAssessment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="94dp"
+            android:background="@color/azul"
+            android:gravity="center"
+            android:text="Generate Appointment"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="35dp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/etInter"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/border"
             android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            android:hint="Intervalo"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="30dp"
+
+
+            />
 
         <EditText
             android:id="@+id/etDay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/border"
             android:ems="10"
+            android:hint="Day"
             android:inputType="text"
-            android:text="Name" />
+            android:paddingLeft="15dp"
 
-        <Button
-            android:id="@+id/btnGenerate"
+            />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnGenerate"
+                android:layout_width="343dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/verde"
+                android:text="Añadir" />
+        </LinearLayout>
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
