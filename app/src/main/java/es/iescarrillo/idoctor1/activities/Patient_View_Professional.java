@@ -210,7 +210,11 @@ public class Patient_View_Professional extends AppCompatActivity {
                                     for (DataSnapshot snapshot : dataSnapshot1.getChildren()) {
                                         // Convierte cada nodo de la base de datos a un objeto Superhero
                                         professional = snapshot.getValue(Professional.class);
-                                        professionals.add(professional);
+
+                                        if(!professionals.contains(professional)){
+                                            professionals.add(professional);
+                                        }
+
                                     }
 
                                     // Una vez los datos añadidos a nuestra lista, se la pasamos al adaptador
