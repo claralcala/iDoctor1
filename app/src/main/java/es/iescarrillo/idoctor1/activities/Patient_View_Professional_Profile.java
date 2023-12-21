@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -85,7 +86,9 @@ public class Patient_View_Professional_Profile extends AppCompatActivity {
         });
 
         btnListvaloratio.setOnClickListener(v -> {
-
+            Intent patientViewAssessment=new Intent(this,PatientViewAssessment.class);
+            patientViewAssessment.putExtra("professional", prof);
+            startActivity(patientViewAssessment);
         });
 
         btnValoration.setOnClickListener(v -> {
