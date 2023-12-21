@@ -44,6 +44,10 @@ public class ConsultationService {
         Query query = database.orderByChild("professional_id").equalTo(id);
         query.addValueEventListener(listener);
     }
+    public void getConsultationByID(String id,ValueEventListener listener){
+        Query query=database.orderByChild("id").equalTo(id);
+        query.addValueEventListener(listener);
+    }
 
     public void getConsultationsByID(String id, ValueEventListener listener){
         Query query = database.orderByChild("consultation_id").equalTo(id);
