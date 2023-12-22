@@ -35,7 +35,11 @@ import java.io.ByteArrayOutputStream;
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.services.PatientService;
-
+/**
+ * @author Jesús
+ *
+ * Pantalla para editar los detalles del paciente
+ */
 public class Patient_Edit_Profile extends AppCompatActivity {
 
     EditText etName, etSurname, etPassword, etDNI, etEmail, etNumber;
@@ -71,6 +75,7 @@ public class Patient_Edit_Profile extends AppCompatActivity {
 
         }
 
+        //Inicializamos componentes
         etName = findViewById(R.id.etName);
         etSurname = findViewById(R.id.etSurname);
         etPassword = findViewById(R.id.etPassword);
@@ -122,6 +127,7 @@ public class Patient_Edit_Profile extends AppCompatActivity {
             }
         });
 
+        //Boton para aceptar la edicion del perfil
         btnAccept.setOnClickListener(v -> {
             patient.setName(etName.getText().toString());
             patient.setSurname(etSurname.getText().toString());

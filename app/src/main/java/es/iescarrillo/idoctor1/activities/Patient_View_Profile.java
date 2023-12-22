@@ -21,7 +21,11 @@ import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.PatientService;
-
+/**
+ * @author Jesús
+ *
+ * Pantalla para ver el perfil de un paciente
+ */
 public class Patient_View_Profile extends AppCompatActivity {
     PatientService patientService;
     Patient patient;

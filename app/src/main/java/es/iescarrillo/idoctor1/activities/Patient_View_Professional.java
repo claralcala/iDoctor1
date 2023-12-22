@@ -32,7 +32,11 @@ import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
-
+/**
+ * @author Jesús
+ *
+ * Pantalla para ver los profesionales
+ */
 public class Patient_View_Professional extends AppCompatActivity {
 
     ListView lvProfessional;

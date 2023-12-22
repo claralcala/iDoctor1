@@ -23,7 +23,11 @@ import es.iescarrillo.idoctor1.models.Appointment;
 import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.services.AppointmentService;
-
+/**
+ * @author Jesús
+ *
+ * Pantalla para ver las citas de un profesional
+ */
 public class Patient_View_Appointment extends AppCompatActivity {
 
     ListView lvAppointments;

@@ -22,7 +22,11 @@ import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.PatientService;
-
+/**
+ * @author Jesús
+ *
+ * Pantalla para coger cita
+ */
 public class Patient_Get_Appointment extends AppCompatActivity {
 
     Appointment app;
