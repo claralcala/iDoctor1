@@ -30,7 +30,7 @@ public class Patient_Main_Activity extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
-
+        //Comprobamos que el rol del usuario sea paciente
         if(!role.equals("PATIENT")){
 
 
@@ -39,12 +39,13 @@ public class Patient_Main_Activity extends AppCompatActivity {
             startActivity(backMain);
 
         }
-
+        //inicializamos componentes
         btnViewProfile = findViewById(R.id.btnViewProfile);
         btnViewProfesionals = findViewById(R.id.btnViewProfesionals);
         btnViewCites = findViewById(R.id.btnViewCites);
         btnLogout = findViewById(R.id.btnLogout);
 
+        //Boton para desloguearnos
         btnLogout.setOnClickListener(v -> {
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
@@ -53,12 +54,14 @@ public class Patient_Main_Activity extends AppCompatActivity {
 
         });
 
+        //Boton para ir a ver nuestro perfil
         btnViewProfile.setOnClickListener(v -> {
             Intent profile = new Intent(this, Patient_View_Profile.class);
             profile.putExtra("id", id);
             startActivity(profile);
         });
 
+        //Boton para ver los profesionales
         btnViewProfesionals.setOnClickListener(v -> {
             Intent prof = new Intent(this, Patient_View_Professional.class);
             startActivity(prof);
@@ -66,7 +69,7 @@ public class Patient_Main_Activity extends AppCompatActivity {
 
 
 
-
+        //Boton para ver las citas disponibles
         btnViewCites.setOnClickListener(v->{
             Intent viewAppointment=new Intent(this, PatientAppointments.class);
             startActivity(viewAppointment);

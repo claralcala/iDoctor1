@@ -47,7 +47,7 @@ public class Patient_Get_Appointment extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
-
+        //Comprobamos que el rol del usuario sea paciente
         if(!role.equals("PATIENT")){
 
 
@@ -57,6 +57,7 @@ public class Patient_Get_Appointment extends AppCompatActivity {
 
         }
 
+        //Nos traemos los datos de un objeto appointment
         Intent intent = getIntent();
 
         app= new Appointment();
@@ -65,7 +66,7 @@ public class Patient_Get_Appointment extends AppCompatActivity {
         }
 
 
-
+        //Inicializamos componentes
         tvDate=findViewById(R.id.tvDate);
         tvHour=findViewById(R.id.tvHour);
         cbActive=findViewById(R.id.checkBoxActive);
@@ -84,13 +85,13 @@ public class Patient_Get_Appointment extends AppCompatActivity {
         }else{
 
         }
-
+        //Comprobamos que la cita este activa para habilitar el boton de reservar o no
         if(cbActive.isChecked()){
             btnReserve.setEnabled(true);
         }else{
             btnReserve.setEnabled(false);
         }
-
+        //Boton para reservar cita
         btnReserve.setOnClickListener(v -> {
 
             app.setPatient_id(id);
@@ -102,7 +103,7 @@ public class Patient_Get_Appointment extends AppCompatActivity {
             Intent reserve = new Intent(this, Patient_Main_Activity.class);
             startActivity(reserve);
         });
-
+        //Boton para volver atrás
         btnBack.setOnClickListener(v -> {
             onBackPressed();
         });

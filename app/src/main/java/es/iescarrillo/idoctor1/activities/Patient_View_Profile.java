@@ -46,7 +46,7 @@ public class Patient_View_Profile extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
-
+        //Comprobamos que el rol del usuario sea paciente
         if(!role.equals("PATIENT")){
 
 
@@ -56,6 +56,7 @@ public class Patient_View_Profile extends AppCompatActivity {
 
         }
 
+        //Inicializamos los componentes
         btnEdit = findViewById(R.id.btnEdit);
         btnBack = findViewById(R.id.btnBack);
 
@@ -71,6 +72,8 @@ public class Patient_View_Profile extends AppCompatActivity {
         ivPhoto=findViewById(R.id.ivPhoto);
 
         patientService = new PatientService(getApplicationContext());
+
+        //Mostramos los datos del paciente.
         patientService.getPatientByID(id, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -105,11 +108,13 @@ public class Patient_View_Profile extends AppCompatActivity {
             }
         });
 
+        //Boton para volver a la main activity
         btnBack.setOnClickListener(v -> {
             Intent intent = new Intent(this, Patient_Main_Activity.class);
             startActivity(intent);
         });
 
+        //Boton para editar los datos del paciente
         btnEdit.setOnClickListener(v -> {
             Intent edit = new Intent(this, Patient_Edit_Profile.class);
             edit.putExtra("patient", patient);
