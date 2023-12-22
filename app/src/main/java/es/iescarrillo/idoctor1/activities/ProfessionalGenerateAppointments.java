@@ -26,6 +26,7 @@ import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Appointment;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Timetable;
+import es.iescarrillo.idoctor1.models.TimetableString;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 import es.iescarrillo.idoctor1.services.TimetableService;
@@ -37,6 +38,8 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
     private AppointmentService appointmentService;
     EditText edDuration;
     Button btnGenerate;
+
+    TimetableString ttableString;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -74,7 +77,9 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Timetable> timetables = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Timetable timetable = snapshot.getValue(Timetable.class);
+
+                    ttableString = snapshot.getValue(TimetableString.class);
+                    Timetable timetable= ttableString.convertToTimetable();
                     timetables.add(timetable);
                 }
 
