@@ -27,7 +27,7 @@ import es.iescarrillo.idoctor1.models.EvaluationString;
 import es.iescarrillo.idoctor1.services.EvaluationService;
 
 public class ProfessionalViewEvaluation extends AppCompatActivity {
-
+    //Declaracion de componentes
     Button btnAddEvaluation;
 
     ListView lvEvaluation;
@@ -46,6 +46,12 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
 
     String appId;
 
+    /**
+     * @author Manu Rguez
+     * Pantalla para Visualizar las evaluaciones
+     */
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,7 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
 
         DatabaseReference dbSuperheros = FirebaseDatabase.getInstance().getReference().child("evaluation");
 
+        //Al entrar en la activity si el rol que tiene no es professional, lo saca hacia la MainActivity
         if(!role.equals("PROFESSIONAL")){
 
             sharedPreferences.edit().clear().apply();
@@ -70,18 +77,23 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
 
         }
 
+        //Recuperamos datos del intent
         Intent  intent1 = getIntent();
         appointment = new Appointment();
         if (intent1 != null) {
             appointment = (Appointment) intent1.getSerializableExtra("appointment");
         }
 
+
+
         lvEvaluation=findViewById(R.id.lvEvaluation);
 
+        //Asignamos el id a una variable
         appId = appointment.getId();
         evaluationService  = new EvaluationService(getApplicationContext());
 
 
+        //Declaramos un arrayList y lo introducimos en el adapter
         evaluationArrayList = new ArrayList<>();
         adapter = new EvaluationAdapter(getApplicationContext(),evaluationArrayList);
 
@@ -89,6 +101,7 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
 
 
 
+        //Añadimos al arraylist los objetos de evaluacion
         evaluationService.getListEvaluation(appId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -113,12 +126,16 @@ public class ProfessionalViewEvaluation extends AppCompatActivity {
 
         btnAddEvaluation = findViewById(R.id.btnAddEvaluation);
 
+
+        //Le damos funcion al boton de añadir evaluacion y nos llevamos el objeto appointment en el intent
         btnAddEvaluation.setOnClickListener( v -> {
             Intent add = new Intent(this, ProfessionalAddEvaluation.class);
             add.putExtra("appointment", appointment);
             startActivity(add);
         });
 
+
+        //Le damos funcion al boton de lvEvaluation que al hacer clic en un objeto de la lista nos llevara a la patalla de detalles
         lvEvaluation.setOnItemClickListener((parent, view, position, id) -> {
         evaluation = (Evaluation)  parent.getItemAtPosition(position);
 

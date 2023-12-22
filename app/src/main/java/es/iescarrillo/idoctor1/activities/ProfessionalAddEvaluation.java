@@ -48,6 +48,10 @@ public class ProfessionalAddEvaluation extends AppCompatActivity {
 
     LocalDateTime currentDate;
 
+    /**
+     * @author Manu Rguez
+     * Pantalla para Visualizar el informe
+     */
 
     @SuppressLint("MissingInflatedId")
     @Override

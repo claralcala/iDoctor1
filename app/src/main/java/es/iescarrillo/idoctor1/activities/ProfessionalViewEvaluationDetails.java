@@ -26,6 +26,8 @@ import es.iescarrillo.idoctor1.services.ProfessionalService;
 
 public class ProfessionalViewEvaluationDetails extends AppCompatActivity {
 
+
+    //Declaracion de componentnes
     Evaluation evaluation;
 
     TextView tvDescriptionDetails, tvExplorationDetails, tvTreatmentDetails, tvDateDetails;
@@ -37,6 +39,11 @@ public class ProfessionalViewEvaluationDetails extends AppCompatActivity {
     EvaluationService evaluationService;
 
     String evaluationId;
+
+    /**
+     * @author Manu Rguez
+     * Pantalla para vissualizar los Detalles de Evaluacion
+     */
 
 
     @Override
@@ -51,7 +58,7 @@ public class ProfessionalViewEvaluationDetails extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
-
+        //Al entrar en la activity si el rol que tiene no es professional, lo saca hacia la MainActivity
         if (!role.equals("PROFESSIONAL")) {
 
 
@@ -61,33 +68,37 @@ public class ProfessionalViewEvaluationDetails extends AppCompatActivity {
 
         }
 
-
+        //Declaracion de componentnes
         btnCancelDetails = findViewById(R.id.btnCancelDetails);
         btnViewInform = findViewById(R.id.btnViewInform);
 
+        //Recuperamos datos del intent
         Intent intent = getIntent();
 
         evaluation = new Evaluation();
         if (intent != null) {
             evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
         }
-
+        //Asignamos a evaluationId la id de la evaluacion para posteriormente pasarlo por parametro
         evaluationId = evaluation.getId();
 
+        //Le asignamos a los componentes su respectivo campo
         tvDescriptionDetails = findViewById(R.id.tvDescriptionDetails);
         tvExplorationDetails = findViewById(R.id.tvExplorationDetails);
         tvTreatmentDetails = findViewById(R.id.tvTreatmentDetails);
         tvDateDetails = findViewById(R.id.tvDateDetails);
 
+        //Llamamos al service
         evaluationService = new EvaluationService(getApplicationContext());
 
         evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
 
-
+        //Guardamos en los componentes la informacion que le pertenece
         tvDescriptionDetails.setText(evaluation.getDescription());
         tvExplorationDetails.setText(evaluation.getExploration());
         tvTreatmentDetails.setText(evaluation.getTreatment());
 
+        //comprobamos la fecha y la hora no es nulla y formateamos  y lo añadimos a su campo
         if (evaluation.getEvaluationDateTime() != null) {
             LocalDateTime dateTime = evaluation.getEvaluationDateTime();
 
@@ -97,6 +108,8 @@ public class ProfessionalViewEvaluationDetails extends AppCompatActivity {
 
             tvDateDetails.setText(formattedDateTime);
         }
+
+        //Le damos funcionalidad al boton de cancelar para que cuando se haga click se dirija a la Main Activity de Profesional
         btnCancelDetails.setOnClickListener(v -> {
             Intent back = new Intent(this, ProfessionalMainActivity.class);
 
@@ -104,6 +117,7 @@ public class ProfessionalViewEvaluationDetails extends AppCompatActivity {
 
         });
 
+        //Le damos funcion al boton de ver informe y nos llevamos en el intent el objeto de evaluacion
         btnViewInform.setOnClickListener(v -> {
             Intent inform = new Intent(this, ProfessionalViewReport.class);
             inform.putExtra("evaluation",evaluation);

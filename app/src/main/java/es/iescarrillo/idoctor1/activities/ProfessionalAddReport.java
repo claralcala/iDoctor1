@@ -28,6 +28,11 @@ public class ProfessionalAddReport extends AppCompatActivity {
     Evaluation evaluation;
     String evaluationId;
 
+    /**
+     * @author Manu Rguez
+     * Pantalla para Visualizar el informe
+     */
+
 
     @SuppressLint("MissingInflatedId")
     @Override

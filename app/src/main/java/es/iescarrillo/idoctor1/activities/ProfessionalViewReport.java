@@ -26,6 +26,8 @@ import es.iescarrillo.idoctor1.services.ReportService;
 
 public class ProfessionalViewReport extends AppCompatActivity {
 
+
+    //Declaracion de componentes
     Button btnAdd, btnCancel;
     TextView tvTitle, tvLink;
 
@@ -36,12 +38,19 @@ public class ProfessionalViewReport extends AppCompatActivity {
     Evaluation evaluation;
     String evaluationId;
 
+    /**
+     * @author Manu Rguez
+     * Pantalla para Visualizar el informe
+     */
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professional_view_report);
+
+        //Declaramos los componentes
 
         btnAdd = findViewById(R.id.btnAdd);
         btnCancel = findViewById(R.id.btnCancel);
@@ -55,6 +64,7 @@ public class ProfessionalViewReport extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        //Al entrar en la activity si el rol que tiene no es professional, lo saca hacia la MainActivity
         if (!role.equals("PROFESSIONAL")) {
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
@@ -63,8 +73,10 @@ public class ProfessionalViewReport extends AppCompatActivity {
 
         DatabaseReference dbDoctor = FirebaseDatabase.getInstance().getReference().child("report");
 
+        //Llamamos al servicio
         reportService = new ReportService(getApplicationContext());
 
+        //Recuperamos datos del intent
         report = new Report();
         Intent intent = getIntent();
 
@@ -73,6 +85,7 @@ public class ProfessionalViewReport extends AppCompatActivity {
             evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
         }
 
+        //Asignamos a evaluationId la id de la evaluacion para posteriormente pasarlo por parametro
         evaluationId = evaluation.getId();
 
 
@@ -95,12 +108,15 @@ public class ProfessionalViewReport extends AppCompatActivity {
                 // Manejar errores de la base de datos
             }
         });
+
+        //Le damos funcionalidad al boton de añadir y pasamos en el intent el objeto evaluacion
         btnAdd.setOnClickListener(v -> {
             Intent intent2 = new Intent(this, ProfessionalAddReport.class);
             intent2.putExtra("evaluation",evaluation);
             startActivity(intent2);
         });
 
+        //Le damos funcionalidad al boton de cancelar para que cuando se haga click se dirija a la Main Activity de Profesional
         btnCancel.setOnClickListener(v -> {
             Intent back = new Intent(this, ProfessionalMainActivity.class);
             startActivity(back);
