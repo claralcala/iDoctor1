@@ -24,37 +24,50 @@
             android:id="@+id/tvTitleDetailAppointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Detalles cita paciente" />
+            android:text="Detalles cita paciente"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvAppointmentDatePatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="fecha" />
+            android:text="Fecha:"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="13dp"/>
 
         <TextView
             android:id="@+id/tvAppointmentTimePatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="hora" />
+            android:text="Hora:"
+            android:textSize="16sp"
+            android:layout_marginBottom="13dp"/>
 
         <TextView
             android:id="@+id/tvConsultationPatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Direccion" />
+            android:text="Direccion:"
+            android:textSize="16sp"
+            android:layout_marginBottom="13dp"/>
 
         <Button
             android:id="@+id/btnCancelAppointmentPatient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancelar cita" />
+            android:text="Cancelar cita"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="13dp" />
 
         <Button
             android:id="@+id/btnViewEvaluation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ver evaluacion" />
+            android:text="Ver evaluacion"
+            android:layout_marginBottom="13dp"/>
 
         <Button
             android:id="@+id/btnBackToAppointment"

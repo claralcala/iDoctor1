@@ -19,40 +19,58 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/tvTitleAssessment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Detalles Valoracion" />
+            android:text="Detalles Valoracion"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+
         <TextView
             android:id="@+id/tvUsernameAssessmentDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Usuario:" />
+            android:text="Usuario:"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="13dp"
+            />
 
         <TextView
             android:id="@+id/tvTitleAssessmentDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Titulo:" />
+            android:text="Titulo:"
+            android:textSize="16sp"
+            android:layout_marginBottom="13dp"/>
 
         <TextView
             android:id="@+id/tvDescriptionAssessmentDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descripcion:" />
+            android:text="Descripcion:"
+            android:textSize="16sp"
+            android:layout_marginBottom="13dp"/>
 
         <TextView
             android:id="@+id/tvAssessmentRatingDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Estrellas:" />
+            android:text="Estrellas:"
+            android:textSize="16sp"
+            android:layout_marginBottom="13dp"/>
 
         <TextView
             android:id="@+id/tvAssessmentDateTimeDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha y hora" />
+            android:text="Fecha y hora:"
+            android:textSize="16sp"
+            android:layout_marginBottom="13dp"/>
 
         <Button
             android:id="@+id/btnBackToViewAssessment"

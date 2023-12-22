@@ -24,13 +24,19 @@
             android:id="@+id/tvTitleAssessment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Valoraciones" />
+            android:text="Valoraciones"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvUserAssessment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="13dp"
+            android:text=""
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/etTitleAssessment"
@@ -40,7 +46,10 @@
             android:gravity="start|top"
             android:hint="Introduce titulo de la valoracion"
             android:inputType="textMultiLine"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:layout_marginBottom="13dp"
+
+            />
 
         <EditText
             android:id="@+id/etAssessmentDescription"
@@ -50,13 +59,17 @@
             android:gravity="start|top"
             android:hint="Descripcion de la valoracion"
             android:inputType="textMultiLine"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:layout_marginBottom="13dp"
+            />
 
         <Spinner
             android:id="@+id/spStars"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:layout_marginBottom="13dp"
+            />
 
         <EditText
             android:id="@+id/etDateTimeAssessment"
@@ -66,7 +79,9 @@
             android:gravity="start|top"
             android:hint="Introduce fecha y hora (dd/MM/YYYY HH:mm)"
             android:inputType="textMultiLine"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:layout_marginBottom="13dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
