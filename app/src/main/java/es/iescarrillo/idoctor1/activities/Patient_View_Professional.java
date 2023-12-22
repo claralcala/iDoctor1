@@ -67,7 +67,7 @@ public class Patient_View_Professional extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
-
+        //Comprobamos que el rol del usuario sea paciente
         if(!role.equals("PATIENT")){
 
 
@@ -77,6 +77,7 @@ public class Patient_View_Professional extends AppCompatActivity {
 
         }
 
+        //Inicializamos los componentes
         lvProfessional = findViewById(R.id.lvProfessional);
         spFilter = findViewById(R.id.spFilter);
         etFilter = findViewById(R.id.etFilter);
@@ -117,6 +118,7 @@ public class Patient_View_Professional extends AppCompatActivity {
             }
         });
 
+        //Creamos un array y volvamos su contenido en el Spinner
         options = new ArrayList<>();
         options.add("Nombre");
         options.add("Ciudad");
@@ -138,6 +140,7 @@ public class Patient_View_Professional extends AppCompatActivity {
             }
         });
 
+        //en caso de darle a algun profesional de la lista nos llevara a ver su perfil
         lvProfessional.setOnItemClickListener((parent, view, position, id) -> {
             professional = (Professional) parent.getItemAtPosition(position);
             Intent intent = new Intent(this, Patient_View_Professional_Profile.class);
@@ -145,13 +148,16 @@ public class Patient_View_Professional extends AppCompatActivity {
             startActivity(intent);
         });
 
+        //Boton para volver a la main activity
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);
         });
 
+        //Boton para filtrar por nombre, especialidad o ciudad
         btnFilter.setOnClickListener(v -> {
 
+            //En caso de en el Spinner seleccionemos nombre buscaremos los profesionales por nombre
             if(option.equalsIgnoreCase("nombre")){
                 professionalService.getProfesionalByName(etFilter.getText().toString(), new ValueEventListener() {
                     @Override
@@ -173,6 +179,7 @@ public class Patient_View_Professional extends AppCompatActivity {
 
                     }
                 });
+                //En caso de en el Spinner seleccionemos Especialidad buscaremos los profesionales por Especialidad
             } else if (option.equalsIgnoreCase("Especialidad")) {
                 professionalService.getProfesionalBySpeciality(etFilter.getText().toString(), new ValueEventListener() {
                     @Override
@@ -194,6 +201,7 @@ public class Patient_View_Professional extends AppCompatActivity {
 
                     }
                 });
+                //En caso de en el Spinner seleccionemos Ciudad buscaremos los profesionales por Ciudad
             } else if (option.equalsIgnoreCase("Ciudad")) {
                 consultationService.getConsultationByCity(etFilter.getText().toString(), new ValueEventListener() {
                     @Override

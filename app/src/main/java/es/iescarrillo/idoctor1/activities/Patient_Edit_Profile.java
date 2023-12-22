@@ -65,7 +65,7 @@ public class Patient_Edit_Profile extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
-
+        //Comprobamos que el rol del usuario sea paciente
         if(!role.equals("PATIENT")){
 
 
@@ -94,6 +94,7 @@ public class Patient_Edit_Profile extends AppCompatActivity {
 
         patientService = new PatientService(getApplicationContext());
 
+        //Recuperamos los datos de un objeto paciente
         Intent intent = getIntent();
 
         patient = new Patient();
@@ -113,12 +114,14 @@ public class Patient_Edit_Profile extends AppCompatActivity {
             cbHealthInsurance.setChecked(false);
         }
 
+        //Cargamos una foto por defecto en el paciente si no tiene foto subida
         if (patient.getPhoto() != null && !patient.getPhoto().isEmpty()) {
             Picasso.get().load(patient.getPhoto()).into(ivPhoto);
         } else {
             Picasso.get().load("https://img.freepik.com/vector-gratis/ilustracion-concepto-dolor-alimentos_114360-16553.jpg?w=826&t=st=1702917731~exp=1702918331~hmac=444109e17f3a8f166c50ae83ebd1e70458916c93b034d22f40e0ba26fb7af18a").into(ivPhoto);
         }
 
+        //Al hacer click sobre la foto nos permite cambiarla
         ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,13 +153,14 @@ public class Patient_Edit_Profile extends AppCompatActivity {
             startActivity(accept);
 
         });
-
+        //Boton para volver a la activity anterior
         btnBack.setOnClickListener(v -> {
             onBackPressed();
         });
 
     }
 
+    //Metodo para cargar una nueva foto
     private void uploadPhoto(){
         Intent i = new Intent(Intent.ACTION_PICK);
         i.setType("image/*");
@@ -175,6 +179,7 @@ public class Patient_Edit_Profile extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+    //Metodo par aconseguir la URI de la imagen
     private Uri getImageUri(Context context, ImageView imageView, String name) {
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -183,6 +188,7 @@ public class Patient_Edit_Profile extends AppCompatActivity {
         return Uri.parse(path);
     }
 
+    //Metodo para actualizar la foto del usuario
     private void uploadImage(String idProf){
         Uri file = getImageUri(this, ivPhoto, idProf);
         StorageReference storageRefProfessional = storageReference.child(idProf);

@@ -38,7 +38,7 @@ public class Patient_View_Professional_Profile extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
-
+        //Comprobamos que el rol del usuario sea paciente
         if(!role.equals("PATIENT")){
 
 
@@ -48,6 +48,7 @@ public class Patient_View_Professional_Profile extends AppCompatActivity {
 
         }
 
+        //Inicializamos los componentes
         tvName=findViewById(R.id.tvProfName);
         tvSurname=findViewById(R.id.tvProfSurname);
         tvCollegiate=findViewById(R.id.tvprofCollegiate);
@@ -60,6 +61,7 @@ public class Patient_View_Professional_Profile extends AppCompatActivity {
         btnListvaloratio=findViewById(R.id.btnListvaloratio);
         btnAddAppointment=findViewById(R.id.btnAddAppointment);
 
+        //Recuperamos los datos de un profesional
         Intent intent=getIntent();
 
         prof = new Professional();
@@ -67,6 +69,7 @@ public class Patient_View_Professional_Profile extends AppCompatActivity {
             prof = (Professional) intent.getSerializableExtra("professional");
         }
 
+        //Volcamos los datos del profesional que nos hemos traido en los TextView
         tvName.setText("Nombre: " +prof.getName());
         tvSurname.setText("Apellidos: " +prof.getSurname());
         tvCollegiate.setText("Num. Colegiado: " +prof.getCollegiateNumber());
@@ -79,23 +82,27 @@ public class Patient_View_Professional_Profile extends AppCompatActivity {
             Picasso.get().load("https://img.freepik.com/vector-gratis/fondo-personaje-doctor_1270-84.jpg?w=740&t=st=1702906621~exp=1702907221~hmac=ab4e750f9abbc3639d96cc11482c3e2d4e2884af78c387638bd8b2c6c2ade362").into(ivPhoto);
         }
 
+        //Boton para volver
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent(this, Patient_View_Professional.class);
             startActivity(back);
         });
 
+        //Boton para coger cita
         btnAddAppointment.setOnClickListener(v -> {
             Intent consultation = new Intent(this, Patient_View_Consultation.class);
             consultation.putExtra("professional", prof);
             startActivity(consultation);
         });
 
+        //Boton para ver las valoraciones del profesional
         btnListvaloratio.setOnClickListener(v -> {
             Intent patientViewAssessment=new Intent(this,PatientViewAssessment.class);
             patientViewAssessment.putExtra("professional", prof);
             startActivity(patientViewAssessment);
         });
 
+        //Boton para valorar al profesional
         btnValoration.setOnClickListener(v -> {
             Intent insertAppointment=new Intent(this,PatientInsertAssessment.class);
             insertAppointment.putExtra("professional", prof);

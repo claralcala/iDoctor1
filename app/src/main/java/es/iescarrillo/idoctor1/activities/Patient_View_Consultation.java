@@ -53,7 +53,7 @@ public class Patient_View_Consultation extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
-
+        //Comprobamos que el rol del usuario sea paciente
         if(!role.equals("PATIENT")){
 
 
@@ -62,10 +62,11 @@ public class Patient_View_Consultation extends AppCompatActivity {
             startActivity(backMain);
 
         }
-
+        //Inicializamos componentes
         lvConsultation = findViewById(R.id.lvConsultations);
         btnBack = findViewById(R.id.btnBack);
 
+        //Recuperamos los datos del profesional
         Intent intent=getIntent();
 
         prof = new Professional();
@@ -77,6 +78,7 @@ public class Patient_View_Consultation extends AppCompatActivity {
 
         consultations= new ArrayList<>();
 
+        //Conseguimos las consultas mediante el id del profesional y las volcamos en una listView
         consultationService.getConsultationsByProfessionalID(prof.getId(), new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -101,7 +103,7 @@ public class Patient_View_Consultation extends AppCompatActivity {
             }
         });
 
-
+        //Al pulsar en la consulta de la ListView nos lleva a ver sus citas
         lvConsultation.setOnItemClickListener((parent, view, position, id) -> {
             consultation = (Consultation) parent.getItemAtPosition(position);
             Intent appointment = new Intent(this, Patient_View_Appointment.class);
@@ -109,6 +111,7 @@ public class Patient_View_Consultation extends AppCompatActivity {
             startActivity(appointment);
         });
 
+        //Boton para volver a la Main activity
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);
