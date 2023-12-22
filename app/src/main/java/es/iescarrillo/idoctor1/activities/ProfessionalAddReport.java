@@ -19,6 +19,8 @@ import es.iescarrillo.idoctor1.services.ReportService;
 
 public class ProfessionalAddReport extends AppCompatActivity {
 
+
+    //Declaracion de los componentes
     Report report;
 
     ReportService reportService;
@@ -47,6 +49,7 @@ public class ProfessionalAddReport extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -55,13 +58,15 @@ public class ProfessionalAddReport extends AppCompatActivity {
             startActivity(backMain);
 
         }
-
+        //Inicializacion de componentes
         etAddTitle = findViewById(R.id.etAddTitle);
         etAddLink = findViewById(R.id.etAddLink);
 
         btnAddReport  = findViewById(R.id.btnAddReport);
         btnCancelAddReport = findViewById(R.id.btnCancelAddReport);
 
+
+        //Declaracion del service y recuperacion de datos del intent
         reportService  =new ReportService(getApplicationContext());
 
         Intent intent = getIntent();
@@ -69,9 +74,12 @@ public class ProfessionalAddReport extends AppCompatActivity {
             evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
         }
 
+        //Asignamos un Id a una variable
         evaluationId = evaluation.getId();
         Log.d("ProfessionalViewReport", "Evaluation ID" + evaluationId);
 
+
+        //añadimos el report a la base de datos
         btnAddReport.setOnClickListener(v -> {
 
             report  =new Report();

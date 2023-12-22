@@ -32,6 +32,7 @@ import es.iescarrillo.idoctor1.services.ConsultationService;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
 public class ProfessionalGenerateAppointments extends AppCompatActivity {
+   //Declaracion de componentes
     private ConsultationService consultationService;
     private String consultationId;
     private Consultation selectedConsultation;
@@ -45,6 +46,12 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
 
     List<LocalDateTime> appointmentDates;
 
+
+    /**
+     * @author Manu Rguez
+     *
+     * Pantalla añadir citas automaticamente
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

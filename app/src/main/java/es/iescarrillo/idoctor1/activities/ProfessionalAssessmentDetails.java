@@ -19,7 +19,7 @@ import es.iescarrillo.idoctor1.models.Assessment;
 import es.iescarrillo.idoctor1.services.AssessmentService;
 
 public class ProfessionalAssessmentDetails extends AppCompatActivity {
-
+    //Declaracion de los componentes
 
     Assessment assessment;
 
@@ -29,6 +29,10 @@ public class ProfessionalAssessmentDetails extends AppCompatActivity {
 
     AssessmentService assessmentService;
 
+    /**
+     * @author Manu Rguez
+     * Pantalla de detalles de la evaluacion
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,7 @@ public class ProfessionalAssessmentDetails extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
-
+        //Comprobacion de roles
         if (!role.equals("PROFESSIONAL")) {
 
 
@@ -53,6 +57,8 @@ public class ProfessionalAssessmentDetails extends AppCompatActivity {
 
         btnCancelDetails = findViewById(R.id.btnCancelDetails);
 
+
+        //Recuperacion de los datos del intent
         Intent intent = getIntent();
 
         assessment = new Assessment();
@@ -61,7 +67,7 @@ public class ProfessionalAssessmentDetails extends AppCompatActivity {
         }
 
         assessmentService = new AssessmentService(getApplicationContext());
-
+        //Inicializacion de componentes
         assessment = (Assessment) intent.getSerializableExtra("assessment");
         tvUsername = findViewById(R.id.tvUsername);
         tvDescription = findViewById(R.id.tvDescription);
@@ -70,12 +76,14 @@ public class ProfessionalAssessmentDetails extends AppCompatActivity {
         tvDateDetails = findViewById(R.id.tvDateDetails);
 
 
-
+        //Asignamos los valores que le corresponden a los campos de texto
         tvUsername.setText(assessment.getUsername().toString());
         tvDescription.setText(assessment.getDescription().toString());
         tvTitle.setText(assessment.getTitle().toString());
         tvStars.setText(assessment.getStars().toString());
 
+
+        //comprobamos que la fecha y hora no sea nulo la formateamos y la añadimos
         if (assessment.getAssessmentDateTime() != null){
             LocalDateTime dateTime  = assessment.getAssessmentDateTime();
 
@@ -84,7 +92,7 @@ public class ProfessionalAssessmentDetails extends AppCompatActivity {
 
             tvDateDetails.setText(formattedDateTime);
         }
-
+        //Le damos funcion al boton de cancelar
         btnCancelDetails.setOnClickListener( v -> {
             Intent intentback = new Intent(this, ProfessionalMainActivity.class);
             startActivity(intentback);

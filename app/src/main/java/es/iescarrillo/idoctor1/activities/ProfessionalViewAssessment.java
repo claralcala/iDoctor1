@@ -25,8 +25,10 @@ import es.iescarrillo.idoctor1.models.Assessment;
 import es.iescarrillo.idoctor1.models.AssessmentString;
 import es.iescarrillo.idoctor1.services.AssessmentService;
 
+
 public class ProfessionalViewAssessment extends AppCompatActivity {
 
+    //Declaracion de componentes
     ListView lvAssessment;
 
     ArrayList<Assessment> assessmentArrayList;
@@ -38,6 +40,12 @@ public class ProfessionalViewAssessment extends AppCompatActivity {
     AssessmentAdapter adapter;
 
     AssessmentString assessmentString;
+
+
+    /**
+     * @author Manu Rguez
+     * Pantalla para Visualizar  las valoraciones
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,7 @@ public class ProfessionalViewAssessment extends AppCompatActivity {
 
         DatabaseReference dbSuperheros = FirebaseDatabase.getInstance().getReference().child("evaluation");
 
+        //Comprobacion de roles
         if (!role.equals("PROFESSIONAL")) {
 
             sharedPreferences.edit().clear().apply();
@@ -61,14 +70,19 @@ public class ProfessionalViewAssessment extends AppCompatActivity {
 
 
         }
+        //Inicializacion de componentes
         lvAssessment = findViewById(R.id.lvAssessment);
 
+        //Ddeclaracion del service
         assessmentService = new AssessmentService(getApplicationContext());
-
+        //Declaracion del arraylist
         assessmentArrayList = new ArrayList<>();
 
+        //Añadimos al adapter el contenido de la lista
         adapter = new AssessmentAdapter(getApplicationContext(), assessmentArrayList);
 
+
+        //Buscamos la lista por el id del professional
         assessmentService.getAssessmentsByProfessionalID(id_, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -89,6 +103,8 @@ public class ProfessionalViewAssessment extends AppCompatActivity {
 
             }
         });
+
+        //Le damos funcion para que cuando se haga clic en un elemento de la lista se muestren sus detalles
 
         lvAssessment.setOnItemClickListener((parent, view, position, id) -> {
             assessment = (Assessment) parent.getItemAtPosition(position);

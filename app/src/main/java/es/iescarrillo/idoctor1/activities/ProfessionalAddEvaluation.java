@@ -50,7 +50,7 @@ public class ProfessionalAddEvaluation extends AppCompatActivity {
 
     /**
      * @author Manu Rguez
-     * Pantalla para Visualizar el informe
+     * Pantalla para Añadir evaluación
      */
 
     @SuppressLint("MissingInflatedId")
@@ -80,6 +80,7 @@ public class ProfessionalAddEvaluation extends AppCompatActivity {
 
         }
 
+        //Inicializacion de componentes
         etDescription = findViewById(R.id.etDescription);
         etExploration = findViewById(R.id.etExploration);
         etTreatment  = findViewById(R.id.etTreatment);
@@ -90,18 +91,20 @@ public class ProfessionalAddEvaluation extends AppCompatActivity {
 
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
-
+        //Nos traemos la consulta en el intent
         Intent  intent1 = getIntent();
         appointment = new Appointment();
         if (intent1 != null) {
             appointment = (Appointment) intent1.getSerializableExtra("appointment");
         }
 
+        //asignamos una id a una variable
         appId=appointment.getId();
 
 
         evaluationService = new EvaluationService(getApplicationContext());
 
+        //Guardamos los datos en la base de datos
         btnSave.setOnClickListener(v -> {
             evaluation = new Evaluation();
             evaluation.setDescription(etDescription.getText().toString());
@@ -145,7 +148,7 @@ public class ProfessionalAddEvaluation extends AppCompatActivity {
 
         });
 
-
+        //Le damos funcion al boton de cancelar
         btnCancel.setOnClickListener(v -> {
             Intent cancel = new Intent(this, ProfessionalMainActivity.class);
             startActivity(cancel);
