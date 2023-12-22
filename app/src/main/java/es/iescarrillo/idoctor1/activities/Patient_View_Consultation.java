@@ -23,7 +23,11 @@ import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
-
+/**
+ * @author Jesús
+ *
+ * Pantalla para ver las consultas
+ */
 public class Patient_View_Consultation extends AppCompatActivity {
 
     ListView lvConsultation;

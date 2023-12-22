@@ -9,7 +9,11 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import es.iescarrillo.idoctor1.R;
-
+/**
+ * @author Jesús
+ *
+ * Main del paciente
+ */
 public class Patient_Main_Activity extends AppCompatActivity {
 
     Button btnViewProfile, btnViewProfesionals, btnViewCites, btnLogout;

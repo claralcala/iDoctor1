@@ -15,7 +15,11 @@ import com.squareup.picasso.Picasso;
 
 import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Professional;
-
+/**
+ * @author Jesús
+ *
+ * Pantalla para ver el perfil de un profesional desde un paciente
+ */
 public class Patient_View_Professional_Profile extends AppCompatActivity {
 
     Button btnValoration, btnBack, btnListvaloratio, btnAddAppointment;
