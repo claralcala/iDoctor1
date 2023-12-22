@@ -34,6 +34,11 @@ import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.PatientService;
 
+/**
+ * @author clara
+ *
+ * Pantalla para que el profesional añada cita
+ */
 public class ProfessionalAddAppointment extends AppCompatActivity {
 
     Appointment app;
@@ -70,6 +75,7 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -79,7 +85,7 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
 
         }
 
-
+        //Inicializamos componentes
         etDate=findViewById(R.id.etDate);
         etHour=findViewById(R.id.etTime);
         cbActive=findViewById(R.id.checkBoxActive);
@@ -90,16 +96,20 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
 
         appService = new AppointmentService(getApplicationContext());
 
+        //Nos traemos el id de la consulta
         Intent intent = getIntent();
         consultationID=intent.getStringExtra("consultation_id");
 
 
 
 
+        //Formatters para la fecha y hora
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH:mm");
 
+        //Accion del boton añadir
         btnAdd.setOnClickListener(v -> {
+
             app = new Appointment();
 
             app.setConsultation_id(consultationID);
@@ -112,6 +122,7 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
                 app.setActive(false);
             }
 
+            //Convertimos a un objeto AppointmentString para insertar
             AppointmentString appString = new AppointmentString();
             appString=app.convertToAppointmentString();
 
@@ -122,7 +133,7 @@ public class ProfessionalAddAppointment extends AppCompatActivity {
         });
 
 
-
+        //Accion del boton volver
         btnBack.setOnClickListener(v -> {
             onBackPressed();
         });

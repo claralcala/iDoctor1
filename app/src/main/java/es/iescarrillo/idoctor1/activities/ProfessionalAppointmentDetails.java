@@ -23,6 +23,11 @@ import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.PatientService;
 
+/**
+ * @author clara
+ * Pantalla para ver los detalles de una cita
+ *
+ */
 public class ProfessionalAppointmentDetails extends AppCompatActivity {
 
     Appointment app;
@@ -54,6 +59,7 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
         String id_ = sharedPreferences.getString("id", "");
 
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -64,6 +70,7 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
         }
 
 
+        //Nos traemos el objeto appointment en el intent
         Intent intent = getIntent();
 
         app= new Appointment();
@@ -73,6 +80,7 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
 
         patientId=app.getPatient_id();
 
+        //Inicializacion de componentes
         tvDate=findViewById(R.id.tvDate);
         tvHour=findViewById(R.id.tvHour);
         tvPatient=findViewById(R.id.tvPatient);
@@ -82,18 +90,28 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
         btnDelete=findViewById(R.id.btnDelete);
         btnBack=findViewById(R.id.btnBack);
 
+        //Servicios
         patService = new PatientService(getApplicationContext());
         appService= new AppointmentService(getApplicationContext());
 
+        //Nos traemos el paciente por su id
         patService.getPatientByID(patientId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Convierte cada nodo de la base de datos a un objeto
+                    //Convierte cada nodo de la base de datos a un objeto Paciente
                     p = snapshot.getValue(Patient.class);
                    patientUsername=p.getUsername();
 
+
+                }
+
+                //Si el nombre del paciente es nulo, le decimos que no se asigne
+                if (patientUsername==null){
+                    tvPatient.setText("Paciente: No asignado");
+                }else {
+                    tvPatient.setText("Paciente: " +patientUsername);
                 }
 
 
@@ -108,11 +126,7 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
             }
         });
 
-        if (patientUsername==null){
-            tvPatient.setText("Paciente: No asignado");
-        }else {
-            tvPatient.setText("Paciente: " +patientUsername);
-        }
+
 
         tvDate.setText("Fecha: "+app.getAppointmentDate().toString());
         tvHour.setText("Hora: " +app.getAppointmentTime().toString());
@@ -124,12 +138,14 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
         }
 
 
+        //Accion del boton editar
         btnEdit.setOnClickListener(v -> {
             Intent edit = new Intent (this, ProfessionalEditAppointment.class);
             edit.putExtra("appointment", app);
             startActivity(edit);
         });
 
+        //Accion del boton de ver evaluaciones
         btnEval.setOnClickListener(v -> {
 
             Intent intent1 = new Intent(this, ProfessionalViewEvaluation.class);
@@ -139,10 +155,12 @@ public class ProfessionalAppointmentDetails extends AppCompatActivity {
             startActivity(intent1);
         });
 
+        //Accion del boton de volver
         btnBack.setOnClickListener(v -> {
             onBackPressed();
         });
 
+        //Accion del boton de borrar
         btnDelete.setOnClickListener(v -> {
             appService.deleteAppointment(app.getId());
             Intent back = new Intent (ProfessionalAppointmentDetails.this, ProfessionalViewConsultations.class);

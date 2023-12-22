@@ -16,6 +16,10 @@ import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
+/**
+ * @author clara
+ * Pantalla para añadir consultas
+ */
 public class ProfessionalAddConsultation extends AppCompatActivity {
 
     EditText etAddress, etCity, etEmail, etPhone, etPhoneAux;
@@ -41,6 +45,7 @@ public class ProfessionalAddConsultation extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -50,6 +55,7 @@ public class ProfessionalAddConsultation extends AppCompatActivity {
 
         }
 
+        //Inicializamos componentes
         etAddress=findViewById(R.id.etConsAddress);
         etCity=findViewById(R.id.etConsCity);
         etEmail=findViewById(R.id.etConsMail);
@@ -62,6 +68,7 @@ public class ProfessionalAddConsultation extends AppCompatActivity {
 
         consService=new ConsultationService(getApplicationContext());
 
+        //Accion del boton guardar, inserta una consulta
         btnSave.setOnClickListener(v -> {
             cons= new Consultation();
             cons.setAddress(etAddress.getText().toString());
@@ -77,6 +84,7 @@ public class ProfessionalAddConsultation extends AppCompatActivity {
         });
 
 
+        //Accion del boton volver
         btnCancel.setOnClickListener(v -> {
             Intent back = new Intent(this, ProfessionalViewConsultations.class);
             startActivity(back);

@@ -32,6 +32,11 @@ import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.AssessmentService;
 
+/**
+ * @author damian
+ *
+ * Pantalla para ver todas las evaluaciones de un profesional
+ */
 public class PatientViewAssessment extends AppCompatActivity {
     ListView lvAssessment;
     Button btnBackToPatientProfile;
@@ -47,29 +52,45 @@ public class PatientViewAssessment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_view_assessment);
+
+
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+        //Comprobar roles
         if(!role.equals("PATIENT")){
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
+
+
         assessmentsList=new ArrayList<Assessment>();
+
         Intent intent=getIntent();
 
+
         professional = new Professional();
+
+        //Nos traemos el profesional en el intent
         if (intent != null) {
             professional = (Professional) intent.getSerializableExtra("professional");
         }
+
         professionalId=professional.getId();
+
+
         lvAssessment=findViewById(R.id.lvAssessment);
         assessmentsList=new ArrayList<Assessment>();
         assessmentService=new AssessmentService(getApplicationContext());
+
         DatabaseReference dbAssessmentProfessional= FirebaseDatabase.getInstance().getReference().child("assessment");
+
+       //Nos traemos las evaluaciones por el id del profesional
         assessmentService.getAssessmentsByProfessionalID(professionalId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -92,12 +113,17 @@ public class PatientViewAssessment extends AppCompatActivity {
 
             }
         });
+
+        //Al hacer click en uno nos lo llevamos en el intent
         lvAssessment.setOnItemClickListener((parent, view, position, id) -> {
             assessment=(Assessment) parent.getItemAtPosition(position);
             Intent patientAssessmentDetails=new Intent(this, PatientAssessmentDetails.class);
             patientAssessmentDetails.putExtra("assessment",assessment);
             startActivity(patientAssessmentDetails);
         });
+
+
+        //Boton volver
         btnBackToPatientProfile=findViewById(R.id.btnBackToPatientProfile);
         btnBackToPatientProfile.setOnClickListener(v -> {
             Intent backToPatientProfile=new Intent(this, Patient_Main_Activity.class);

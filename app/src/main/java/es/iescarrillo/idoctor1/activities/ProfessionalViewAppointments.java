@@ -26,6 +26,10 @@ import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Timetable;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 
+/**
+ * @author clara
+ * Pantalla para ver las citas asignadas a una consulta
+ */
 public class ProfessionalViewAppointments extends AppCompatActivity {
 
     ListView lvAppointments;
@@ -61,6 +65,7 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
         String id_ = sharedPreferences.getString("id", "");
 
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -70,16 +75,20 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
 
         }
 
+        //Inicializacion de componentes
         lvAppointments=findViewById(R.id.lvAppointments);
         btnBack=findViewById(R.id.btnBack);
         btnAdd=findViewById(R.id.btnAddAppointment);
 
+        //Servicio
         appService = new AppointmentService(getApplicationContext());
 
         Intent intent=getIntent();
 
+
         appointments= new ArrayList<>();
 
+        //Nos traemos el objeto en el intent
         consul= new Consultation();
         if (intent != null) {
             consul = (Consultation) intent.getSerializableExtra("consultation");
@@ -92,6 +101,7 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
         app = new Appointment();
 
 
+        //Nos traemos las citas a través del id de la consulta
         appService.getAppointmentsByConsultation(consultationID, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -99,7 +109,7 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
                 appointments.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Convierte cada nodo de la base de datos a un objeto Superhero
+                    // Convierte cada nodo de la base de datos a un objeto Appointment
                     appString= snapshot.getValue(AppointmentString.class);
                     app=appString.convertToAppointment();
                     appointments.add(app);
@@ -118,6 +128,7 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
         });
 
 
+        //Cuando clicamos en un item nos llevamos el objeto en el intent
         lvAppointments.setOnItemClickListener((parent, view, position, id) -> {
             app = (Appointment) parent.getItemAtPosition(position);
             Intent details = new Intent(this, ProfessionalAppointmentDetails.class);
@@ -126,12 +137,14 @@ public class ProfessionalViewAppointments extends AppCompatActivity {
         });
 
 
+        //Accion boton añadir
         btnAdd.setOnClickListener(v -> {
             Intent add = new Intent(this, ProfessionalAddAppointment.class);
             add.putExtra("consultation_id", consultationID);
             startActivity(add);
         });
 
+        //Accion boton volver
         btnBack.setOnClickListener(v -> {
             onBackPressed();
         });

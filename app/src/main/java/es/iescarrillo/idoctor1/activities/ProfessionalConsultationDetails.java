@@ -19,6 +19,10 @@ import es.iescarrillo.idoctor1.models.Consultation;
 
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
+/**
+ * @author clara
+ * Pantalla de detalles de la consulta
+ */
 public class ProfessionalConsultationDetails extends AppCompatActivity {
 
     TextView tvAddress, tvCity, tvEmail, tvPhone, tvPhoneAux;
@@ -50,7 +54,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
-
+        //Comprobacion de roles
         if (!role.equals("PROFESSIONAL")) {
 
 
@@ -60,7 +64,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
 
         }
 
-
+        //Inicializacion de componentes
         tvAddress = findViewById(R.id.tvAddress);
         tvCity = findViewById(R.id.tvCity);
         tvEmail = findViewById(R.id.tvEmail);
@@ -82,34 +86,40 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         consService = new ConsultationService(getApplicationContext());
 
 
+        //Nos traemos la consulta en el intent
         cons = new Consultation();
         if (intent != null) {
             cons = (Consultation) intent.getSerializableExtra("consultation");
         }
 
+        //Ponemos datos en los campos de texto
         tvAddress.setText("Direccion: " + cons.getAddress());
         tvCity.setText("Ciudad: " + cons.getCity());
         tvEmail.setText("Email: " + cons.getEmail());
         tvPhone.setText("Telefono: " + cons.getPhone());
         tvPhoneAux.setText("Telf. Auxiliar: " + cons.getPhoneAux());
 
+        //Accion del boton volver
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent(this, ProfessionalViewConsultations.class);
             startActivity(back);
         });
 
+        //Accion del boton para ver citas
         btnViewAppointments.setOnClickListener(v -> {
             Intent appointment = new Intent(this, ProfessionalViewAppointments.class);
             appointment.putExtra("consultation", cons);
             startActivity(appointment);
         });
 
+        //Accion del boton para ver horarios
         btnViewTimetable.setOnClickListener(v -> {
             Intent timetable = new Intent(this, ProfessionalViewTimetable.class);
             timetable.putExtra("consultation", cons);
             startActivity(timetable);
         });
 
+        //Accion del boton para editar
         btnEdit.setOnClickListener(v -> {
             Intent edit = new Intent(this, ProfessionalEditConsultation.class);
             edit.putExtra("consultation", cons);
@@ -117,6 +127,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
         });
 
 
+        //Accion del boton para borrar
         btnDelete.setOnClickListener(v -> {
 
             consService.deleteConsultation(cons.getId());
@@ -125,6 +136,7 @@ public class ProfessionalConsultationDetails extends AppCompatActivity {
 
         });
 
+        //Accion del boton para generar citas automaticamente
         btnGenerateAppointments.setOnClickListener(v -> {
             Intent generate = new Intent(this, ProfessionalGenerateAppointments.class);
             generate.putExtra("consultation",cons);

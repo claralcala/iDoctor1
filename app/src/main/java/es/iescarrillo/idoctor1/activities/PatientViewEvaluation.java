@@ -52,22 +52,34 @@ public class PatientViewEvaluation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_view_evaluation);
+
+
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+
+        //Comprobacion roles
         if(!role.equals("PATIENT")){
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
+
+
         Intent  intent1 = getIntent();
         appointment = new Appointment();
+
+        //Nos traemos el appointment en el intent
         if (intent1 != null) {
             appointment = (Appointment) intent1.getSerializableExtra("appointment");
         }
+
+
+
 
         lvPatientEvaluation=findViewById(R.id.lvPatientEvaluation);
         btnBackMainPatient=findViewById(R.id.btnBackMain);
@@ -75,6 +87,9 @@ public class PatientViewEvaluation extends AppCompatActivity {
         evaluationService  = new EvaluationService(getApplicationContext());
         evaluationArrayList = new ArrayList<>();
         adapter = new EvaluationAdapter(getApplicationContext(),evaluationArrayList);
+
+
+        //Nos traemos la lista de evaluaciones
         evaluationService.getListEvaluation(appId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,6 +113,8 @@ public class PatientViewEvaluation extends AppCompatActivity {
 
             }
         });
+
+        //Al hacer click en uno nos lo llevamos en el intent
         lvPatientEvaluation.setOnItemClickListener((parent, view, position, id) -> {
             evaluation = (Evaluation)  parent.getItemAtPosition(position);
 
@@ -105,6 +122,8 @@ public class PatientViewEvaluation extends AppCompatActivity {
             IntentEvaluationDetails.putExtra("evaluation",evaluation);
             startActivity(IntentEvaluationDetails);
         });
+
+        //Boton de volver
         btnBackMainPatient.setOnClickListener(v -> {
             //Intent BackToPatientActivity=new Intent(this, Patient_Main_Activity.class);
             //startActivity(BackToPatientActivity);

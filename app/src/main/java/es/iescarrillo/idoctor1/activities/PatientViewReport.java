@@ -22,6 +22,12 @@ import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Evaluation;
 import es.iescarrillo.idoctor1.models.Report;
 import es.iescarrillo.idoctor1.services.ReportService;
+
+/**
+ * @author damian
+ *
+ * Pantalla para ver el informe de una evaluacion
+ */
 public class PatientViewReport extends AppCompatActivity {
     Button btnCancelReport;
     TextView tvTitleReport, tvLinkReport;
@@ -36,14 +42,20 @@ public class PatientViewReport extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_view_report);
+
+
         btnCancelReport = findViewById(R.id.btnCancelReport);
         tvTitleReport = findViewById(R.id.tvTitleReport);
         tvLinkReport = findViewById(R.id.tvLinkReport);
+
+        //Variables de sesion
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+       //Comprobamos rol
         if(!role.equals("PATIENT")){
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
@@ -51,16 +63,20 @@ public class PatientViewReport extends AppCompatActivity {
         }
         DatabaseReference dbDoctor = FirebaseDatabase.getInstance().getReference().child("report");
 
+        //Servicio
         reportService = new ReportService(getApplicationContext());
 
         report = new Report();
         Intent intent = getIntent();
 
+        //Nos traemos el objeto en el intent
         evaluation = new Evaluation();
         if (intent != null) {
             evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
         }
         evaluationId = evaluation.getId();
+
+        //Nos traemos el report por el id de evaluacion
         reportService.getReportByEvaluationID(evaluationId, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -79,6 +95,7 @@ public class PatientViewReport extends AppCompatActivity {
             }
         });
 
+        //Boton canelar
         btnCancelReport.setOnClickListener(v -> {
             Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);

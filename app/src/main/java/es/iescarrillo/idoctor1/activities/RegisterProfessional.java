@@ -26,6 +26,10 @@ import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.PatientService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
+/**
+ * @author clara
+ * Pantalla para registrarse como profesional
+ */
 public class RegisterProfessional extends AppCompatActivity {
 
     EditText etName, etSurname, etCollegiate, etDescription, etUsername, etPassword;
@@ -48,6 +52,7 @@ public class RegisterProfessional extends AppCompatActivity {
         setContentView(R.layout.activity_register_professional);
 
 
+        //Inicializamos componentes
         etName=findViewById(R.id.etProfName);
         etSurname=findViewById(R.id.etProfSurname);
         etCollegiate=findViewById(R.id.etCollegiate);
@@ -60,6 +65,7 @@ public class RegisterProfessional extends AppCompatActivity {
         btnSave=findViewById(R.id.btnSaveProf);
         btnCancel=findViewById(R.id.btnCancel);
 
+        //Creamos un arraylist para las especialidades, lo introduciremos en un spinner
         ArrayList<String> specialities= new ArrayList<>();
         specialities.add("general");
         specialities.add("fisioterapia");
@@ -67,6 +73,7 @@ public class RegisterProfessional extends AppCompatActivity {
 
         patService= new PatientService(getApplicationContext());
 
+        //Adapter del spinner
         ArrayAdapter sAdapter= new ArrayAdapter(RegisterProfessional.this, android.R.layout.simple_spinner_dropdown_item, specialities);
         spSpeciality.setAdapter(sAdapter);
 
@@ -74,6 +81,7 @@ public class RegisterProfessional extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                //El item seleccionado lo metemos en una variable
                 profSpeciality=spSpeciality.getSelectedItem().toString();
             }
 
@@ -86,6 +94,7 @@ public class RegisterProfessional extends AppCompatActivity {
         prof = new Professional();
 
 
+        //Accion del boton guardar
         btnSave.setOnClickListener(v -> {
 
             String username=etUsername.getText().toString();
@@ -95,10 +104,10 @@ public class RegisterProfessional extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     if (snapshot.exists()) {
-                        // El nombre de usuario ya está en uso por un profesional, muestra un Toast y no registres al profesional
+                        //El nombre de usuario ya está en uso por un profesional, muestra un Toast y no registra al profesional
                         Toast.makeText(RegisterProfessional.this, "El nombre de usuario ya existe", Toast.LENGTH_SHORT).show();
                     } else {
-                        // El nombre de usuario no existe en profesionales, verifica en pacientes
+                        //El nombre de usuario no existe en profesionales, verifica en pacientes
                         checkPatientUsername(username);
                     }
 
@@ -125,13 +134,13 @@ public class RegisterProfessional extends AppCompatActivity {
     }
 
     private void checkPatientUsername(String username) {
-        // Verificar si el nombre de usuario ya existe en pacientes
+        //Verificar si el nombre de usuario ya existe en pacientes
         patService.getPatientByUsername(username, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot patSnapshot) {
 
                 if (patSnapshot.exists()) {
-                    // El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registres al profesional
+                    //El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registra al profesional
                     Toast.makeText(RegisterProfessional.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
                 } else {
                     registerProfessional();
@@ -140,14 +149,14 @@ public class RegisterProfessional extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Manejo de cancelación si es necesario
+
             }
         });
     }
 
 
     private void registerProfessional() {
-        // El nombre de usuario no existe en pacientes ni en profesionales, permite el registro del profesional
+        //El nombre de usuario no existe en pacientes ni en profesionales, permite el registro del profesional
         prof.setName(etName.getText().toString());
         prof.setSurname(etSurname.getText().toString());
         prof.setCollegiateNumber((etCollegiate.getText().toString()));

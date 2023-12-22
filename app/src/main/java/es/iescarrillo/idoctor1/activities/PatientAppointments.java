@@ -27,6 +27,10 @@ import es.iescarrillo.idoctor1.models.Appointment;
 import es.iescarrillo.idoctor1.models.AppointmentString;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 
+/**
+ * @author damian
+ * pantalla para ver las citas de un paciente
+ */
 public class PatientAppointments extends AppCompatActivity {
     ListView lvAppointment;
     Button btnBackPatientMain;
@@ -38,22 +42,32 @@ public class PatientAppointments extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_appointments);
+
+
         ArrayList <Appointment> appointmentsList=new ArrayList<Appointment>();
         apService = new AppointmentService(getApplicationContext());
         lvAppointment=findViewById(R.id.lvPatientAppointment);
         btnBackPatientMain=findViewById(R.id.btnBackPatientMainEvaluation);
+
+
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+        //Comprobamos si es paciente
         if(!role.equals("PATIENT")){
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
+
+
         DatabaseReference dbAppointmentPatient= FirebaseDatabase.getInstance().getReference().child("appointment");
+
+        //Servicio
         apService.getAppointmentsByPatientID(id_, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -74,6 +88,8 @@ public class PatientAppointments extends AppCompatActivity {
 
             }
         });
+
+        //Al hacer click en uno nos llevamos el objeto en el intent
         lvAppointment.setOnItemClickListener((parent, view, position, id) -> {
             appointment=(Appointment) parent.getItemAtPosition(position);
             Intent intent=new Intent(this, PatientAppointmentDetails.class);
@@ -81,6 +97,7 @@ public class PatientAppointments extends AppCompatActivity {
             startActivity(intent);
         });
 
+        //boton de volver
         btnBackPatientMain.setOnClickListener(v -> {
             Intent intent=new Intent(this, Patient_Main_Activity.class);
             startActivity(intent);

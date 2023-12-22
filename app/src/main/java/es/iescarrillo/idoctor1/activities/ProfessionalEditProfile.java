@@ -41,6 +41,10 @@ import es.iescarrillo.idoctor1.R;
 import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
+/**
+ * @author clara
+ * Pantalla de editar el perfil del profesional
+ */
 public class ProfessionalEditProfile extends AppCompatActivity {
 
 
@@ -77,6 +81,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professional_edit_profile);
 
+        //Inicializacion de componentes
         btnSave=findViewById(R.id.btnSaveProf);
         btnCancel=findViewById(R.id.btnCancel);
         etName=findViewById(R.id.etProfName);
@@ -103,6 +108,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
+        //Comprobacion de rol
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -116,11 +122,13 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         profService=new ProfessionalService(getApplicationContext());
 
 
+        //Lista de las especialidades para el spinner
         ArrayList<String> specialities= new ArrayList<>();
         specialities.add("general");
         specialities.add("fisioterapia");
         specialities.add("odontologia");
 
+        //Adaptador para el spinner de especialidades
         ArrayAdapter sAdapter= new ArrayAdapter(ProfessionalEditProfile.this, android.R.layout.simple_spinner_dropdown_item, specialities);
         spSpeciality.setAdapter(sAdapter);
 
@@ -138,17 +146,20 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         });
 
 
+        //Nos traemos el profesional del intent
         prof = new Professional();
         if (intent != null) {
             prof = (Professional) intent.getSerializableExtra("professional");
         }
 
 
+        //Ponemos los valores en los campos
         etName.setText(prof.getName());
         etSurname.setText(prof.getSurname());
         etCollegiate.setText(prof.getCollegiateNumber());
         etDescription.setText(prof.getDescription());
 
+        //Ponemos la foto (si no tiene se le asigna una por defecto)
         if (prof.getPhoto() != null && !prof.getPhoto().isEmpty()) {
             Picasso.get().load(prof.getPhoto()).into(ivPhoto);
         } else {
@@ -157,6 +168,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
 
 
 
+        //Cuando pulsamos la foto abrimos la galeria del móvil
         ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,6 +177,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
             }
         });
 
+        //Boton guardar: actualizamos el profesional en Firebase
         btnSave.setOnClickListener(v -> {
             prof.setName(etName.getText().toString());
             prof.setSurname(etSurname.getText().toString());
@@ -190,6 +203,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
         });
 
 
+        //Boton cancelar
         btnCancel.setOnClickListener(v -> {
             Intent back = new Intent (this, ProfessionalProfileActivity.class);
             startActivity(back);
@@ -199,6 +213,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
 
     }
 
+
     private void uploadPhoto(){
         Intent i = new Intent(Intent.ACTION_PICK);
         i.setType("image/*");
@@ -206,6 +221,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
     }
 
 
+    //Codigo para subir la foto
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK){
@@ -221,7 +237,7 @@ public class ProfessionalEditProfile extends AppCompatActivity {
 
 
 
-    // Método para obtener la URI de la imagen de un ImageView
+    //Método para obtener la URI de la imagen de un ImageView
     private Uri getImageUri(Context context, ImageView imageView, String name) {
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();

@@ -35,6 +35,11 @@ import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 
+/**
+ * @author clara
+ * Pantalla para editar citas
+ *
+ */
 
 public class ProfessionalEditAppointment extends AppCompatActivity {
 
@@ -75,6 +80,7 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -84,6 +90,7 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
 
         }
 
+        //Nos traemos el appointment en el intent
         Intent intent = getIntent();
 
         app= new Appointment();
@@ -92,6 +99,7 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
         }
 
 
+        //Inicializacion de componentes
         etDate=findViewById(R.id.etDate);
         etHour=findViewById(R.id.etTime);
         cbActive=findViewById(R.id.checkBoxActive);
@@ -100,6 +108,7 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
         btnSave=findViewById(R.id.btnSaveAppo);
         btnBack=findViewById(R.id.btnCancel);
 
+        //Servicio
         appService = new AppointmentService(getApplicationContext());
 
 
@@ -113,9 +122,11 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
             cbActive.setChecked(false);
         }
 
+        //Formatters para fecha y hora
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH:mm");
 
+        //Accion boton guardar
         btnSave.setOnClickListener(v -> {
 
 
@@ -139,7 +150,7 @@ public class ProfessionalEditAppointment extends AppCompatActivity {
         });
 
 
-
+    //Accion boton volver
         btnBack.setOnClickListener(v -> {
             onBackPressed();
         });

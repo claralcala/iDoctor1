@@ -24,6 +24,11 @@ import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.PatientService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
+/**
+ * @author clara
+ * Pantalla principal - de login
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     EditText etUsername, etPassword;
@@ -46,20 +51,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Inicializamos componentes
         btnLogin=findViewById(R.id.btnLogin);
         btnRegister=findViewById(R.id.btnRegister);
         etUsername= findViewById(R.id.etUserName);
         etPassword=findViewById(R.id.etPassword);
         tvError=findViewById(R.id.tvError);
 
+        //Inicializamos servicios
         profService= new ProfessionalService(getApplicationContext());
         patService = new PatientService(getApplicationContext());
 
+        //Acción del botón registrar
         btnRegister.setOnClickListener(v -> {
             Intent register= new Intent(this, RegisterActivity.class);
             startActivity(register);
         });
 
+        //Accion del botón login
         btnLogin.setOnClickListener(v -> {
 
             login();
@@ -72,10 +81,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Método para loguearse
     private void login() {
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
+        //Comprobamos que los campos no estén vacíos. Si no lo están, comprobamos que ese profesional exista
         if (!username.isEmpty() && !password.isEmpty()) {
             checkProfessional(username, password);
         } else {
@@ -83,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Método para comprobar que exista ese profesional
     private void checkProfessional(String username, String password) {
         profService.getProfessionalByUsername(username, new ValueEventListener() {
             @Override
@@ -102,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                // Si no se encuentra en profesionales, verifica en pacientes
+                //Si no se encuentra en profesionales, verifica en pacientes
                 checkPatient(username, password);
             }
 
@@ -113,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Método para comprobar que existe paciente
     private void checkPatient(String username, String password) {
         patService.getPatientByUsername(username, new ValueEventListener() {
             @Override
@@ -131,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                //Si tampoco lo encuentra en pacientes, saca un mensaje de usuario no válido
                 tvError.setText("Usuario no válido");
             }
 
@@ -141,10 +155,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private void loginUser(String username, String id, String role) {
         sharedPreferences = getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        //Al loguearnos, creamos las variables de sesión y llevamos a las pantallas adecuadas
         editor.putBoolean("login", true);
         editor.putString("user", username);
         editor.putString("id", id);

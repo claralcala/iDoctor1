@@ -23,6 +23,10 @@ import es.iescarrillo.idoctor1.adapters.ConsultationAdapter;
 import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
+/**
+ * @author clara
+ * Pantalla para ver las consultas de un profesional
+ */
 public class ProfessionalViewConsultations extends AppCompatActivity {
 
 
@@ -43,6 +47,7 @@ public class ProfessionalViewConsultations extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professional_view_consultations);
 
+        //Inicializamos componentes
         btnAdd=findViewById(R.id.btnAddConsultation);
         btnBack=findViewById(R.id.btnBack);
         lvConsultations=findViewById(R.id.lvConsultations);
@@ -54,6 +59,7 @@ public class ProfessionalViewConsultations extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -70,18 +76,19 @@ public class ProfessionalViewConsultations extends AppCompatActivity {
 
         consultations= new ArrayList<>();
 
+        //Nos traemos las consultas por el id del profesional
         consService.getConsultationsByProfessionalID(id_, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     consultations.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Convierte cada nodo de la base de datos a un objeto Superhero
+                    //Convierte cada nodo de la base de datos a un objeto Consultation
                     cons = snapshot.getValue(Consultation.class);
                     consultations.add(cons);
                 }
 
-                // Una vez los datos añadidos a nuestra lista, se la pasamos al adaptador
+                //Una vez los datos añadidos a nuestra lista, se la pasamos al adaptador
                 adapter = new ConsultationAdapter(getApplicationContext(), consultations);
                 lvConsultations.setAdapter(adapter);
 
@@ -95,6 +102,7 @@ public class ProfessionalViewConsultations extends AppCompatActivity {
         });
 
 
+        //Cuando pulsamos un objeto del lv nos llevamos el objeto entero en el intent
         lvConsultations.setOnItemClickListener((parent, view, position, id) -> {
             cons = (Consultation) parent.getItemAtPosition(position);
             Intent intent = new Intent(this, ProfessionalConsultationDetails.class);

@@ -26,6 +26,11 @@ import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
+/**
+ * @author damian
+ *
+ * Pantalla para ver detalles de la cita
+ */
 public class PatientAppointmentDetails extends AppCompatActivity {
     TextView tvAppointmentDatePatient;
     TextView tvAppointmentTimePatient;
@@ -51,21 +56,33 @@ public class PatientAppointmentDetails extends AppCompatActivity {
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+
+       //Comprobacion de roles
         if(!role.equals("PATIENT")){
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
+
+        //Inicializacion de componentes
         tvAppointmentDatePatient=findViewById(R.id.tvAppointmentDatePatient);
         tvAppointmentTimePatient=findViewById(R.id.tvAppointmentTimePatient);
         tvConsultationPatient=findViewById(R.id.tvConsultationPatient);
         appointmentService=new AppointmentService(getApplicationContext());
+
+       //En el intent nos traemos el objeto
         Intent intent=getIntent();
         if (intent!=null){
             appointment=(Appointment)intent.getSerializableExtra("appointment");
         }
+
         consultation_id=appointment.getConsultation_id();
+
+        //Servicio
         ConsultationService consultationService=new ConsultationService(getApplicationContext());
+
+        //Nos traemos las consultas
         consultationService.getConsultationByID(consultation_id, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -81,11 +98,16 @@ public class PatientAppointmentDetails extends AppCompatActivity {
 
             }
         });
+
+
+        //Ponemos los datos en los campos de texto
         tvAppointmentDatePatient.setText("Fecha: " +appointment.getAppointmentDate().toString());
         tvAppointmentTimePatient.setText("Hora: " + appointment.getAppointmentTime().toString());
         btnCancelAppointmentPatient=findViewById(R.id.btnCancelAppointmentPatient);
         LocalDate currentDate=LocalDate.now();
         LocalDate DateAppointment=appointment.getAppointmentDate();
+
+        //Permitimos cancelar si la fecha no ha pasado
         if (currentDate.isAfter(DateAppointment)){
             btnCancelAppointmentPatient.setEnabled(false);
         }else{
@@ -98,12 +120,16 @@ public class PatientAppointmentDetails extends AppCompatActivity {
             });
 
         }
+
+        //Boton para ver la evaluacion
         btnViewEvaluation=findViewById(R.id.btnViewEvaluation);
         btnViewEvaluation.setOnClickListener(v -> {
             Intent goToEvaluation=new Intent(this,PatientViewEvaluation.class);
             goToEvaluation.putExtra("appointment",appointment);
             startActivity(goToEvaluation);
         });
+
+        //Boton de vuelta
         btnBackToAppointment=findViewById(R.id.btnBackToAppointment);
         btnBackToAppointment.setOnClickListener(v -> {
             Intent backToAppointment=new Intent(this,PatientAppointments.class);

@@ -22,6 +22,11 @@ import es.iescarrillo.idoctor1.models.Timetable;
 import es.iescarrillo.idoctor1.models.TimetableString;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
+/**
+ * @author clara
+ *
+ * Pantalla para editar horario
+ */
 public class ProfessionalEditTimetable extends AppCompatActivity {
 
     EditText etStart, etEnd;
@@ -49,6 +54,7 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -58,6 +64,7 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
 
         }
 
+        //Inicializacion de componentes
         etStart=findViewById(R.id.etStartTime);
         etEnd=findViewById(R.id.etEndTime);
         spDays=findViewById(R.id.spinner);
@@ -67,14 +74,17 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
         Intent intent =getIntent();
 
 
+        //Nos traemos el objeto en el intent
         timetable = new Timetable();
         if (intent != null) {
             timetable = (Timetable) intent.getSerializableExtra("timetable");
         }
 
 
+        //Servicio
         timetableService= new TimetableService(getApplicationContext());
 
+        //Lista para los días de la semana para el spinner
         ArrayList<String> daysOfWeek= new ArrayList<>();
 
         daysOfWeek.add("lunes");
@@ -85,6 +95,7 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
         daysOfWeek.add("sabado");
         daysOfWeek.add("domingo");
 
+        //Adaptador para el spinner
         ArrayAdapter sAdapter= new ArrayAdapter(ProfessionalEditTimetable.this, android.R.layout.simple_spinner_dropdown_item, daysOfWeek);
         spDays.setAdapter(sAdapter);
 
@@ -104,8 +115,10 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
         etStart.setText(timetable.getStartTime().toString());
         etEnd.setText(timetable.getEndTime().toString());
 
+        //Formatter para la hora
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
+        //Accion del boton guardar
         btnSave.setOnClickListener(v -> {
 
 
@@ -122,6 +135,7 @@ public class ProfessionalEditTimetable extends AppCompatActivity {
         });
 
 
+        //Accion del boton cancelar
         btnCancel.setOnClickListener(v -> {
             onBackPressed();
         });

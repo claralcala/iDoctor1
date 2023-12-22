@@ -22,6 +22,10 @@ import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.services.PatientService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
+/**
+ * @author clara
+ * Pantalla para registrarse como paciente
+ */
 public class RegisterPatient extends AppCompatActivity{
 
         Button btnSave,btnBack;
@@ -44,6 +48,7 @@ protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_patient);
 
+        //Inicializamos componentes
         btnSave=findViewById(R.id.btnSavePatient);
         btnBack=findViewById(R.id.btnCancel);
 
@@ -55,15 +60,17 @@ protected void onCreate(Bundle savedInstanceState){
         etEmail=findViewById(R.id.etPatientMail);
         etPhone=findViewById(R.id.etTelephone);
 
-        tvError=findViewById(R.id.tvError);
+
 
         cbHealthInsurance=findViewById(R.id.checkBoxInsurance);
 
+        //Accion del botón volver
         btnBack.setOnClickListener(v->{
         Intent back=new Intent(this,RegisterActivity.class);
         startActivity(back);
         });
 
+        //Inicializamos los servicios
         pService=new PatientService(getApplicationContext());
         profService=new ProfessionalService(getApplicationContext());
 
@@ -77,13 +84,13 @@ protected void onCreate(Bundle savedInstanceState){
 @Override
 public void onDataChange(@NonNull DataSnapshot snapshot){
         if(snapshot.exists()){
-        // El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registres al paciente
+        //El nombre de usuario ya está en uso por un paciente, muestra un Toast y no registra al paciente
 
         Toast.makeText(RegisterPatient.this,"El nombre de usuario ya está en uso",Toast.LENGTH_SHORT).show();
 
 
         }else{
-        // El nombre de usuario no existe en pacientes, verifica en profesionales
+        //El nombre de usuario no existe en pacientes, verifica en profesionales
         checkProfessionalUsername(username);
         }
         }
@@ -99,32 +106,33 @@ public void onCancelled(@NonNull DatabaseError error){
         }
 
 private void checkProfessionalUsername(String username){
-        // Verificar si el nombre de usuario ya existe en profesionales
+        //Comprobamos si el nombre de usuario ya existe en profesionales
         profService.getProfessionalByUsername(username,new ValueEventListener(){
 @Override
 public void onDataChange(@NonNull DataSnapshot profSnapshot){
         if(profSnapshot.exists()){
 
 
-        // El nombre de usuario ya está en uso por un profesional, muestra un Toast y no registres al paciente
+        //El nombre de usuario ya está en uso por un profesional, muestra un Toast y no registres al paciente
 
         Toast.makeText(RegisterPatient.this,"El nombre de usuario ya está en uso",Toast.LENGTH_SHORT).show();
 
 
         }else{
-        // El nombre de usuario no existe en profesionales ni en pacientes, permite el registro del paciente
+        //El nombre de usuario no existe en profesionales ni en pacientes, permite el registro del paciente
         registerPatient();
         }
         }
 
 @Override
 public void onCancelled(@NonNull DatabaseError error){
-        // Manejo de cancelación si es necesario
+
         }
         });
         }
 
 private void registerPatient(){
+        //Finalmente registramos al paciente
         pat.setName(etName.getText().toString());
         pat.setSurname(etSurname.getText().toString());
         pat.setDni(etDNI.getText().toString());

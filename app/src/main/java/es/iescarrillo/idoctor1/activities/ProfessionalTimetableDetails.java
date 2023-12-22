@@ -14,6 +14,10 @@ import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Timetable;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
+/**
+ * @author clara
+ * Pantalla para ver los detalles del horario
+ */
 public class ProfessionalTimetableDetails extends AppCompatActivity {
 
     TextView tvDay, tvStart, tvEnd;
@@ -35,6 +39,7 @@ public class ProfessionalTimetableDetails extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -44,6 +49,7 @@ public class ProfessionalTimetableDetails extends AppCompatActivity {
 
         }
 
+        //Inicializamos componentes
         tvDay=findViewById(R.id.tvDay);
         tvStart=findViewById(R.id.tvStartTime);
         tvEnd=findViewById(R.id.tvendTime);
@@ -53,8 +59,10 @@ public class ProfessionalTimetableDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        //Servicio
         timetableService=new TimetableService(getApplicationContext());
 
+        //Nos traemos el objeto en el intent
         timetable = new Timetable();
         if (intent != null) {
            timetable = (Timetable) intent.getSerializableExtra("timetable");
@@ -65,12 +73,14 @@ public class ProfessionalTimetableDetails extends AppCompatActivity {
         tvStart.setText(timetable.getStartTime().toString());
         tvEnd.setText(timetable.getEndTime().toString());
 
+        //Accion del boton editar
         btnEdit.setOnClickListener(v -> {
             Intent edit = new Intent(this, ProfessionalEditTimetable.class);
             edit.putExtra("timetable", timetable);
             startActivity(edit);
         });
 
+        //Accion del boton volver
         btnBack.setOnClickListener(v -> {
             onBackPressed();
         });

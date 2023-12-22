@@ -21,6 +21,10 @@ import es.iescarrillo.idoctor1.models.Patient;
 import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
+/**
+ * @author clara
+ * Pantalla de perfil del profesional
+ */
 public class ProfessionalProfileActivity extends AppCompatActivity {
 
     Button btnEdit, btnBack;
@@ -38,6 +42,7 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professional_profile);
 
+        //Inicializacion de componentes
         tvName=findViewById(R.id.tvProfName);
         tvSurname=findViewById(R.id.tvProfSurname);
         tvUsername=findViewById(R.id.tvProfUsername);
@@ -53,6 +58,7 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id = sharedPreferences.getString("id", "");
 
+        //Comprobacion de rol
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -69,12 +75,14 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
 
         profService=new ProfessionalService(getApplicationContext());
 
+        //Nos traemos los datos del profesional a través de las variables de sesion
         profService.getProfessionalByID(id, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    // Convierte cada nodo de la base de datos a un objeto professio
+                    //Convierte cada nodo de la base de datos a un objeto professio
                     prof = dataSnapshot.getValue(Professional.class);
+                    //Ponemos los datos en los campos
                     tvName.setText("Nombre: " +prof.getName());
                     tvSurname.setText("Apellidos: " +prof.getSurname());
                     tvCollegiate.setText("Num. Colegiado: " +prof.getCollegiateNumber());
@@ -82,6 +90,7 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
                     tvSpeciality.setText("Especialidad: " +prof.getSpeciality());
                     tvUsername.setText("Nom. usuario: " +prof.getUsername());
 
+                    //Ponemos la foto (si no tiene, se le pone una por defecto
                     if (prof.getPhoto() != null && !prof.getPhoto().isEmpty()) {
                         Picasso.get().load(prof.getPhoto()).into(ivPhoto);
                     } else {
@@ -98,7 +107,7 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
         });
 
 
-
+    //Boton de editar
         btnEdit.setOnClickListener(v -> {
             Intent edit = new Intent (this, ProfessionalEditProfile.class);
             edit.putExtra("professional", prof);
@@ -106,7 +115,7 @@ public class ProfessionalProfileActivity extends AppCompatActivity {
             startActivity(edit);
         });
 
-
+        //Boton de volver
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent (this, ProfessionalMainActivity.class);
             startActivity(back);

@@ -14,6 +14,10 @@ import es.iescarrillo.idoctor1.models.Consultation;
 import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
+/**
+ * @author clara
+ * Pantalla para editar consulta
+ */
 public class ProfessionalEditConsultation extends AppCompatActivity {
 
 
@@ -40,6 +44,7 @@ public class ProfessionalEditConsultation extends AppCompatActivity {
         String id = sharedPreferences.getString("id", "");
 
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -50,6 +55,7 @@ public class ProfessionalEditConsultation extends AppCompatActivity {
         }
 
 
+        //Inicializacion de componentes
         etAddress=findViewById(R.id.etConsAddress);
         etCity=findViewById(R.id.etConsCity);
         etMail=findViewById(R.id.etConsMail);
@@ -62,12 +68,14 @@ public class ProfessionalEditConsultation extends AppCompatActivity {
 
         consService=new ConsultationService(getApplicationContext());
 
+        //Nos traemos la consulta en el intent
        cons = new Consultation();
         if (intent != null) {
             cons = (Consultation) intent.getSerializableExtra("consultation");
         }
 
 
+        //Ponemos datos en los campos de textos
         etAddress.setText(cons.getAddress());
         etCity.setText(cons.getCity());
         etMail.setText(cons.getEmail());
@@ -75,6 +83,7 @@ public class ProfessionalEditConsultation extends AppCompatActivity {
         etPhoneAux.setText(cons.getPhoneAux());
 
 
+        //Accion del boton guardar. Actualizamos la consulta en Firebase
         btnSave.setOnClickListener(v -> {
             cons.setAddress(etAddress.getText().toString());
             cons.setCity(etCity.getText().toString());
@@ -89,7 +98,7 @@ public class ProfessionalEditConsultation extends AppCompatActivity {
 
         });
 
-
+//Accion del boton cancelar
         btnCancel.setOnClickListener(v -> {
             onBackPressed();
         });

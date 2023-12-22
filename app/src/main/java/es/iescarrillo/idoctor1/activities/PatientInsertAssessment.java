@@ -31,6 +31,11 @@ import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.AssessmentService;
 import es.iescarrillo.idoctor1.services.PatientService;
 
+/**
+ * @author damian
+ *
+ * Pantalla para insertar evaluacion de un profesional
+ */
 public class PatientInsertAssessment extends AppCompatActivity {
     TextView tvUserAssessment;
     EditText etTitleAssessment;
@@ -51,16 +56,22 @@ public class PatientInsertAssessment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_insert_assessment);
+
+        //Variables de sesion
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+        //Comprobacion roles
         if(!role.equals("PATIENT")){
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
+
+        //Inicializacion de componentes
         tvUserAssessment=findViewById(R.id.tvUserAssessment);
         etTitleAssessment=findViewById(R.id.etTitleAssessment);
         etAssessmentDescription=findViewById(R.id.etAssessmentDescription);
@@ -69,12 +80,20 @@ public class PatientInsertAssessment extends AppCompatActivity {
         etDateTimeAssessment=findViewById(R.id.etDateTimeAssessment);
         btnAddAssessment=findViewById(R.id.btnAddAssessment);
         btnBackToDetails=findViewById(R.id.btnBackToDetails);
+
+        //Adapter para el spinner
         ArrayAdapter<CharSequence> adapterSpinnerRating= ArrayAdapter.createFromResource(this,R.array.starsValues, android.R.layout.simple_spinner_item);
         adapterSpinnerRating.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spStars.setAdapter(adapterSpinnerRating);
+
+
         Intent intent=getIntent();
+
+        //Servicios
         assessmentService=new AssessmentService(getApplicationContext());
         patientService=new PatientService(getApplicationContext());
+
+        //Nos traemos el objeto en el intent
         if (intent!=null){
             professional=(Professional) intent.getSerializableExtra("professional");
         }
@@ -85,6 +104,7 @@ public class PatientInsertAssessment extends AppCompatActivity {
 
 
 
+        //Nos traemos el username del paciente
         patientService.getPatientByID(id_, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -103,14 +123,17 @@ public class PatientInsertAssessment extends AppCompatActivity {
 
             }
         });
+
+        //Boton de añadir
         btnAddAssessment.setOnClickListener(v -> {
             String titleAssessment=etTitleAssessment.getText().toString();
             String assessmentDescription=etAssessmentDescription.getText().toString();
             Double stars= Double.valueOf(spStars.getSelectedItem().toString());
             String date=etDateTimeAssessment.getText().toString();
-            // Convertir las cadenas a LocalDateTime (asumiendo un formato específico)
+
+            //Convertir las cadenas a LocalDateTime
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            // Establecer el LocalDateTime en tu entidad Evaluation
+            //Establecer el LocalDateTime en Evaluation
             assessment=new Assessment();
             assessment.setDescription(assessmentDescription);
             assessment.setTitle(titleAssessment);
@@ -124,6 +147,8 @@ public class PatientInsertAssessment extends AppCompatActivity {
             Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);
         });
+
+        //Boton volver
         btnBackToDetails.setOnClickListener(v -> {
             onBackPressed();
         });

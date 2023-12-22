@@ -26,6 +26,10 @@ import es.iescarrillo.idoctor1.models.Timetable;
 import es.iescarrillo.idoctor1.models.TimetableString;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
+/**
+ * @author clara
+ * Pantalla para ver los horarios
+ */
 public class ProfessionalViewTimetable extends AppCompatActivity {
 
     ListView lvTimetable;
@@ -58,6 +62,7 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
         String id_ = sharedPreferences.getString("id", "");
 
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -81,6 +86,7 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        //Nos traemos la consulta en el intent
         consul= new Consultation();
         if (intent != null) {
             consul = (Consultation) intent.getSerializableExtra("consultation");
@@ -91,6 +97,7 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
 
         timetable = new Timetable();
 
+        //Nos traemos los horarios por el id de la consulta
         timetableService.getTimetablesByConsultationID(consultationID, new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -115,6 +122,7 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
             }
         });
 
+        //Al clicar en un item nos llevamos el objeto en el intent
         lvTimetable.setOnItemClickListener((parent, view, position, id) -> {
             timetable = (Timetable) parent.getItemAtPosition(position);
             Intent details = new Intent(this, ProfessionalTimetableDetails.class);
@@ -123,6 +131,7 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
         });
 
 
+        //Accion boton añadir
         btnAdd.setOnClickListener(v -> {
             Intent add = new Intent (this, ProfessionalAddTimetable.class);
             add.putExtra("consultation_id", consultationID);
@@ -131,6 +140,7 @@ public class ProfessionalViewTimetable extends AppCompatActivity {
         });
 
 
+        //Accion boton volver
         btnBack.setOnClickListener(v -> {
             Intent back = new Intent(this, ProfessionalViewConsultations.class);
             startActivity(back);

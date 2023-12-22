@@ -24,6 +24,11 @@ import es.iescarrillo.idoctor1.services.AppointmentService;
 import es.iescarrillo.idoctor1.services.AssessmentService;
 import es.iescarrillo.idoctor1.services.ConsultationService;
 
+/**
+ * @author damian
+ *
+ * pantalla para ver los detalles de evaluacion
+ */
 public class PatientAssessmentDetails extends AppCompatActivity {
     TextView tvUsernameAssessmentDetails;
     TextView tvTitleAssessmentDetails;
@@ -32,7 +37,7 @@ public class PatientAssessmentDetails extends AppCompatActivity {
     TextView tvAssessmentDateTimeDetails;
     Button btnBackToViewAssessment;
     AssessmentService assessmentService;
-//    Professional professional;
+    Professional professional;
     Patient patient;
     Assessment assessment;
     String assessmentId;
@@ -43,17 +48,23 @@ public class PatientAssessmentDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_assessment_details);
+
+
         //Variables de sesión
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+        //comprobamos rol
         if(!role.equals("PATIENT")){
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
+
+        //Inicializacion componentes
         tvUsernameAssessmentDetails=findViewById(R.id.tvUsernameAssessmentDetails);
         tvTitleAssessmentDetails=findViewById(R.id.tvTitleAssessmentDetails);
         tvDescriptionAssessmentDetails=findViewById(R.id.tvDescriptionAssessmentDetails);
@@ -61,20 +72,29 @@ public class PatientAssessmentDetails extends AppCompatActivity {
         tvAssessmentDateTimeDetails=findViewById(R.id.tvAssessmentDateTimeDetails);
         btnBackToViewAssessment=findViewById(R.id.btnBackToViewAssessment);
         assessmentService=new AssessmentService(getApplicationContext());
+
         Intent intent=getIntent();
         assessment = new Assessment();
 
+        //Nos traemos el objeto en el intent
         if (intent != null) {
             assessment= (Assessment) intent.getSerializableExtra("assessment");
         }
 
+
         assessmentId=assessment.getUsername();
+
+        //Servicio
         assessmentService=new AssessmentService(getApplicationContext());
+
+        //datos en los textview
         tvUsernameAssessmentDetails.setText("Usuario: " + assessment.getUsername().toString());
         tvTitleAssessmentDetails.setText("Titulo:  " +assessment.getTitle().toString());
         tvDescriptionAssessmentDetails.setText("Descripcion: " + assessment.getDescription().toString());
         tvAssessmentRatingDetails.setText("Estrellas: " + assessment.getStars().toString());
         tvAssessmentDateTimeDetails.setText("Fecha y hora: " + assessment.getAssessmentDateTime().toString());
+
+        //Boton volver
         btnBackToViewAssessment.setOnClickListener(v -> {
             Intent BackToViewAssessment=new Intent(this, Patient_Main_Activity.class);
             BackToViewAssessment.putExtra("patient",patient);

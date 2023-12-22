@@ -24,6 +24,11 @@ import es.iescarrillo.idoctor1.models.Professional;
 import es.iescarrillo.idoctor1.services.EvaluationService;
 import es.iescarrillo.idoctor1.services.ProfessionalService;
 
+/**
+ * @author damian
+ *
+ * Pantalla para ver detalles de evaluacion
+ */
 
 public class PatientViewEvaluationDetails extends AppCompatActivity {
     Evaluation evaluation;
@@ -41,27 +46,36 @@ public class PatientViewEvaluationDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_view_evaluation_details);
+
+        //Variables de sesion
         SharedPreferences sharedPreferences= getSharedPreferences("PreferencesDoctor", Context.MODE_PRIVATE);
         String username= sharedPreferences.getString("user", "");
         String role = sharedPreferences.getString("role", "");
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
+
+        //Comprobacion roles
         if(!role.equals("PATIENT")){
             sharedPreferences.edit().clear().apply();
             Intent backMain = new Intent(this, MainActivity.class);
             startActivity(backMain);
         }
+
+
         btnCancelDetailsEvaluation = findViewById(R.id.btnCancelDetailsEvaluation);
         btnViewInformPatient = findViewById(R.id.btnViewInformPatient);
 
         Intent intent = getIntent();
 
+        //Nos traemos evaluacion en el intent
         evaluation = new Evaluation();
         if (intent != null) {
             evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
         }
 
+
         evaluationId = evaluation.getId();
+
 
         tvDescriptionDetailsEvaluation = findViewById(R.id.tvDescriptionDetailsEvaluation);
         tvExplorationDetailsEvaluation = findViewById(R.id.tvExplorationDetailsEvaluation);
@@ -70,7 +84,7 @@ public class PatientViewEvaluationDetails extends AppCompatActivity {
 
         evaluationService = new EvaluationService(getApplicationContext());
 
-        evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
+       // evaluation = (Evaluation) intent.getSerializableExtra("evaluation");
 
 
         tvDescriptionDetailsEvaluation.setText("Descripcion: " + evaluation.getDescription());
@@ -86,11 +100,15 @@ public class PatientViewEvaluationDetails extends AppCompatActivity {
 
             tvDateDetailsEvaluation.setText("Fecha y hora " + formattedDateTime);
         }
+
+        //Boton cancelar
         btnCancelDetailsEvaluation.setOnClickListener(v -> {
             Intent back = new Intent(this, Patient_Main_Activity.class);
             startActivity(back);
 
         });
+
+        //Boton de ver el informe
         btnViewInformPatient.setOnClickListener(v -> {
             Intent inform = new Intent(this, PatientViewReport.class);
             inform.putExtra("evaluation",evaluation);

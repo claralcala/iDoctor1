@@ -26,6 +26,10 @@ import es.iescarrillo.idoctor1.models.Timetable;
 import es.iescarrillo.idoctor1.models.TimetableString;
 import es.iescarrillo.idoctor1.services.TimetableService;
 
+/**
+ * @author clara
+ * Pantalla para añadir horario
+ */
 public class ProfessionalAddTimetable extends AppCompatActivity {
 
     Spinner spDay;
@@ -47,6 +51,7 @@ public class ProfessionalAddTimetable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professional_add_timetable);
 
+        //Inicializacion de componentes
         spDay=findViewById(R.id.spinnerDay);
         etStartHour=findViewById(R.id.etStartTime);
         etEndHour=findViewById(R.id.etEndTime);
@@ -60,6 +65,7 @@ public class ProfessionalAddTimetable extends AppCompatActivity {
         Boolean login = sharedPreferences.getBoolean("login", true);
         String id_ = sharedPreferences.getString("id", "");
 
+        //Comprobacion de roles
         if(!role.equals("PROFESSIONAL")){
 
 
@@ -69,10 +75,12 @@ public class ProfessionalAddTimetable extends AppCompatActivity {
 
         }
 
+        //Nos traemos el id de la consulta
         Intent intent = getIntent();
         consultationID=intent.getStringExtra("consultation_id");
 
         timetableService= new TimetableService(getApplicationContext());
+        //Spinner para los dias de la semana
         ArrayList<String>daysOfWeek= new ArrayList<>();
 
         daysOfWeek.add("lunes");
@@ -83,6 +91,7 @@ public class ProfessionalAddTimetable extends AppCompatActivity {
         daysOfWeek.add("sabado");
         daysOfWeek.add("domingo");
 
+        //Adapter del spinner
         ArrayAdapter sAdapter= new ArrayAdapter(ProfessionalAddTimetable.this, android.R.layout.simple_spinner_dropdown_item, daysOfWeek);
         spDay.setAdapter(sAdapter);
 
@@ -100,8 +109,10 @@ public class ProfessionalAddTimetable extends AppCompatActivity {
         });
 
 
+        //Formatter para la hora
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
+        //Accion boton guardar. Añade un horario a Firebase
         btnSave.setOnClickListener(v -> {
 
             timetable = new Timetable();
@@ -116,6 +127,7 @@ public class ProfessionalAddTimetable extends AppCompatActivity {
             onBackPressed();
         });
 
+        //Accion btn cancelar
         btnCancel.setOnClickListener(v -> {
             onBackPressed();
         });
