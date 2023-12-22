@@ -39,7 +39,11 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
     EditText edDuration;
     Button btnGenerate;
 
+    int totalDuration;
+
     TimetableString ttableString;
+
+    List<LocalDateTime> appointmentDates;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -66,7 +70,11 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
         btnGenerate.setOnClickListener(v -> {
             String durationText = edDuration.getText().toString();
             int duration = Integer.parseInt(durationText);
-            generateAppointments(selectedConsultation, duration);
+
+            // Calcular la duración total de las citas (en minutos) para 30 días
+            totalDuration = duration * 30 * 24 * 60; // días * horas/día * minutos/hora
+
+            generateAppointments(selectedConsultation, totalDuration);
         });
     }
 
@@ -83,9 +91,9 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
                     timetables.add(timetable);
                 }
 
-                List<LocalDateTime> appointmentDates = new ArrayList<>();
+                appointmentDates = new ArrayList<>();
                 LocalDate startDate = LocalDate.now();
-                LocalDate endDate = startDate.plusMonths(1);
+                LocalDate endDate = startDate.plusDays(30);
 
                 for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
                     DayOfWeek dayOfWeek = date.getDayOfWeek();
@@ -94,8 +102,14 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
                             LocalTime startTime = timetable.getStartTime();
                             LocalTime endTime = timetable.getEndTime();
                             LocalDateTime appointmentDateTime = LocalDateTime.of(date, startTime);
-                            while (appointmentDateTime.plusMinutes(duration).isBefore(LocalDateTime.of(date, endTime))) {
-                                appointmentDates.add(appointmentDateTime);
+
+                            // Generar citas hasta que alcancemos la duración total
+                            while (appointmentDateTime.isBefore(LocalDateTime.of(date, endTime)) &&
+                                    totalDuration > 0) {
+                                if (isTimeSlotAvailable(appointmentDateTime, duration)) {
+                                    appointmentDates.add(appointmentDateTime);
+                                    totalDuration -= duration;
+                                }
                                 appointmentDateTime = appointmentDateTime.plusMinutes(duration);
                             }
                         }
@@ -103,7 +117,23 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
                 }
 
                 insertAppointments(appointmentDates);
+
+
             }
+
+            // Verificar si el intervalo de tiempo está disponible
+            private boolean isTimeSlotAvailable(LocalDateTime appointmentDateTime, int duration) {
+                for (LocalDateTime existingAppointment : appointmentDates) {
+                    if (existingAppointment.isEqual(appointmentDateTime) ||
+                            existingAppointment.plusMinutes(duration).isAfter(appointmentDateTime) &&
+                                    existingAppointment.isBefore(appointmentDateTime.plusMinutes(duration))) {
+                        return false; // El intervalo está ocupado
+                    }
+                }
+                return true; // El intervalo está disponible
+            }
+
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -131,4 +161,6 @@ public class ProfessionalGenerateAppointments extends AppCompatActivity {
 
         Toast.makeText(this, "Citas generadas correctamente", Toast.LENGTH_SHORT).show();
     }
+
+
 }
